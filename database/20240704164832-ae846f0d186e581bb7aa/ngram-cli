@@ -1,9 +1,13 @@
 #!/bin/bash
 
-export ngram_prog="$0"
-export ngram_rootdir=$(dirname $0)
+export ngram_run_dir="$(pwd)"
+export ngram_script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+export ngram_cli_path="$(realpath $0)"
+export ngram_root_dir=$(realpath "$ngram_cli_path/../../..")
+
+# constants
 export ngram_program_id="20240704164832-ae846f0d186e581bb7aa"
-export ngram_subcommands_dir="$ngram_rootdir/database/$ngram_program_id/subcommands"
+export ngram_subcommands_dir="$ngram_root_dir/database/$ngram_program_id/subcommands"
 
 command="$1"
 shift
@@ -18,7 +22,12 @@ if [ ! -x "$command_prog" ]; then
   exit 1
 fi
 
-cd $ngram_rootdir
+cd $ngram_root_dir
+
+if [ -f .env ]; then
+  source .env
+fi
+
 "$command_prog" "$@"
 
 #arglistf=$(mktemp)

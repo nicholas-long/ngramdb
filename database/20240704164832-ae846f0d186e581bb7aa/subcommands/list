@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export LC_LOCALE=C.utf8
+ls database | sort
