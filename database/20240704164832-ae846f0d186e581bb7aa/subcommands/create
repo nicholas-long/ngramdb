@@ -1,7 +1,8 @@
 #!/bin/bash
 
 id=$("$ngram_prog" id)
-dir="$ngram_rootdir/database/$id"
+echo "created new id $id" >/dev/stderr
+dir="$ngram_root_dir/database/$id"
 mkdir -p "$dir"
 echo "$id"
 echo "$dir" >/dev/stderr
