@@ -1,0 +1,29 @@
+#!/bin/bash
+
+export ngram_prog="$0"
+export ngram_rootdir=$(dirname $0)
+export ngram_program_id="20240704164832-ae846f0d186e581bb7aa"
+export ngram_subcommands_dir="$ngram_rootdir/database/$ngram_program_id/subcommands"
+
+command="$1"
+shift
+if [ -z "$command" ]; then
+  echo missing command
+  exit 1
+fi
+command_prog="$ngram_subcommands_dir/$command"
+
+if [ ! -x "$command_prog" ]; then
+  echo "error no_subcommand $command" >/dev/stderr
+  exit 1
+fi
+
+cd $ngram_rootdir
+"$command_prog" "$@"
+
+#arglistf=$(mktemp)
+#rm "$arglistf" # clean up argument list
+#touch database/20240704164832-ae846f0d186e581bb7aa/subcommands/id
+#touch database/20240704164832-ae846f0d186e581bb7aa/subcommands/create
+#chmod +x database/20240704164832-ae846f0d186e581bb7aa/subcommands/id
+#chmod +x database/20240704164832-ae846f0d186e581bb7aa/subcommands/create

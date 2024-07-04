@@ -1,0 +1,5 @@
+#!/bin/bash
+
+id=$(date -u +%Y%m%d%H%M%S)
+randpart=$(cat /dev/urandom | head -c 10 | xxd -p)
+echo "${id}-${randpart}"
