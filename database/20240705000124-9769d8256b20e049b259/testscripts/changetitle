@@ -8,7 +8,7 @@ readme="$dir/README.md"
 echo test content >> $readme # add content to the readme to test overwriting the title
 
 # test changing the title
-./ngram settitle -t 'title2' $id
+./ngram set-title -t 'title2' $id
 if ! grep '^# title2' $readme; then
   echo failed to change title
   fail=1
@@ -20,7 +20,7 @@ fi
 
 printf "## fake h2 file\n\n- line of content here\n" > $readme
 cat $readme
-./ngram settitle -t 'title3' $id
+./ngram set-title -t 'title3' $id
 if ! grep '^#* title3' $readme; then
   echo failed to change title of h2
   fail=1
