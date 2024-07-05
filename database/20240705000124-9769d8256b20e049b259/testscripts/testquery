@@ -12,3 +12,13 @@ if ! ngram query @ngram-internal not @test | grep "$cliscripts"; then
   echo query including not failed without filename
   exit 1
 fi
+
+if [ $(ngram query @ngram-internal @test | wc -l) != $(ngram query @test @ngram-internal | wc -l) ]; then
+  echo "query didn't match tags regardless of ordering"
+  exit 1
+fi
+
+if [ $(ngram query @subcommand union @test | wc -l) != "2" ]; then
+  echo "union didn't work"
+  exit 1
+fi

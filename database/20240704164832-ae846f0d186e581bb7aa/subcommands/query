@@ -32,7 +32,7 @@ while [[ $# -gt 0 ]]; do
       awk '
         BEGIN { tag = ENVIRON["tag"]; gsub(/@/,"",tag) }
         $0 == tag { print FILENAME | "cut -d / -f 2" }
-      ' $("$ngram_prog" tagfiles) | "$ngram_prog" replace "$workingset"
+      ' $("$ngram_prog" tagfiles) | grep -f "$workingset" | "$ngram_prog" replace "$workingset"
       ;;
     refs)
       cat "$workingset" | xargs -n 1 "$ngram_prog" refs | "$ngram_prog" replace "$workingset"
@@ -47,6 +47,14 @@ while [[ $# -gt 0 ]]; do
         grep -vf <($ngram_prog query $1) "$workingset" | "$ngram_prog" replace "$workingset"
       else
         grep -vf "$1" "$workingset" | "$ngram_prog" replace "$workingset"
+      fi
+      ;;
+    union)
+      shift
+      if [[ "$1" =~ @.* ]]; then
+        cat <($ngram_prog query $1) "$workingset" | sort -u | "$ngram_prog" replace "$workingset"
+      else
+        cat "$workingset" "$1" | sort -u | "$ngram_prog" replace "$workingset"
       fi
       ;;
     *) # filename parameter or subquery implemented with bash filename redirection
