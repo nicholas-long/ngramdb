@@ -1,8 +1,38 @@
 #!/bin/bash
 
 id=$("$ngram_prog" id)
-echo "created new id $id" >/dev/stderr
 dir="$ngram_root_dir/database/$id"
 mkdir -p "$dir"
+
+# parse args with case statement
+VERBOSE=0
+title=""
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -t|--title)
+      shift # pop arg
+      title="$1"
+      ;;
+    -v|--verbose)
+      VERBOSE=1
+      ;;
+    -h|--help)
+      echo "Usage: $0 [ options ] directory"
+      echo "Options:"
+      cat "$0" | grep '^\s\+-.|--.*'
+      exit 1
+      ;;
+  esac
+  shift
+done
+# TODO: template argument - pass in id to copy for template
+
+if [ -z "$title" ]; then
+  title="data point created at $(date)"
+fi
+
+# TODO: build default README here
+echo "# $title" > "$dir/README.md"
+
 echo "$id"
 echo "$dir" >/dev/stderr
