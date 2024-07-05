@@ -1,0 +1,15 @@
+#!/bin/bash
+
+id=$(./ngram create -t "test title")
+dir="database/$id"
+if [ -z "$id" ]; then
+  exit 1
+fi
+if [ ! -d "$dir" ]; then
+  echo failed to make directory
+  exit 1
+fi
+grep "test title" "$dir/README.md"
+result=$?
+rm -rf "$dir" # cleanup directory created from test
+exit $result

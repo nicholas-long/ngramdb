@@ -1,0 +1,17 @@
+#!/bin/bash
+
+scriptsdir="database/20240705000124-9769d8256b20e049b259/testscripts"
+fails=0
+for script in $(ls "$scriptsdir"); do
+  scriptpath="$scriptsdir/$script"
+  echo "running script $scriptpath"
+  "$scriptpath"
+  if [ "$?" != "0" ]; then
+    echo "FAILED test $script"
+    fails=1
+  else
+    echo "SUCCESS test $script"
+  fi
+done
+
+exit $fails
