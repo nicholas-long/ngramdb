@@ -17,9 +17,15 @@ if [ -z "$command" ]; then
   echo missing command
   exit 1
 fi
+
 command_prog="$ngram_subcommands_dir/$command"
 
-if [ ! -x "$command_prog" ]; then
+if [[ "$command" =~ -h|--help ]]; then
+  echo "Usage: $0 [subcommand] [--help | options... ]"
+  echo "Subcommands:"
+  ls "$ngram_subcommands_dir"
+  exit 1
+elif [ ! -x "$command_prog" ]; then
   echo "error no_subcommand $command" >/dev/stderr
   exit 1
 fi
