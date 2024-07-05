@@ -7,3 +7,8 @@ if ! ngram query @ngram-internal not <( ngram query @test ) | grep "$cliscripts"
   echo query including not failed
   exit 1
 fi
+# find all things referenced by things which have the ngram-internal tag, which do not contain the tag test. check if it contains known ID value for CLI scripts.
+if ! ngram query @ngram-internal not @test | grep "$cliscripts"; then
+  echo query including not failed without filename
+  exit 1
+fi

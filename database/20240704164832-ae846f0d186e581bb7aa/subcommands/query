@@ -43,7 +43,11 @@ while [[ $# -gt 0 ]]; do
       ;;
     not)
       shift
-      grep -vf "$1" "$workingset" | "$ngram_prog" replace "$workingset"
+      if [[ "$1" =~ @.* ]]; then
+        grep -vf <($ngram_prog query $1) "$workingset" | "$ngram_prog" replace "$workingset"
+      else
+        grep -vf "$1" "$workingset" | "$ngram_prog" replace "$workingset"
+      fi
       ;;
     *) # filename parameter or subquery implemented with bash filename redirection
       grep -f "$1" "$workingset" | "$ngram_prog" replace "$workingset"
