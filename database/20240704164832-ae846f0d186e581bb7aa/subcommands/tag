@@ -2,6 +2,7 @@
 
 # get or alter the tags of a data set
 
+delete=0
 while [[ $# -gt 0 ]]; do
   case $1 in
     -l|--list) # list tags for ID
@@ -9,9 +10,16 @@ while [[ $# -gt 0 ]]; do
       tagfile="database/$1/tags"
       [ -f "$tagfile" ] && cat "$tagfile"
       ;;
-    -t|--tag) # tag
+    -t|--tag) # add tag
       shift # pop arg
       export settag="$1"
+      # TODO: check tag format is alphanumeric
+      ;;
+    -d|--delete) # remove a tag (passed as argument after)
+      delete=1
+      shift
+      export settag="$1"
+      # TODO: check tag format is alphanumeric
       ;;
     -v|--verbose)
       VERBOSE=1
@@ -27,14 +35,19 @@ while [[ $# -gt 0 ]]; do
       # set tag of id to $tag
       tagfile="database/$id/tags"
       if [ ! -z "$settag" ]; then
-        if [ -f "$tagfile" ]; then
-          cat "$tagfile" | awk '
-            { seen[$1]=1 }
-            { print }
-            END { if (!seen[ENVIRON["settag"]]) print ENVIRON["settag"] }
-          ' | ./ngram replace "$tagfile"
-        else
-          echo $settag > "$tagfile"
+        if [ "$delete" = "0" ]; then
+          if [ -f "$tagfile" ]; then
+            cat "$tagfile" | awk '
+              { seen[$1]=1 }
+              { print }
+              END { if (!seen[ENVIRON["settag"]]) print ENVIRON["settag"] }
+            ' | ./ngram replace "$tagfile"
+          else
+            echo $settag > "$tagfile"
+          fi
+        else # delete a tag
+          echo "deleting tag $settag" >/dev/stderr
+          awk '$1 != ENVIRON["settag"]' "$tagfile" | "$ngram_prog" replace "$tagfile"
         fi
       else
         echo what tag > /dev/stderr

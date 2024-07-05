@@ -17,6 +17,12 @@ if [ "$?" != "0" ]; then
   echo failed set tag
   fail=1
 fi
+./ngram tag -d newtag "$id"
+./ngram tag -l "$id" | grep newtag
+if [ "$?" == "0" ]; then
+  echo failed to remove tag
+  fail=1
+fi
 
 rm -rf "$dir"
 exit $fail
