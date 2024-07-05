@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -o pipefail
+cliscripts="20240704164832-ae846f0d186e581bb7aa" # include a reference to the main program directory in here
+# find all things referenced by things which have the ngram-internal tag, which do not contain the tag test. check if it contains known ID value for CLI scripts.
+if ! ngram query @ngram-internal not <( ngram query @test ) | grep "$cliscripts"; then
+  echo query including not failed
+  exit 1
+fi

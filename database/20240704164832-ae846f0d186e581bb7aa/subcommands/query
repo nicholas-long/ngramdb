@@ -41,6 +41,10 @@ while [[ $# -gt 0 ]]; do
       shift
       echo "$1" > "$workingset"
       ;;
+    not)
+      shift
+      grep -vf "$1" "$workingset" | "$ngram_prog" replace "$workingset"
+      ;;
     *) # filename parameter or subquery implemented with bash filename redirection
       grep -f "$1" "$workingset" | "$ngram_prog" replace "$workingset"
       ;;
