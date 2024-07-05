@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# here is the logic to determine what files get scanned for changes
+find database -type f | awk '
+/\.mp4$/ { next }
+/\.webm$/ { next }
+/\.png$/ { next }
+/\.gif$/ { next }
+#/\.gz$/ { next } # do checksum gz files
+{ print }
+' | xargs md5sum
