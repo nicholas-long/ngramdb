@@ -35,7 +35,7 @@ while [[ $# -gt 0 ]]; do
       ' $("$ngram_prog" tagfiles) | grep -f "$workingset" | "$ngram_prog" replace "$workingset"
       ;;
     refs)
-      cat "$workingset" | xargs -n 1 "$ngram_prog" refs | "$ngram_prog" replace "$workingset"
+      cat "$workingset" | xargs -n 1 "$ngram_prog" refs | sort -u | "$ngram_prog" replace "$workingset"
       ;;
     id)
       shift
