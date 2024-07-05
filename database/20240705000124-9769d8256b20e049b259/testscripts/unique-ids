@@ -1,0 +1,7 @@
+#!/bin/bash
+
+count=100 # make this many IDs to test
+set -o pipefail
+for i in $(seq 1 $count); do
+  ./ngram id
+done | sort -u | wc -l | grep "$count"

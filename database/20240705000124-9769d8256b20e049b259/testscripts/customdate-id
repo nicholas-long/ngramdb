@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# test creating an ID with a custom date
+set -o pipefail
+./ngram id -d '2024-01-01T00:00:00' | grep 20240101000000
