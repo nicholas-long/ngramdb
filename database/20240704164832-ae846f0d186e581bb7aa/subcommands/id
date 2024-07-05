@@ -1,5 +1,51 @@
 #!/bin/bash
 
-id=$(date -u +%Y%m%d%H%M%S)
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -d|--date) # provide a custom date to use as a timestamp within the ID
+      shift
+      customdate="$1"
+      ;;
+    -f|--date-format) # date format if providing a custom date
+      shift
+      dateformat="$1"
+      ;;
+    -v|--verbose)
+      VERBOSE=1
+      ;;
+    -h|--help)
+      echo "Usage: $0 [ options ] directory"
+      echo "Options:"
+      cat "$0" | grep '^\s\+-.|--.*'
+      exit 1
+      ;;
+  esac
+  shift
+done
+#date -u -j -f '%Y-%m-%dT%H:%M:%S' '+%Y%m%d%H%M%S' '2020-01-01T10:36:04Z'
+
+if [ ! -z "$customdate" ]; then
+  datecmd="/bin/date -u -j"
+  if [ ! -z "$dateformat" ]; then
+    datecmd="$datecmd -f '$dateformat' '+%Y%m%d%H%M%S'"
+  else
+    datecmd="$datecmd -f '%Y-%m-%dT%H:%M:%S' +%Y%m%d%H%M%S"
+  fi
+  datecmd="$datecmd '$customdate'"
+else # not a custom date
+  datecmd="/bin/date -u +%Y%m%d%H%M%S"
+fi
+
+[ "$VERBOSE" = "1" ] && echo "$datecmd" >/dev/stderr
+id=$($datecmd)
 randpart=$(cat /dev/urandom | head -c 10 | xxd -p)
 echo "${id}-${randpart}"
+
+#Some formatting options
+#
+#%b for abbreviated Month name: Jul
+#%B for full Month name: July
+#%a for abbreviated weekday name: Tue
+#%A for full weekday name: Tuesday
+#%d for day of month: 20
+#%Y for 4 character year: 1999
