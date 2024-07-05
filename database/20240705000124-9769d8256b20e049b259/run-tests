@@ -14,4 +14,7 @@ for script in $(ls "$scriptsdir"); do
   fi
 done
 
+if [ "$fails" = "0" ]; then
+  echo "ALL TESTS PASSED!"
+fi
 exit $fails

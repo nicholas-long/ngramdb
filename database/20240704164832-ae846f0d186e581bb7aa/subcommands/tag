@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# get or alter the tags of a data set
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -l|--list) # list tags for ID
+      shift # pop arg
+      tagfile="database/$1/tags"
+      [ -f "$tagfile" ] && cat "$tagfile"
+      ;;
+    -t|--tag) # tag
+      shift # pop arg
+      export settag="$1"
+      ;;
+    -v|--verbose)
+      VERBOSE=1
+      ;;
+    -h|--help)
+      echo "Usage: $0 [ options ] directory"
+      echo "Options:"
+      cat "$0" | grep '^\s\+-.|--.*'
+      exit 1
+      ;;
+    *)
+      id="$1"
+      # set tag of id to $tag
+      tagfile="database/$id/tags"
+      if [ ! -z "$settag" ]; then
+        if [ -f "$tagfile" ]; then
+          cat "$tagfile" | awk '
+            { seen[$1]=1 }
+            { print }
+            END { if (!seen[ENVIRON["settag"]]) print ENVIRON["settag"] }
+          ' | ./ngram replace "$tagfile"
+        else
+          echo $settag > "$tagfile"
+        fi
+      else
+        echo what tag > /dev/stderr
+        exit 2
+      fi
+    ;;
+  esac
+  shift
+done
+

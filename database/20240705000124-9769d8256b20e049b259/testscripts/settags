@@ -1,0 +1,22 @@
+#!/bin/bash
+
+fail=0
+set -o pipefail
+id=$(./ngram create)
+dir="database/$id"
+
+./ngram tag -t newtag "$id"
+./ngram tag -t tag2 "$id"
+./ngram tag -l "$id" | grep newtag
+if [ "$?" != "0" ]; then
+  echo failed set tag
+  fail=1
+fi
+./ngram tag -l "$id" | grep tag2
+if [ "$?" != "0" ]; then
+  echo failed set tag
+  fail=1
+fi
+
+rm -rf "$dir"
+exit $fail
