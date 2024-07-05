@@ -1,17 +1,17 @@
 #!/bin/bash
 
-id=$("$ngram_prog" id)
-dir="$ngram_root_dir/database/$id"
-mkdir -p "$dir"
-
 # parse args with case statement
 VERBOSE=0
 title=""
 while [[ $# -gt 0 ]]; do
   case $1 in
-    -t|--title)
+    -t|--title) # set title in README of created data point
       shift # pop arg
       title="$1"
+      ;;
+    -c|--clone) # clone from a template data point ID, bringing over all its files
+      shift
+      cloneid="$1"
       ;;
     -v|--verbose)
       VERBOSE=1
@@ -27,11 +27,21 @@ while [[ $# -gt 0 ]]; do
 done
 # TODO: template argument - pass in id to copy for template
 
+id=$("$ngram_prog" id)
+dir="$ngram_root_dir/database/$id"
+
+if [ ! -z "$cloneid" ]; then # if there's a template ID to clone from
+  cp -r "$ngram_root_dir/database/$cloneid" "$dir"
+  # TODO: check ID
+else
+  mkdir -p "$dir"
+fi
+
 if [ -z "$title" ]; then
   title="data point created at $(date)"
 fi
 
-# TODO: build default README here
+# TODO: build default README here using commands to set title etc
 echo "# $title" > "$dir/README.md"
 
 echo "$id"

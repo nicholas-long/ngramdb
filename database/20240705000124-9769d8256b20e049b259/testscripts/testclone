@@ -1,0 +1,17 @@
+#!/bin/bash
+
+faketitle="testing cloning feature"
+fakecontent="test content"
+firstid=$(./ngram create)
+fail=0
+echo "$fakecontent" > "database/$firstid/testdata"
+secondid=$(./ngram create -c "$firstid" -t "$faketitle")
+if [ -z "$firstid" ]; then fail=1; fi
+if [ -z "$secondid" ]; then fail=1; fi
+if [ ! -d "database/$firstid" ]; then fail=1; fi
+if [ ! -d "database/$secondid" ]; then fail=1; fi
+if [ ! grep "$faketitle" "database/$secondid/README.md" ]; then fail=1; fi
+if [ ! grep "$fakecontent" "database/$secondid/testdata" ]; then fail=1; fi
+rm -rf "database/$secondid"
+rm -rf "database/$firstid"
+exit $fail
