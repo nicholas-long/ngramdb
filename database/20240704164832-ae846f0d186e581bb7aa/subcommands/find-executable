@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# script to find executable files. equivalent to find $1 --executable ; except works on mac
+if 2>&1 find --help | grep '[-]executable' >/dev/null; then
+  findcommandmods="-executable"
+else
+  # if it doesn't, there's a non-portable alternative for mac os
+  findcommandmods="-perm +111"
+fi
+
+find $@ $findcommandmods
