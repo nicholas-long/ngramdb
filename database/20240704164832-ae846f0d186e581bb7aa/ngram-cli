@@ -5,6 +5,7 @@ export ngram_script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/n
 export ngram_cli_path="$(realpath $0)"
 export ngram_root_dir=$(realpath "$ngram_cli_path/../../..")
 export ngram_prog="$ngram_root_dir/ngram"
+export PATH="$PATH:$ngram_root_dir"
 
 # constants
 export ngram_program_id="20240704164832-ae846f0d186e581bb7aa"

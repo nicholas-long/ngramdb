@@ -1,0 +1,42 @@
+#!/bin/bash
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -t|--title) # set or replace title in markdown file
+      shift # pop arg
+      export title="$1"
+      ;;
+    -v|--verbose)
+      VERBOSE=1
+      ;;
+    -h|--help)
+      echo "Usage: $0 [ options ] directory"
+      echo "Options:"
+      cat "$0" | grep '^\s\+-.|--.*'
+      exit 1
+      ;;
+    *)
+      id="$1"
+    ;;
+  esac
+  shift
+done
+
+if [ -z "$title" ]; then
+  echo missing title >/dev/stderr
+  exit 1
+fi
+
+f="database/$id/README.md"
+
+if [ ! -f "$f" ]; then # file doesn't exist so just write a title
+  echo "# $title" > "$f"
+  exit 0
+fi
+
+# replace title in existing readme file
+awk '
+$1 == "#" { print "# " ENVIRON["title"]; replaced=1; next }
+!replaced && /^#* / { print $1 " " ENVIRON["title"]; replaced=1; next } # replace h2 if h1 is missing
+{ print }
+' $f | ./ngram replace "$f"

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# utility to replace a file
+if [ -z "$1" ]; then
+  echo file argument required
+  exit 1
+fi
+tf=$(mktemp)
+if [ -z "$tf" ]; then
+  echo failed to create temp file for replace swap >/dev/stderr
+  exit 1
+fi
+cat > $tf
+mv "$tf" "$1"
