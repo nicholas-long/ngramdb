@@ -1,6 +1,20 @@
 #!/bin/bash
 
+# find refs by ID
+# pass --all as parameter to get table of all refs
 if [ -z "$1" ]; then
   echo missing argument >/dev/stderr
 fi
-grep -Eof <(ls database | grep -v "$1") $("$ngram_prog" find-executable "database/$1" -type f) | cut -d : -f 2 #| awk -F / '{print $2}' | sort -u
+if [ "$1" = "--all" ]; then
+  grep -Eof <(ls database) $("$ngram_prog" find-executable "database" -type f) | awk -F : '
+    BEGIN{OFS=" "}
+    {
+      gsub(/^database./,"",$1)
+      gsub(/\/.*/,"",$1)
+    }
+    $1 != $2 && !seen[$1,$2] { print $1, $2 }
+    { seen[$1,$2] = 1 }
+  '
+else
+  grep -Eof <(ls database | grep -v "$1") $("$ngram_prog" find-executable "database/$1" -type f) | cut -d : -f 2 #| awk -F / '{print $2}' | sort -u
+fi
