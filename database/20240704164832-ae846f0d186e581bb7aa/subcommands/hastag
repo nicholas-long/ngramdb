@@ -1,0 +1,12 @@
+#!/bin/bash
+
+tag="$1"
+id="$2"
+tagfile="database/$id/tags"
+if grep "$tag" "$tagfile" >/dev/null 2>/dev/null; then
+  echo yes
+  exit 0
+else
+  echo no
+  exit 1
+fi

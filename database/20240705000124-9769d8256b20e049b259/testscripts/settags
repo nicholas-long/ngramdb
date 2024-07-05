@@ -17,10 +17,20 @@ if [ "$?" != "0" ]; then
   echo failed set tag
   fail=1
 fi
+./ngram hastag newtag "$id"
+if [ "$?" != "0" ]; then
+  echo failed to check if tag exists
+  fail=1
+fi
 ./ngram tag -d newtag "$id"
 ./ngram tag -l "$id" | grep newtag
 if [ "$?" == "0" ]; then
   echo failed to remove tag
+  fail=1
+fi
+./ngram hastag newtag "$id"
+if [ "$?" == "0" ]; then
+  echo failed to make sure tag removed
   fail=1
 fi
 
