@@ -1,0 +1,13 @@
+#!/bin/bash
+
+tf=$(mktemp)
+if [ -z "$tf" ]; then exit 1; fi
+
+# clean up empty directories
+find database -type d -empty | awk -F / 'NF == 2' > $tf
+lines=$(wc -l $tf | awk '{print $1}')
+if [ $lines -gt 0 ]; then
+  cat $tf | xargs rm -rf
+fi
+
+rm "$tf"
