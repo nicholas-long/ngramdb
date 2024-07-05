@@ -41,8 +41,7 @@ if [ -z "$title" ]; then
   title="data point created at $(date)"
 fi
 
-# TODO: build default README here using commands to set title etc
-echo "# $title" > "$dir/README.md"
+"$ngram_prog" set-title -t "$title" "$id"
 
 echo "$id"
 echo "$dir" >/dev/stderr
