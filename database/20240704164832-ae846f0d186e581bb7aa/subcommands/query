@@ -1,0 +1,51 @@
+#!/bin/bash
+
+workingset=$(mktemp)
+if [ -z "$workingset" ]; then exit 1; fi
+ls database > $workingset
+if [ -z "$VERBOSE" ]; then VERBOSE=0; fi
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -v)
+      export VERBOSE=1
+      ;;
+    --human) # TODO: print results in human format with titles
+      human=1
+      shift
+      "$ngram_prog" query "$@" | awk '
+      { 
+        command = "head -n 1 database/" $1 "/README.md"
+        command | getline title
+        gsub(/^#* /, "", title)
+        print $0, title
+        close(command)
+      }
+      '
+      exit 0
+      ;;
+    @*) # search by tag with `ngram query @tag`
+      export tag="$1"
+      if [ "$VERBOSE" != 0 ]; then
+        echo "looking for $tag" >/dev/stderr
+      fi
+      # TODO: could use an index
+      awk '
+        BEGIN { tag = ENVIRON["tag"]; gsub(/@/,"",tag) }
+        $0 == tag { print FILENAME | "cut -d / -f 2" }
+      ' $("$ngram_prog" tagfiles) | "$ngram_prog" replace "$workingset"
+      ;;
+    refs)
+      cat "$workingset" | xargs -n 1 "$ngram_prog" refs | "$ngram_prog" replace "$workingset"
+      ;;
+    id)
+      shift
+      echo "$1" > "$workingset"
+      ;;
+    *) # filename parameter or subquery implemented with bash filename redirection
+      grep -f "$1" "$workingset" | "$ngram_prog" replace "$workingset"
+      ;;
+  esac
+  shift
+done
+cat "$workingset"
+rm "$workingset"
