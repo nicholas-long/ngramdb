@@ -6,4 +6,4 @@ if [ -z "$1" ]; then
   echo missing argument to findrefsto >/dev/stderr
 fi
 exelist=$(mktemp)
-grep -Eo "$1" $( "$ngram_prog" find-executable database) | cut -d : -f 2 | sort -u
+grep -Eo "$1" $( find database -type f -perm +111) | cut -d : -f 1 | awk -F / '{print $2}' | grep -v "$1" | sort -u
