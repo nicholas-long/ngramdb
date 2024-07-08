@@ -8,4 +8,4 @@ else
   findcommandmods="-perm +111"
 fi
 
-find $@ $findcommandmods
+find "$@" $findcommandmods
