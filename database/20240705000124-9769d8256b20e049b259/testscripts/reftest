@@ -7,3 +7,12 @@ cliscripts="20240704164832-ae846f0d186e581bb7aa" # include a reference to the ma
 
 set -o pipefail
 ./ngram refs "$testscripts" | grep "$cliscripts"
+if [ "$?" != "0" ]; then
+  echo could not find cli script in references of test scripts, which it should be included in
+  exit 1
+fi
+uniquerefcount=$(./ngram refs "$testscripts" | grep "$cliscripts" | wc -l | awk '{print $NF}')
+if [ "$uniquerefcount" != "1" ]; then
+  echo unique ref test failed - multiple copies of same reference
+  exit 1
+fi

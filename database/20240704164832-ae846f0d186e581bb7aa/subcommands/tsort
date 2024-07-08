@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# do a topological sort of the input IDs based on their dependencies between them
+# or do a tsort of input IDs for all dependencies of changed things?!

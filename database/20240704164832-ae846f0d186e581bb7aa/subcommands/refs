@@ -16,5 +16,5 @@ if [ "$1" = "--all" ]; then
     { seen[$1,$2] = 1 }
   '
 else
-  grep -Eof <(ls database | grep -v "$1") $("$ngram_prog" find-executable "database/$1" -type f) | cut -d : -f 2 #| awk -F / '{print $2}' | sort -u
+  grep -Eof <(ls database | grep -v "$1") $("$ngram_prog" find-executable "database/$1" -type f) | cut -d : -f 2 | sort -u #| awk -F / '{print $2}' | sort -u
 fi
