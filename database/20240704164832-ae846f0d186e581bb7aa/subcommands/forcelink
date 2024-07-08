@@ -1,0 +1,21 @@
+#!/bin/bash
+
+from="$1"
+to="$2"
+if [ -z "$from" ]; then
+  echo missing to argument '#1'
+  exit 1
+fi
+if [ -z "$to" ]; then
+  echo missing to argument '#2'
+  exit 1
+fi
+linkfile="database/$from/.link"
+if [ -x "$linkfile" ] ; then
+  echo "$2" >> "$linkfile"
+else
+  echo "$2" >> "$linkfile"
+  chmod +x "$linkfile" # mark as executable so it gets picked up for references
+fi
+
+

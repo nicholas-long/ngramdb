@@ -1,0 +1,13 @@
+#!/bin/bash
+
+A=$(ngram create -t "A")
+B=$(ngram create -t "B")
+C=$(ngram create -t "C")
+ngram forcelink $A $B
+ngram forcelink $C $B
+echo "running TSORT:"
+ngram tsort $B
+
+rm -rf "database/$A"
+rm -rf "database/$B"
+rm -rf "database/$C"
