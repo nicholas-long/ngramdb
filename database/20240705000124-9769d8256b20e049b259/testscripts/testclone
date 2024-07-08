@@ -10,8 +10,8 @@ if [ -z "$firstid" ]; then fail=1; fi
 if [ -z "$secondid" ]; then fail=1; fi
 if [ ! -d "database/$firstid" ]; then fail=1; fi
 if [ ! -d "database/$secondid" ]; then fail=1; fi
-if [ ! grep "$faketitle" "database/$secondid/README.md" ]; then fail=1; fi
-if [ ! grep "$fakecontent" "database/$secondid/testdata" ]; then fail=1; fi
+if ! grep "$faketitle" "database/$secondid/README.md" ; then fail=1; fi
+if ! grep "$fakecontent" "database/$secondid/testdata" ; then fail=1; fi
 rm -rf "database/$secondid"
 rm -rf "database/$firstid"
 exit $fail
