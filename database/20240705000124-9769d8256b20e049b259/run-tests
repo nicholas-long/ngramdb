@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export PATH="$PATH:$ngram_root_dir"
 scriptsdir="database/20240705000124-9769d8256b20e049b259/testscripts"
 fails=0
 for script in $(ls "$scriptsdir"); do
