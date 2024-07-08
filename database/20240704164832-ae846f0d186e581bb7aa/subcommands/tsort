@@ -2,3 +2,23 @@
 
 # do a topological sort of the input IDs based on their dependencies between them
 # or do a tsort of input IDs for all dependencies of changed things?!
+inputids=$(mktemp)
+if [ ! -z "$1" ]; then
+  while [ ! -z "$1" ]; do
+    echo "$1" >> $inputids
+    shift
+  done
+else
+  cat > $inputids # read from stdin
+fi
+cat $inputids | awk '
+{
+  command = ENVIRON["ngram_prog"] " refs " $1
+  while ((command | getline ref) > 0) {
+    print $1, ref
+  }
+  close(command)
+}
+'
+
+rm "$inputids"
