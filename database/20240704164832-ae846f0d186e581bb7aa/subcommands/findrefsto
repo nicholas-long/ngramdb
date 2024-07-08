@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# find things that reference this ID
+
+if [ -z "$1" ]; then
+  echo missing argument to findrefsto >/dev/stderr
+fi
+exelist=$(mktemp)
+grep -Eo "$1" $( "$ngram_prog" find-executable database) | cut -d : -f 2 | sort -u

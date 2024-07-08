@@ -3,11 +3,15 @@
 A=$(ngram create -t "A")
 B=$(ngram create -t "B")
 C=$(ngram create -t "C")
+D=$(ngram create -t "D")
 ngram forcelink $A $B
 ngram forcelink $C $B
+ngram forcelink $D $B
+ngram forcelink $D $A
 echo "running TSORT:"
 ngram tsort $B
 
 rm -rf "database/$A"
 rm -rf "database/$B"
 rm -rf "database/$C"
+rm -rf "database/$D"
