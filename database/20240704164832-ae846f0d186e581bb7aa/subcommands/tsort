@@ -15,7 +15,7 @@ echo "Input IDs:" >>/dev/stderr
 cat $inputids >>/dev/stderr
 cat $inputids | awk '
 {
-  command = ENVIRON["ngram_prog"] " refs " $1
+  command = ENVIRON["ngram_prog"] " findrefsto " $1
   while ((command | getline ref) > 0) {
     print $1, ref
   }
