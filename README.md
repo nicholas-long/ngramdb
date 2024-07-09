@@ -44,7 +44,7 @@ Queries are possible using a simple query engine that supports traversing graphs
 ## how to run
 ```bash
 # run once and continue until the system is in a stable state with no file changes propogating
-./ngram run --until-stable
+./ngram run
 # run continuously in a loop
 ./ngram start
 ```

@@ -24,18 +24,4 @@ for id in $( "$ngram_prog" find-executable database -type f -name run | awk -F /
   fi
 done
 
-# TODO: run all things marked with tags that specify rerunning often, like "live" or something
-# can run everyting at first? after all, there is the optimization
-#runnableIds=$(mktemp)
-
-# TODO: tsort dependencies
-
-# TODO: run all things modified initially 
-# TODO: find everything that's modified now
-# TODO: attempt to run it
-    # at each stage, mark things as run. exclude anything run initially from the first run. 
-    # find the dependencies of each modified thing as the next set to run. run tsort on dependencies.
-
-#rm "$runnableIds"
-
 exit $didntrunanything
