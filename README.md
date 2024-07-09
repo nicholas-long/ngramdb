@@ -134,6 +134,7 @@ running tests
 ALL TESTS PASSED!
 SUCCESS test changetitle
 SUCCESS test customdate-id
+SUCCESS test graphquery-cats
 SUCCESS test reftest
 SUCCESS test settags
 SUCCESS test testclone
