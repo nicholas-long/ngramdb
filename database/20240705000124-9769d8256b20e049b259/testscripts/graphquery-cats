@@ -1,0 +1,59 @@
+#!/bin/bash
+
+fail=0
+set -o pipefail
+
+cats=$(mktemp)
+
+# cats
+patches=$(ngram create -t "patches" --tag cat)
+olive=$(ngram create -t "olive" --tag cat)
+gnocchi=$(ngram create -t "gnocchi" --tag cat)
+pizza=$(ngram create -t "pizza" --tag cat)
+yeti=$(ngram create -t "yeti" --tag cat)
+
+me=$(ngram create -t "me" --tag person --tag me)
+mary=$(ngram create -t "mary" --tag person)
+
+# my cats
+ngram forcelink $me $patches
+ngram forcelink $me $olive
+ngram forcelink $me $gnocchi
+# marys cat
+ngram forcelink $mary $yeti
+# related cats ?
+ngram forcelink $yeti $gnocchi
+ngram forcelink $gnocchi $yeti
+
+echo "cats that are mine"
+ngram query --human @person @me refs @cat
+ngram query @person @me refs @cat | wc -l | grep 3
+if [ "$?" != "0" ]; then
+  echo failed
+  fail=1
+fi
+echo "cats that are not mine"
+ngram query --human @person not @me refs @cat | grep yeti
+count=$(ngram query @person not @me refs @cat | wc -l | awk '{print $1}')
+if [ "$count" != "1" ]; then
+  echo failed
+  fail=1
+fi
+
+echo "cats that are mine which have cat relatives which are owned by other people"
+ngram query --human @person not @me refs @cat refs @cat <(ngram query @me refs @cat)
+ngram query @person not @me refs @cat refs @cat <(ngram query @me refs @cat) | grep $gnocchi
+if [ "$?" != "0" ]; then
+  echo failed
+  fail=1
+fi
+
+for id in $(ngram query '@cat'); do
+  [ ! -z "$id" ] && rm -rf "database/$id"
+done
+for id in $(ngram query '@person'); do
+  [ ! -z "$id" ] && rm -rf "database/$id"
+done
+
+rm "$cats"
+exit $fail
