@@ -3,8 +3,18 @@
 # parse args with case statement
 VERBOSE=0
 title=""
+runtags=0
+tagfile=""
 while [[ $# -gt 0 ]]; do
   case $1 in
+    --tag) # add tags inline
+      runtags=1
+      if [ -z "$tagfile" ]; then
+        tagfile=$(mktemp)
+      fi
+      shift
+      echo "$1" >> $tagfile
+      ;;
     -t|--title) # set title in README of created data point
       shift # pop arg
       title="$1"
@@ -42,6 +52,14 @@ if [ -z "$title" ]; then
 fi
 
 "$ngram_prog" set-title -t "$title" "$id"
+if [ ! -z "$tagfile" ]; then
+  for tag in $(cat "$tagfile"); do
+    "$ngram_prog" tag -t "$tag" "$id"
+  done
+fi
 
 echo "$id"
 echo "$dir" >/dev/stderr
+if [ ! -z "$tagfile" ]; then
+  rm "$tagfile"
+fi
