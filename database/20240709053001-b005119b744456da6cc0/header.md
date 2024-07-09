@@ -5,6 +5,7 @@ This is kind of a graph database.
 This is kind of a framework.
 This is kind of an organizational system.
 This is kind of a live-updating report dashboard.
+This is kind of a switchboard of data analysis pipelines made of small programs that rerun when dependent data files update
 
 The idea is that you put programs and data files together in something approximating a database on the filesystem.
 The data is stored in directories with ID numbers roughly formatted to the current UTC timecode and containing a unique string ("nonce") within the ID.
@@ -22,11 +23,11 @@ By convention, once coding for a datapoint is complete, the format of the files 
 # Ngram CLI
 
 ## Queries
-Queries are possible using a query engine that supports traversing graphs.
+Queries are possible using a simple query engine that supports traversing graphs.
 ```bash
 # look for things tagged test
 ./ngram query @test
-# pretty print output
+# pretty print output with titles of README.md files as the names of data points
 ./ngram query --human @test
 # look for things referenced by things tagged logdata and web
 ./ngram query @logdata @web refs
@@ -37,3 +38,5 @@ Queries are possible using a query engine that supports traversing graphs.
 # subqueries are possible using bash redirection - inverse of previous query, but looking for pets not owned by my family members that are not tagged as cats
 ./ngram query @pet not <( ./ngram query @me refs @person @family refs @pet not @cat )
 ```
+
+## CLI help

@@ -1,2 +1,8 @@
 #!/bin/bash
 
+cd $(dirname $0)
+(
+cat header.md
+./ngram --help
+cat footer.md
+) | ngram replace ../../README.md
