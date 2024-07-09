@@ -1,4 +1,6 @@
-# Ngram Project
+# NgramDB Project
+
+![Ngram circuitry icon](/icon.png)
 
 ## what is NgramDB...
 This is kind of a graph database.
