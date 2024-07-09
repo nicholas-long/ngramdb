@@ -1,7 +1,5 @@
 # NgramDB Project
 
-![Ngram circuitry icon](/icon.png)
-
 ## what is NgramDB...
 This is kind of a graph database.
 This is kind of a framework.
@@ -13,6 +11,8 @@ The idea is that you put programs and data files together in something approxima
 The data is stored in directories with ID numbers roughly formatted to the current UTC timecode and containing a unique string ("nonce") within the ID.
 I will refer to these directories as "datapoints".
 Modifications to the data files referenced by executable programs within these directories will trigger these programs to rerun, based on the dependent Ngram ID links.
+
+![Ngram circuitry icon](/icon.png)
 
 ## Programs
 Programs can generate one or more output files, in addition to the default behavior of logging to standard output and stderr log files within their own directory during every run.
