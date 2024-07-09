@@ -51,6 +51,8 @@ if [ -z "$title" ]; then
   title="data point created at $(date)"
 fi
 
+echo "{}" > data.json
+
 "$ngram_prog" set-title -t "$title" "$id"
 if [ ! -z "$tagfile" ]; then
   for tag in $(cat "$tagfile"); do

@@ -40,3 +40,7 @@ $1 == "#" { print "# " ENVIRON["title"]; replaced=1; next }
 !replaced && /^#* / { print $1 " " ENVIRON["title"]; replaced=1; next } # replace h2 if h1 is missing
 { print }
 ' $f | ./ngram replace "$f"
+
+jsonfile="database/$id/data.json"
+safetitle=$(echo "$title" | jq -R -s)
+cat "$jsonfile" | jq -c ".title=\"$safetitle\"" > 
