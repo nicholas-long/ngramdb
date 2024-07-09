@@ -37,6 +37,9 @@ while [[ $# -gt 0 ]]; do
     refs)
       cat "$workingset" | xargs -n 1 "$ngram_prog" refs | sort -u | "$ngram_prog" replace "$workingset"
       ;;
+    refsto)
+      cat "$workingset" | xargs -n 1 "$ngram_prog" findrefsto | sort -u | "$ngram_prog" replace "$workingset"
+      ;;
     id)
       shift
       echo "$1" > "$workingset"

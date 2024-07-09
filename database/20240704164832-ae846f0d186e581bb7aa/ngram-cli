@@ -26,8 +26,13 @@ if [[ "$command" =~ -h|--help ]]; then
   ls "$ngram_subcommands_dir"
   exit 1
 elif [ ! -x "$command_prog" ]; then
-  echo "error no_subcommand $command" >/dev/stderr
-  exit 1
+  if [ "$command" = "ls" ]; then
+    command="list"
+  else
+    echo "error no_subcommand $command" >/dev/stderr
+    exit 1
+  fi
+  command_prog="$ngram_subcommands_dir/$command"
 fi
 
 cd $ngram_root_dir
