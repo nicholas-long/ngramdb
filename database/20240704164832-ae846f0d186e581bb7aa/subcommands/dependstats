@@ -1,0 +1,4 @@
+#!/bin/bash
+
+id="$1"
+"$ngram_prog" checksums $( "$ngram_prog" query id "$id" refs union <( echo "$id" ) )

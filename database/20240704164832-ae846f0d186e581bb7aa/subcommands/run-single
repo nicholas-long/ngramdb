@@ -22,11 +22,21 @@ fi
 # TODO: docker containerization of runs for directory data sandboxing
 stdoutfile="database/$id/stdout.log"
 stderrfile="database/$id/stderr.log"
+runstats="database/$id/.ngram.dependencies.hashes"
+
+# if there's previous run stats then compare against current dependency file contents and skip the run if they are identical
+if [ -f "$runstats" ]; then
+  if diff <("$ngram_prog" dependstats) "$runstats"; then
+    echo "run skipped by optimization: identical dependency conditions" >/dev/stderr
+    exit 2
+  fi
+fi
 
 if [ -s "$stdoutfile" ]; then
   echo "storing previous console output" >/dev/stderr
   ( echo ">>>>>>>>>> RUN STDOUT STARTED" $( date -r "$stdoutfile" ) && cat "$stdoutfile" ) | gzip >> "${stdoutfile}.gz"
 fi
+
 if [ -s "$stderrfile" ]; then
   echo "storing previous console stderr" >/dev/stderr
   cat "$stderrfile" | gzip > "${stderrfile}.gz"
@@ -35,3 +45,4 @@ fi
 
 # execute program and overwrite output files when finished
 "$program" 2> "$stderrfile" | "$ngram_prog" replace "$stdoutfile"
+"$ngram_prog" dependstats > "$runstats"

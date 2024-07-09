@@ -4,11 +4,25 @@
 # gz files cannot be included in checksums because the data does not seem to be deterministic across machines and versions
 # TODO: make sure it's clear that if gzip files are output, you should print stats about them like line counts to stdout so updates get triggered downstream otherwise updates to gz files get ignored
 
-find database -type f | awk '
-/\.mp4$/ { next }
-/\.webm$/ { next }
-/\.png$/ { next }
-/\.gif$/ { next }
-/\.gz$/ { next }
-{ print }
-' | xargs md5sum
+function checksumsstream {
+  awk '
+    /\.mp4$/ { next }
+    /\.webm$/ { next }
+    /\.png$/ { next }
+    /\.gif$/ { next }
+    /\.gz$/ { next }
+    /\.ngram\.dependencies\.hashes$/ { next }
+    { print }
+  ' | xargs md5sum
+}
+
+export LC_LOCALE=C # deterministic sort ordering across systems with various localization settings
+
+if [ -z "$1" ]; then
+  find database -type f | checksumsstream
+else
+  while [ ! -z "$1" ]; do
+    find "database/$1" -type f | checksumsstream
+    shift
+  done
+fi | sort
