@@ -42,7 +42,7 @@ $1 == "#" { print "# " ENVIRON["title"]; replaced=1; next }
 
 jsonfile="database/$id/data.json"
 if [ -f "$jsonfile" ]; then
-  safetitle=$(echo "$title" | jq -R -s)
+  safetitle=$(echo -n "$title" | jq -R -s)
   cat "$jsonfile" | jq -c ".title=$safetitle" | "$ngram_prog" replace "$jsonfile"
   cat "$jsonfile" | jq -c ".title=$safetitle" > /dev/stderr
 fi

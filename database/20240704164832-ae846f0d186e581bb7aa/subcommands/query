@@ -60,6 +60,20 @@ while [[ $# -gt 0 ]]; do
         cat "$workingset" "$1" | sort -u | "$ngram_prog" replace "$workingset"
       fi
       ;;
+    filterjson)
+      shift
+      query="$1"
+      for id in $(cat "$workingset"); do
+        jsonfile="database/$id/data.json"
+        if [ -f "$jsonfile" ]; then
+          cat "$jsonfile" | jq -c "select( $query )" >/dev/stderr
+          result=$(cat "$jsonfile" | jq -c "select( $query )" | wc -l | awk '{print $1}')
+          if [ "$result" != "0" ]; then
+            echo $id
+          fi
+        fi
+      done | sort -u | "$ngram_prog" replace "$workingset"
+      ;;
     *) # filename parameter or subquery implemented with bash filename redirection
       grep -f "$1" "$workingset" | "$ngram_prog" replace "$workingset"
       ;;
