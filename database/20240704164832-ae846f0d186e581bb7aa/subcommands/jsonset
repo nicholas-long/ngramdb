@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# set json fields
+
+if [ "$1" == "--help" ]; then
+  echo "Usage: $0 id field value [-n : numeric]"
+fi
+
+id="$1"
+field="$2"
+value="$3"
+if [ -z "$1" ]; then echo "missing args" >/dev/stderr; exit 1; fi
+numeric="$4"
+if [ "$numeric" = "-n" ]; then
+  safevalue=$(echo -n "$value" | sed 's/[^0-9]//g')
+else
+  safevalue=$(echo -n "$value" | jq -R -s)
+fi
+
+jsonfile="database/$id/data.json"
+cat "$jsonfile" | jq -c ".$field=$safevalue" | "$ngram_prog" replace "$jsonfile"
+#cat "$jsonfile" | jq -c ".$field=$safevalue" > /dev/stderr
