@@ -5,7 +5,7 @@ This is kind of a graph database.
 This is kind of a framework.
 This is kind of an organizational system.
 This is kind of a live-updating report dashboard.
-This is kind of a switchboard of data analysis pipelines made of small programs that rerun when dependent data files update
+This is kind of a switchboard of data analysis pipelines made of small programs that rerun when dependent data files update.
 
 The idea is that you put programs and data files together in something approximating a database on the filesystem.
 The data is stored in directories with ID numbers roughly formatted to the current UTC timecode and containing a unique string ("nonce") within the ID.
@@ -42,6 +42,9 @@ Queries are possible using a simple query engine that supports traversing graphs
 ```
 
 ## CLI help
+
+Automatically generated help documentation:
+
 
 ```bash
 Usage: /Users/coyote/ngramdb/ngram [subcommand] [--help | options... ]
