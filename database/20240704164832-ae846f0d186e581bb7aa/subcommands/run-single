@@ -3,13 +3,16 @@
 # root run script for an ID
 
 id="$1"
+# exported values in environment to be used by subcommands
+export NGRAM_ID="$id"
+export NGRAM_ID_DIR="database/$id"
 
 # check dir ID exists
-if [ ! -d "database/$id" ]; then
+if [ ! -d "$NGRAM_ID_DIR" ]; then
   echo "unable to run: missing ID $id" >/dev/stderr
   exit 1
 fi
-program="database/$id/run"
+program="$NGRAM_ID_DIR/run"
 if [ ! -x "$program" ]; then 
   echo "unable to run: missing run entrypoint for ID $id : $program" >/dev/stderr
   if [ -f "$program" ]; then
@@ -20,9 +23,9 @@ fi
 
 # TODO: host partitioning
 # TODO: docker containerization of runs for directory data sandboxing
-stdoutfile="database/$id/stdout.log"
-stderrfile="database/$id/stderr.log"
-runstats="database/$id/.ngram.dependencies.hashes"
+stdoutfile="$NGRAM_ID_DIR/stdout.log"
+stderrfile="$NGRAM_ID_DIR/stderr.log"
+runstats="$NGRAM_ID_DIR/.ngram.dependencies.hashes"
 
 if ! "$ngram_prog" hastag live "$id" ; then # always run program that is tagged live - fast and current data
   # if there's previous run stats then compare against current dependency file contents and skip the run if they are identical
