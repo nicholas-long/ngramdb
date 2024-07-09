@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# start running the command as a service
+# supports backing off to a maximum refresh interval if there are no changes
+
 MAX_LOOP_INTERVAL=10
 MIN_LOOP_INTERVAL=10
 interval=1

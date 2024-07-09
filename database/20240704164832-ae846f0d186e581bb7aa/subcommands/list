@@ -1,4 +1,6 @@
 #!/bin/bash
 
+# list Ngram data points in database
+# alias: ngram ls
 export LC_LOCALE=C.utf8
 ls database | sort

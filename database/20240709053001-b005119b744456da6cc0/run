@@ -2,6 +2,7 @@
 
 # overwrite main readme file
 # for now while this is not running in a container, this will work
+set -o pipefail
 READMEFILE="$(pwd)/README.md"
 echo "writing readme file $READMEFILE" >/dev/stderr
 cd $(dirname $0)
@@ -13,13 +14,19 @@ function generate_readme {
   ngram --help 
   echo '```'
   echo
-  for subcommand in $(grep -R '.--help' ../20240704164832-ae846f0d186e581bb7aa/subcommands | cut -d : -f 1 | awk -F / '{print $NF}' | sort -u | grep -v 'find-executable'); do
+  for subcommand in $( ls "../20240704164832-ae846f0d186e581bb7aa/subcommands" | grep -v 'find-executable'); do
+    echo "processing $subcommand" >/dev/stderr
     # ignore find-executable because it does not work with --help
     echo "## subcommand: $subcommand"
-    echo '```bash'
-    echo ngram "$subcommand" --help
-    ngram "$subcommand" --help 2>&1
-    echo '```'
+    echo ""
+    awk '/^##* / { gsub(/^##* /, ""); print "-", $0 }' "../20240704164832-ae846f0d186e581bb7aa/subcommands/$subcommand"
+    echo ""
+    if grep '.--help' "../20240704164832-ae846f0d186e581bb7aa/subcommands/$subcommand" | cut -d : -f 1 | awk -F / '{print $NF}' | sort -u >/dev/null; then
+      echo '```bash'
+      echo ngram "$subcommand" --help
+      ngram "$subcommand" --help 2>&1
+      echo '```'
+    fi
   done
   echo
   echo '# Test Run Output'

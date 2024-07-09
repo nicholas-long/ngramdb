@@ -7,6 +7,8 @@ id="$1"
 export NGRAM_ID="$id"
 export NGRAM_ID_DIR="database/$id"
 
+echo "running Ngram ID $id" >/dev/stderr
+
 # check dir ID exists
 if [ ! -d "$NGRAM_ID_DIR" ]; then
   echo "unable to run: missing ID $id" >/dev/stderr
@@ -51,3 +53,5 @@ fi
 # execute program and overwrite output files when finished
 "$program" 2> "$stderrfile" | "$ngram_prog" replace "$stdoutfile"
 "$ngram_prog" dependstats "$id" > "$runstats"
+
+echo "done running Ngram ID $id" >/dev/stderr

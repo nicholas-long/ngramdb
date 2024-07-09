@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# retrieve all run logs for an Ngram ID
+
 id="$1"
 outputfile="database/$id/stdout.log"
 errfile="database/$id/stderr.log"

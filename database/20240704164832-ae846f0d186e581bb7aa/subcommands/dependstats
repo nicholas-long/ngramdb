@@ -1,4 +1,7 @@
 #!/bin/bash
 
+# find checksums of all dependencies for an ID
+# used to create .hashes files for comparison
+
 id="$1"
 "$ngram_prog" checksums $( "$ngram_prog" query id "$id" refs union <( echo "$id" ) )

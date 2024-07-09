@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# force a link from ID in arg 1 to arg 2.
+# do this by adding IDs to a data file that is marked executable
+
 from="$1"
 to="$2"
 if [ -z "$from" ]; then
