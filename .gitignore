@@ -1,4 +1,4 @@
 **/stderr.log
 **/stderr.log.gz
-**/stdout.log
+#**/stdout.log
 **/stdout.log.gz

@@ -140,6 +140,7 @@ running tests
 ALL TESTS PASSED!
 SUCCESS test changetitle
 SUCCESS test customdate-id
+SUCCESS test dependencies-match-refs
 SUCCESS test graphquery-cats
 SUCCESS test reftest
 SUCCESS test settags
