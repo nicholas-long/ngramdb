@@ -1,11 +1,23 @@
 #!/bin/bash
 
+if [ "$1" == "--until-stable" ]; then
+  while [ 1 ]; do
+    echo Looping $(date)
+    "$ngram_prog" run
+    if [ "$?" != "0" ]; then
+      exit 0
+    fi
+  done
+fi
+
 didntrunanything=1
 
 # dumb simple implementation: run everything and let the checksum optimization deal with problems
 for id in $( "$ngram_prog" find-executable database -type f -name run | awk -F / 'NF == 3 { print $2 }' ); do
   "$ngram_prog" run-single "$id"
-  didntrunanything=0
+  if [ "$?" = "0" ]; then
+    didntrunanything=0
+  fi
 done
 
 # TODO: run all things marked with tags that specify rerunning often, like "live" or something

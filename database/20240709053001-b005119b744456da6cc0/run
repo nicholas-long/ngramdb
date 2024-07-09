@@ -13,9 +13,15 @@ function generate_readme {
   ngram --help 
   echo '```'
   echo
+  echo '# Test Run Output'
+  echo
+  echo '```'
+  cat ../20240705000124-9769d8256b20e049b259/stdout.log
+  echo '```'
+  echo
   cat footer.md
 }
 
 generate_readme | ngram replace "$READMEFILE"
 
-cat "$READMEFILE"
+wc -l "$READMEFILE"

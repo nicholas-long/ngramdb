@@ -68,6 +68,55 @@ tagfiles
 tsort
 ```
 
+# Test Run Output
+
+```
+running tests
+running script database/20240705000124-9769d8256b20e049b259/testscripts/changetitle
+# title2
+test content
+## fake h2 file
+
+- line of content here
+## title3
+SUCCESS test changetitle
+running script database/20240705000124-9769d8256b20e049b259/testscripts/customdate-id
+20240101000000-c697576ae3116565aa68
+SUCCESS test customdate-id
+running script database/20240705000124-9769d8256b20e049b259/testscripts/reftest
+20240704164832-ae846f0d186e581bb7aa
+SUCCESS test reftest
+running script database/20240705000124-9769d8256b20e049b259/testscripts/settags
+newtag
+tag2
+yes
+no
+SUCCESS test settags
+running script database/20240705000124-9769d8256b20e049b259/testscripts/testclone
+# testing cloning feature
+test content
+SUCCESS test testclone
+running script database/20240705000124-9769d8256b20e049b259/testscripts/testcreate
+# test title
+SUCCESS test testcreate
+running script database/20240705000124-9769d8256b20e049b259/testscripts/testquery
+20240704164832-ae846f0d186e581bb7aa
+20240704164832-ae846f0d186e581bb7aa
+20240704164832-ae846f0d186e581bb7aa
+SUCCESS test testquery
+running script database/20240705000124-9769d8256b20e049b259/testscripts/topographical-sort-test
+running TSORT:
+20240709063620-45cfbfb3336c29f2f1aa
+20240709063620-ff3928b1b83d22f8fbac
+20240709063620-9f199065b6dd9a0e08ed
+20240709063620-7e5732985e5452c0c409
+SUCCESS test topographical-sort-test
+running script database/20240705000124-9769d8256b20e049b259/testscripts/unique-ids
+     100
+SUCCESS test unique-ids
+ALL TESTS PASSED!
+```
+
 # Information
 ngramdb
 Nicholas Long
