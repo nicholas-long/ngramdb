@@ -19,6 +19,14 @@ function generate_readme {
   cat ../20240705000124-9769d8256b20e049b259/stdout.log
   echo '```'
   echo
+  for subcommand in $(grep -R '.--help' ../20240704164832-ae846f0d186e581bb7aa/subcommands | cut -d : -f 1 | awk -F / '{print $NF}' | sort -u | grep -v 'find-executable'); do
+    # ignore find-executable because it does not work with --help
+    echo "## subcommand: $subcommand"
+    echo '```bash'
+    echo ngram "$subcommand" --help
+    ngram "$subcommand" --help 2>&1
+    echo '```'
+  done
   cat footer.md
 }
 

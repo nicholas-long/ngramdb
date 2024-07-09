@@ -72,51 +72,63 @@ tsort
 
 ```
 running tests
-running script database/20240705000124-9769d8256b20e049b259/testscripts/changetitle
-# title2
-test content
-## fake h2 file
-
-- line of content here
-## title3
-SUCCESS test changetitle
-running script database/20240705000124-9769d8256b20e049b259/testscripts/customdate-id
-20240101000000-c697576ae3116565aa68
-SUCCESS test customdate-id
-running script database/20240705000124-9769d8256b20e049b259/testscripts/reftest
-20240704164832-ae846f0d186e581bb7aa
-SUCCESS test reftest
-running script database/20240705000124-9769d8256b20e049b259/testscripts/settags
-newtag
-tag2
-yes
-no
-SUCCESS test settags
-running script database/20240705000124-9769d8256b20e049b259/testscripts/testclone
-# testing cloning feature
-test content
-SUCCESS test testclone
-running script database/20240705000124-9769d8256b20e049b259/testscripts/testcreate
-# test title
-SUCCESS test testcreate
-running script database/20240705000124-9769d8256b20e049b259/testscripts/testquery
-20240704164832-ae846f0d186e581bb7aa
-20240704164832-ae846f0d186e581bb7aa
-20240704164832-ae846f0d186e581bb7aa
-SUCCESS test testquery
-running script database/20240705000124-9769d8256b20e049b259/testscripts/topographical-sort-test
-running TSORT:
-20240709063620-45cfbfb3336c29f2f1aa
-20240709063620-ff3928b1b83d22f8fbac
-20240709063620-9f199065b6dd9a0e08ed
-20240709063620-7e5732985e5452c0c409
-SUCCESS test topographical-sort-test
-running script database/20240705000124-9769d8256b20e049b259/testscripts/unique-ids
-     100
-SUCCESS test unique-ids
 ALL TESTS PASSED!
+SUCCESS test changetitle
+SUCCESS test customdate-id
+SUCCESS test reftest
+SUCCESS test settags
+SUCCESS test testclone
+SUCCESS test testcreate
+SUCCESS test testquery
+SUCCESS test topographical-sort-test
+SUCCESS test unique-ids
 ```
 
+## subcommand: create
+```bash
+ngram create --help
+Usage: /Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/create [ options ] directory
+Options:
+    -t|--title) # set title in README of created data point
+    -c|--clone) # clone from a template data point ID, bringing over all its files
+    -v|--verbose)
+    -h|--help)
+```
+## subcommand: hastag
+```bash
+ngram hastag --help
+usage /Users/coyote/ngramdb/ngram hastag tagquery 20240704164832-ae846f0d186e581bb7aa
+```
+## subcommand: id
+```bash
+ngram id --help
+Usage: /Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/id [ options ] directory
+Options:
+    -d|--date) # provide a custom date to use as a timestamp within the ID
+    -f|--date-format) # date format if providing a custom date
+    -v|--verbose)
+    -h|--help)
+```
+## subcommand: set-title
+```bash
+ngram set-title --help
+Usage: /Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/set-title [ options ] directory
+Options:
+    -t|--title) # set or replace title in markdown file
+    -v|--verbose)
+    -h|--help)
+```
+## subcommand: tag
+```bash
+ngram tag --help
+Usage: /Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/tag [ options ] directory
+Options:
+    -l|--list) # list tags for ID
+    -t|--tag) # add tag
+    -d|--delete) # remove a tag (passed as argument after)
+    -v|--verbose)
+    -h|--help)
+```
 # Information
 ngramdb
 Nicholas Long
