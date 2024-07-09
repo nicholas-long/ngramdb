@@ -83,6 +83,20 @@ while [[ $# -gt 0 ]]; do
       done | jq -c -s .
       exit 0 # printing JSON breaks the normal flow of printing IDs
       ;;
+    jsonset)
+      shift
+      field="$1"
+      shift
+      value="$1"
+      numeric=""
+      if [ "$2" == "-n" ]; then
+        shift
+        numeric="$1"
+      fi
+      for id in $(cat "$workingset"); do
+        "$ngram_prog" jsonset "$id" "$field" "$value" "$numeric"
+      done
+      ;;
     *) # filename parameter or subquery implemented with bash filename redirection
       grep -f "$1" "$workingset" | "$ngram_prog" replace "$workingset"
       ;;

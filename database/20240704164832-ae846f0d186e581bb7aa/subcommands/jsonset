@@ -18,5 +18,8 @@ else
 fi
 
 jsonfile="database/$id/data.json"
+if [ ! -s "$jsonfile" ]; then
+  echo '{}' > "$jsonfile"
+fi
 cat "$jsonfile" | jq -c ".$field=$safevalue" | "$ngram_prog" replace "$jsonfile"
 #cat "$jsonfile" | jq -c ".$field=$safevalue" > /dev/stderr
