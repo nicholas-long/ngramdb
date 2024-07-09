@@ -14,7 +14,7 @@ while [[ $# -gt 0 ]]; do
       VERBOSE=1
       ;;
     -h|--help)
-      echo "Usage: $0 [ options ] directory"
+      echo "Usage: $(basename $ngram_prog) $(basename $0)  [ options ] directory"
       echo "Options:"
       cat "$0" | grep '^\s\+-.|--.*'
       exit 1

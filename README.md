@@ -55,7 +55,7 @@ Automatically generated help documentation:
 
 
 ```bash
-Usage: /Users/coyote/ngramdb/ngram [subcommand] [--help | options... ]
+Usage: ngram  [subcommand] [--help | options... ]
 Subcommands:
 checksums
 cleanup
@@ -85,7 +85,7 @@ tsort
 ## subcommand: create
 ```bash
 ngram create --help
-Usage: /Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/create [ options ] directory
+Usage: ngram create  [ options ] directory
 Options:
     -t|--title) # set title in README of created data point
     -c|--clone) # clone from a template data point ID, bringing over all its files
@@ -100,7 +100,7 @@ usage /Users/coyote/ngramdb/ngram hastag tagquery 20240704164832-ae846f0d186e581
 ## subcommand: id
 ```bash
 ngram id --help
-Usage: /Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/id [ options ] directory
+Usage: ngram id  [ options ] directory
 Options:
     -d|--date) # provide a custom date to use as a timestamp within the ID
     -f|--date-format) # date format if providing a custom date
@@ -110,12 +110,12 @@ Options:
 ## subcommand: jsonset
 ```bash
 ngram jsonset --help
-Usage: /Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/jsonset id field value [-n : numeric]
+Usage: ngram jsonset id field value [-n : numeric]
 ```
 ## subcommand: set-title
 ```bash
 ngram set-title --help
-Usage: /Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/set-title [ options ] directory
+Usage: ngram set-title  [ options ] directory
 Options:
     -t|--title) # set or replace title in markdown file
     -v|--verbose)

@@ -3,7 +3,7 @@
 # set json fields
 
 if [ "$1" == "--help" ]; then
-  echo "Usage: $0 id field value [-n : numeric]"
+  echo "Usage: $(basename $ngram_prog) $(basename $0) id field value [-n : numeric]"
   exit 0
 fi
 

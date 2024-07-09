@@ -21,7 +21,7 @@ fi
 command_prog="$ngram_subcommands_dir/$command"
 
 if [[ "$command" =~ -h|--help ]]; then
-  echo "Usage: $0 [subcommand] [--help | options... ]"
+  echo "Usage: $(basename $0)  [subcommand] [--help | options... ]"
   echo "Subcommands:"
   ls "$ngram_subcommands_dir"
   exit 1

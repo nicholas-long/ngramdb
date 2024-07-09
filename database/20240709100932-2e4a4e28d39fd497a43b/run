@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd $(dirname $0)
+grep -R 'Usage' ../20240704164832-ae846f0d186e581bb7aa
