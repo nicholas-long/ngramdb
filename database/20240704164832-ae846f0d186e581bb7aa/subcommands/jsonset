@@ -4,6 +4,7 @@
 
 if [ "$1" == "--help" ]; then
   echo "Usage: $0 id field value [-n : numeric]"
+  exit 0
 fi
 
 id="$1"

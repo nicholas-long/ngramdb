@@ -111,9 +111,6 @@ Options:
 ```bash
 ngram jsonset --help
 Usage: /Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/jsonset id field value [-n : numeric]
-/Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/jsonset: line 22: database/--help/data.json: No such file or directory
-cat: database/--help/data.json: No such file or directory
-mv: rename /var/folders/1s/yp74q6t92gl_2nvdbww909700000gn/T/tmp.wlg10wUPGt to database/--help/data.json: No such file or directory
 ```
 ## subcommand: set-title
 ```bash
