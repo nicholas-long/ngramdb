@@ -75,12 +75,20 @@ while [[ $# -gt 0 ]]; do
       done | sort -u | "$ngram_prog" replace "$workingset"
       ;;
     json)
+      optionaljq=""
+      if [ -z "$2" ]; then
+        optionaljq="| jq -c '$2'" # command injection?
+      fi
       for id in $(cat "$workingset"); do
         jsonfile="database/$id/data.json"
         if [ -f "$jsonfile" ]; then
           cat "$jsonfile"
         fi
-      done | jq -c -s .
+      done | jq -c -s . | if [ ! -z "$2" ]; then
+        jq -c $3 $4 "$2"
+      else
+        cat
+      fi
       exit 0 # printing JSON breaks the normal flow of printing IDs
       ;;
     jsonset)
