@@ -74,6 +74,15 @@ while [[ $# -gt 0 ]]; do
         fi
       done | sort -u | "$ngram_prog" replace "$workingset"
       ;;
+    json)
+      for id in $(cat "$workingset"); do
+        jsonfile="database/$id/data.json"
+        if [ -f "$jsonfile" ]; then
+          cat "$jsonfile"
+        fi
+      done | jq -c -s .
+      exit 0 # printing JSON breaks the normal flow of printing IDs
+      ;;
     *) # filename parameter or subquery implemented with bash filename redirection
       grep -f "$1" "$workingset" | "$ngram_prog" replace "$workingset"
       ;;
