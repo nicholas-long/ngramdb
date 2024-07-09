@@ -9,10 +9,10 @@ function printlogfile {
     cat "${1}.gz" | gzip -d -
   fi
   if [ -f "$1" ]; then
-    echo ">>>>>>>>>> RUN STARTED" $(date -r "$1")
+    echo ">>>>>>>>>> RUN $2 STARTED" $(date -r "$1")
     cat "$1"
   fi
 }
 
-printlogfile "$errfile" >/dev/stderr
-printlogfile "$outputfile"
+printlogfile "$errfile" STDOUT >/dev/stderr
+printlogfile "$outputfile" STDERR

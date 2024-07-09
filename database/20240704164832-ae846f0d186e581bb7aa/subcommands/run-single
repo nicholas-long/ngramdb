@@ -24,11 +24,13 @@ stdoutfile="database/$id/stdout.log"
 stderrfile="database/$id/stderr.log"
 runstats="database/$id/.ngram.dependencies.hashes"
 
-# if there's previous run stats then compare against current dependency file contents and skip the run if they are identical
-if [ -f "$runstats" ]; then
-  if diff <("$ngram_prog" dependstats) "$runstats"; then
-    echo "run skipped by optimization: identical dependency conditions" >/dev/stderr
-    exit 2
+if ! "$ngram_prog" hastag live "$id" ; then # always run program that is tagged live - fast and current data
+  # if there's previous run stats then compare against current dependency file contents and skip the run if they are identical
+  if [ -f "$runstats" ]; then
+    if diff <("$ngram_prog" dependstats) "$runstats"; then
+      echo "run skipped by optimization: identical dependency conditions" >/dev/stderr
+      exit 2
+    fi
   fi
 fi
 
