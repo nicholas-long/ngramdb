@@ -1,4 +1,4 @@
-# ngramdb project
+# Ngram Project
 
 ## what is NgramDB...
 This is kind of a graph database.

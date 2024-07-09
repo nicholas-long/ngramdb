@@ -1,8 +1,21 @@
 #!/bin/bash
 
+# overwrite main readme file
+# for now while this is not running in a container, this will work
+READMEFILE="$(pwd)/README.md"
+echo "writing readme file $READMEFILE" >/dev/stderr
 cd $(dirname $0)
-(
-cat header.md
-./ngram --help
-cat footer.md
-) | ngram replace ../../README.md
+
+function generate_readme {
+  cat header.md 
+  echo
+  echo '```bash'
+  ngram --help 
+  echo '```'
+  echo
+  cat footer.md
+}
+
+generate_readme | ngram replace "$READMEFILE"
+
+cat "$READMEFILE"
