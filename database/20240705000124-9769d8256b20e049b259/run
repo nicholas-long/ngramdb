@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo running tests
+echo running tests stderr >/dev/stderr
+./run-tests

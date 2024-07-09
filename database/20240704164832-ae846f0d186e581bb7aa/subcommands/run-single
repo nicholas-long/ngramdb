@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# root run script for an ID
+
+id="$1"
+
+# check dir ID exists
+if [ ! -d "database/$id" ]; then
+  echo "unable to run: missing ID $id" >/dev/stderr
+  exit 1
+fi
+program="database/$id/run"
+if [ ! -x "$program" ]; then 
+  echo "unable to run: missing run entrypoint for ID $id : $program" >/dev/stderr
+  if [ -f "$program" ]; then
+    echo "Tip: the run file exists, but is not executable. run: chmod +x $program" >/dev/stderr
+  fi
+  exit 1
+fi
+
+# TODO: host partitioning
+# TODO: docker containerization of runs for directory data sandboxing
+stdoutfile="database/$id/stdout.log"
+stderrfile="database/$id/stderr.log"
+
+if [ -s "$stdoutfile" ]; then
+  echo "storing previous console output" >/dev/stderr
+  ( echo ">>>>>>>>>> RUN STARTED " && date -r "$stdoutfile" && cat "$stdoutfile" ) | gzip >> "${stdoutfile}.gz"
+fi
+if [ -s "$stderrfile" ]; then
+  echo "storing previous console stderr" >/dev/stderr
+  cat "$stderrfile" | gzip > "${stderrfile}.gz"
+  ( echo ">>>>>>>>>> RUN STARTED " && date -r "$stderrfile" && cat "$stderrfile" ) | gzip >> "${stderrfile}.gz"
+fi
+
+# execute program and overwrite output files when finished
+"$program" 2>( "$ngram_prog" replace "$stderrfile" ) | "$ngram_prog" replace "$stdoutfile"
