@@ -51,7 +51,7 @@ if [ -z "$title" ]; then
   title="data point created at $(date)"
 fi
 
-echo "{}" > data.json
+echo "{}" > "database/$id/data.json" # initialize json
 
 "$ngram_prog" set-title -t "$title" "$id"
 if [ ! -z "$tagfile" ]; then
