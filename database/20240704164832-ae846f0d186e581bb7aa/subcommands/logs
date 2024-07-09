@@ -5,16 +5,14 @@ outputfile="database/$id/stdout.log"
 errfile="database/$id/stderr.log"
 
 function printlogfile {
-  if [ -f "${$1}.gz" ]; then
-    cat "${$1}.gz"
+  if [ -f "${1}.gz" ]; then
+    cat "${1}.gz" | gzip -d -
   fi
-  if [ -f "$$1" ]; then
-    echo ">>>>>>>>>> RUN STARTED " $(date -s "$outputfile")
-    cat "$$1"
+  if [ -f "$1" ]; then
+    echo ">>>>>>>>>> RUN STARTED" $(date -r "$1")
+    cat "$1"
   fi
 }
 
+printlogfile "$errfile" >/dev/stderr
 printlogfile "$outputfile"
-if [ -p /dev/stderr ]; then # check if there is an stderr pipe connected
-  printlogfile "$errfile" >/dev/stderr
-fi

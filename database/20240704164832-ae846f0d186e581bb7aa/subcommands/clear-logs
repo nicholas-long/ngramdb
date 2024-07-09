@@ -1,0 +1,15 @@
+#!/bin/bash
+
+id="$1"
+if [ -z "$id" ]; then
+  echo missing id parameter >/dev/stderr
+  exit 1
+fi
+
+for f in $( echo "stdout.log" "stderr.log" "stdout.log.gz" "stderr.log.gz" ); do
+  fullpath="database/$id/$f"
+  if [ -f "$fullpath" ]; then
+    echo cleaning up "$fullpath" >/dev/stderr
+    rm "$fullpath"
+  fi
+done

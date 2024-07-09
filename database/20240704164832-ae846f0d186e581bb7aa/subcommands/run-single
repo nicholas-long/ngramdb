@@ -25,13 +25,13 @@ stderrfile="database/$id/stderr.log"
 
 if [ -s "$stdoutfile" ]; then
   echo "storing previous console output" >/dev/stderr
-  ( echo ">>>>>>>>>> RUN STARTED " && date -r "$stdoutfile" && cat "$stdoutfile" ) | gzip >> "${stdoutfile}.gz"
+  ( echo ">>>>>>>>>> RUN STDOUT STARTED" $( date -r "$stdoutfile" ) && cat "$stdoutfile" ) | gzip >> "${stdoutfile}.gz"
 fi
 if [ -s "$stderrfile" ]; then
   echo "storing previous console stderr" >/dev/stderr
   cat "$stderrfile" | gzip > "${stderrfile}.gz"
-  ( echo ">>>>>>>>>> RUN STARTED " && date -r "$stderrfile" && cat "$stderrfile" ) | gzip >> "${stderrfile}.gz"
+  ( echo ">>>>>>>>>> RUN STDERR STARTED" $( date -r "$stderrfile" ) && cat "$stderrfile" ) | gzip >> "${stderrfile}.gz"
 fi
 
 # execute program and overwrite output files when finished
-"$program" 2>( "$ngram_prog" replace "$stderrfile" ) | "$ngram_prog" replace "$stdoutfile"
+"$program" 2> "$stderrfile" | "$ngram_prog" replace "$stdoutfile"
