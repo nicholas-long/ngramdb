@@ -41,6 +41,14 @@ Queries are possible using a simple query engine that supports traversing graphs
 ./ngram query @pet not <( ./ngram query @me refs @person @family refs @pet not @cat )
 ```
 
+## how to run
+```bash
+# run once and continue until the system is in a stable state with no file changes propogating
+./ngram run --until-stable
+# run continuously in a loop
+./ngram start
+```
+
 ## CLI help
 
 Automatically generated help documentation:
