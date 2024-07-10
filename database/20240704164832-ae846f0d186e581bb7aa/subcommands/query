@@ -116,6 +116,23 @@ while [[ $# -gt 0 ]]; do
         "$ngram_prog" jsonset "$id" "$field" "$value" "$numeric"
       done
       ;;
+    expand) # expand all references into functional group
+      et=$(mktemp)
+      cat "$workingset" > "$et"
+      lastcount=0
+      count=$(wc -l $et | awk '{print $1}')
+      stop=0
+      while [ "$stop" = "0" ]; do
+        echo "expanding count $count" >/dev/stderr
+        if [ "$count" = "$lastcount" ]; then
+          stop=1
+        fi
+        "$ngram_prog" query "$et" union <( "$ngram_prog" query "$et" refs ) union <( "$ngram_prog" query "$et" refsto ) | "$ngram_prog" replace "$et"
+        lastcount="$count"
+        count=$(wc -l $et | awk '{print $1}')
+      done
+      mv "$et" "$workingset"
+      ;;
     -h|--help) # print help text
       echo "Usage: $(basename $ngram_prog) $(basename $0)  [ options ] directory"
       echo "Options:"
