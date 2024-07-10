@@ -1,0 +1,20 @@
+#!/bin/bash
+
+function genmarkdown {
+  cat << EOF
+# automatically generated mermaid graph
+
+```mermaid
+EOF
+  cat ./graph.mermaid
+  echo '```'
+}
+
+cd $(dirname $0)
+gawk '
+BEGIN { print "graph TD;" }
+ARGIND == 1 { name[$1] = $2 }
+ARGIND > 1 { print "  " name[$1] " --> " name[$2] ";" }
+' <( ngram stubname ) <( ngram refdata ) | ngram replace graph.mermaid
+
+genmarkdown | ngram replace graph.md

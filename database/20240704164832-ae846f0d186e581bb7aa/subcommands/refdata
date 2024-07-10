@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# print a table of all references
+
+for id in $(ngram ls); do
+  export id
+  #echo "checking $id" >/dev/stderr
+  ngram refs $id | awk '{print ENVIRON["id"], $1}'
+done

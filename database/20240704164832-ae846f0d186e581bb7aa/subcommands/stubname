@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# generate stub names for IDs based on titles
+
+"$ngram_prog" query --human | awk '
+{
+  id = $1
+  gsub(/^[^ ]* /,"")
+  gsub(/ /,"_")
+  print id, $0
+}
+'
