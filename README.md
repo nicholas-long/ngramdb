@@ -128,6 +128,7 @@ Options:
 
 ## subcommand: hastag
 
+- check if an Ngram ID has a tag
 
 ```bash
 ngram hastag --help
@@ -135,6 +136,16 @@ usage /Users/coyote/ngramdb/ngram hastag tagquery 20240704164832-ae846f0d186e581
 ```
 ## subcommand: id
 
+- internal
+- generate a unique ID
+- optionally use a custom timestamp
+- Some formatting options:
+- %b for abbreviated Month name: Jul
+- %B for full Month name: July
+- %a for abbreviated weekday name: Tue
+- %A for full weekday name: Tuesday
+- %d for day of month: 20
+- %Y for 4 character year: 1999
 
 ```bash
 ngram id --help
@@ -165,7 +176,14 @@ Usage: ngram jsonset id field value [-n : numeric]
 ## subcommand: query
 
 - perform graph queries with graph links, tags, and JSON data within Ngram.
+- this is a reverse polish notation machine that performs queries across a graph by using operators from set theory and refrences between IDs.
 
+```bash
+ngram query --help
+Usage: ngram query  [ options ] directory
+Options:
+    -h|--help) # print help text
+```
 ## subcommand: refs
 
 - find refs by ID
@@ -173,15 +191,20 @@ Usage: ngram jsonset id field value [-n : numeric]
 
 ## subcommand: replace
 
-- utility to replace a file
+- utility subcommand to replace a file.
+- use this when possible instead of shell redirection to avoid overwriting files until the program is complete.
+- example: echo ... | ngram replace datafile.dat
 
 ## subcommand: run
 
+- entrypoint to run one single cycle of ngram.
+- one cycle is defined as one pass over all IDs with programs that have dependencies that have changed since the last time the program was run.
+- returns a status code of 1 if nothing was run
 - dumb simple implementation: run everything and let the checksum optimization deal with problems
 
 ## subcommand: run-single
 
-- root run script for an ID
+- run a single ID, process all conditions, set environment, and perform all output logging as necessary.
 - exported values in environment to be used by subcommands
 - check dir ID exists
 - TODO: host partitioning
@@ -190,6 +213,8 @@ Usage: ngram jsonset id field value [-n : numeric]
 
 ## subcommand: set-title
 
+- set the title of an Ngram data point
+- overwrites the first title in the README.md markdown file and the title field in the data.json file.
 - replace title in existing readme file
 
 ```bash
@@ -221,7 +246,8 @@ Options:
 ```
 ## subcommand: tagfiles
 
-- TODO: configure tag name file?
+- internal
+- list all tag files present
 
 ## subcommand: tsort
 
