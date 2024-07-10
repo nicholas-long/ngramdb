@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# clear the logs for an Ngram data point by ID
+# argument: Ngram ID
+
 id="$1"
 if [ -z "$id" ]; then
   echo missing id parameter >/dev/stderr
