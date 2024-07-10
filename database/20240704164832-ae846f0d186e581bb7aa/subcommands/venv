@@ -8,10 +8,11 @@ fi
 if [ "$1" = "--latest" ]; then
   lastid=$(ls database | tail -n 1)
   "$ngram_prog" venv "$lastid"
+  exit 0
 elif [ ! -z "$1" ]; then # run it as if we are running within the environment
   export NGRAM_ID="$id"
   export NGRAM_ID_DIR="database/$id"
   cd "database/$1"
 fi
 
-"$SHELL"
+"$SHELL" -i
