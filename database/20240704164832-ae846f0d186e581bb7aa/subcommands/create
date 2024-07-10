@@ -5,6 +5,8 @@ VERBOSE=0
 title=""
 runtags=0
 tagfile=""
+venv=0
+usetmux=0
 while [[ $# -gt 0 ]]; do
   case $1 in
     --tag) # add tags inline
@@ -22,6 +24,9 @@ while [[ $# -gt 0 ]]; do
     -c|--clone) # clone from a template data point ID, bringing over all its files
       shift
       cloneid="$1"
+      ;;
+    -e|--venv) # start shell in a new virtual environment
+      venv=1
       ;;
     -v|--verbose)
       VERBOSE=1
@@ -64,4 +69,8 @@ echo "$id"
 echo "$dir" >/dev/stderr
 if [ ! -z "$tagfile" ]; then
   rm "$tagfile"
+fi
+
+if [ "$venv" = "1" ]; then
+  "$ngram_prog" venv "$id"
 fi
