@@ -55,3 +55,7 @@ fi
 "$ngram_prog" dependstats "$id" > "$runstats"
 
 echo "done running Ngram ID $id" >/dev/stderr
+
+if "$ngram_prog" hastag live "$id" ; then # always run program that is tagged live - fast and current data
+  exit 3 # this makes sense - if something is live then it is pretending not to run so it doesn't affect the rerunning stats
+fi
