@@ -9,10 +9,10 @@ var filedata = require(filepathsdatafile) // this is a link to the other data se
 
 // watch file for changes
 // TODO: this will work on mac and BSD, use inotifywait on linux
-var p = child_process.spawn('fswatch', [filepathsdatafile])
+var p = child_process.spawn('./watchfile', [filepathsdatafile])
 p.stdout.on('data', ( data ) => {
   console.log(`detected file changes, closing: ${data}`)
-  app.close();
+  process.exit(0);
 });
 
 for (const fp of filedata) {
