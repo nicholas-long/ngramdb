@@ -208,7 +208,7 @@ Options:
 - entrypoint to run one single cycle of ngram.
 - one cycle is defined as one pass over all IDs with programs that have dependencies that have changed since the last time the program was run.
 - returns a status code of 1 if nothing was run
-- dumb simple implementation: run everything and let the checksum optimization deal with problems
+- run all IDs in topological order
 
 ## subcommand: run-single
 
@@ -283,6 +283,7 @@ graph TD;
   test_scripts --> subcommand_implementations;
   interactively_generated_README_for_this_project --> subcommand_implementations;
   interactively_generated_README_for_this_project --> test_scripts;
+  interactively_generated_README_for_this_project --> connections_within_the_system;
   subcommand_help_implementation_status --> subcommand_implementations;
 ```
 
