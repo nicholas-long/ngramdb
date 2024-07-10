@@ -1,11 +1,15 @@
 #!/bin/bash
 
+# generate mermaid diagram
+
+cd $(dirname $0) # change to script directory
+
 function genmarkdown {
   cat << EOF
 # automatically generated mermaid graph
 
-```mermaid
 EOF
+  echo '```mermaid'
   cat ./graph.mermaid
   echo '```'
 }
@@ -15,6 +19,8 @@ gawk '
 BEGIN { print "graph TD;" }
 ARGIND == 1 { name[$1] = $2 }
 ARGIND > 1 { print "  " name[$1] " --> " name[$2] ";" }
-' <( ngram stubname ) <( ngram refdata ) | ngram replace graph.mermaid
+' <( ngram stubname ) <( ngram refdata ) > graph.mermaid #| "$ngram_prog" replace graph.mermaid
 
-genmarkdown | ngram replace graph.md
+genmarkdown > graph.md #| "$ngram_prog" replace graph.md
+
+wc -l graph.mermaid graph.md

@@ -71,12 +71,14 @@ jsonset
 list
 logs
 query
+refdata
 refs
 replace
 run
 run-single
 set-title
 start
+stubname
 tag
 tagfiles
 tsort
@@ -186,6 +188,10 @@ Usage: ngram query  [ options ] directory
 Options:
     -h|--help) # print help text
 ```
+## subcommand: refdata
+
+- print a table of all references
+
 ## subcommand: refs
 
 - find refs by ID
@@ -231,6 +237,10 @@ Options:
 
 - start running the command as a service
 - supports backing off to a maximum refresh interval if there are no changes
+
+## subcommand: stubname
+
+- generate stub names for IDs based on titles
 
 ## subcommand: tag
 

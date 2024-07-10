@@ -1,5 +1,6 @@
 # connections within the system
 
+- [graph](graph.md)
 - install graphviz
 ```bash
 brew install graphviz

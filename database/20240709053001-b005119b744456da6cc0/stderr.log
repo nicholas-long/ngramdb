@@ -12,12 +12,14 @@ processing jsonset
 processing list
 processing logs
 processing query
+processing refdata
 processing refs
 processing replace
 processing run
 processing run-single
 processing set-title
 processing start
+processing stubname
 processing tag
 processing tagfiles
 processing tsort
