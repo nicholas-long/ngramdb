@@ -29,6 +29,10 @@ function generate_readme {
     fi
   done
   echo
+  echo '# Active Data Pipelines in the System'
+  echo
+  cat ../20240710043728-86ad27b18da4fa187615/graph.md
+  echo
   echo '# Test Run Output'
   echo
   echo '```'
