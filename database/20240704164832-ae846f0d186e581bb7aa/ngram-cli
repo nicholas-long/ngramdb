@@ -6,6 +6,7 @@ export ngram_cli_path="$(realpath $0)"
 export ngram_root_dir=$(realpath "$ngram_cli_path/../../..")
 export ngram_prog="$ngram_root_dir/ngram"
 export PATH="$PATH:$ngram_root_dir"
+export NGRAM_TAG_FILE="tags.ngram"
 
 # constants
 export ngram_program_id="20240704164832-ae846f0d186e581bb7aa"
@@ -42,10 +43,3 @@ if [ -f .env ]; then
 fi
 
 "$command_prog" "$@"
-
-#arglistf=$(mktemp)
-#rm "$arglistf" # clean up argument list
-#touch database/20240704164832-ae846f0d186e581bb7aa/subcommands/id
-#touch database/20240704164832-ae846f0d186e581bb7aa/subcommands/create
-#chmod +x database/20240704164832-ae846f0d186e581bb7aa/subcommands/id
-#chmod +x database/20240704164832-ae846f0d186e581bb7aa/subcommands/create

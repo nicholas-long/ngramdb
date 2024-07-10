@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # TODO: configure tag name file?
-find database -name tags | awk -F / 'NF == 3' | sort
+find database -name "$NGRAM_TAG_FILE" | awk -F / 'NF == 3' | sort
