@@ -96,6 +96,8 @@ venv
 
 ## subcommand: clear-logs
 
+- clear the logs for an Ngram data point by ID
+- argument: Ngram ID
 
 ## subcommand: create
 
