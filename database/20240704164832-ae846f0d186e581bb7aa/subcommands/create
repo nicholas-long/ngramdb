@@ -7,6 +7,7 @@ runtags=0
 tagfile=""
 venv=0
 usetmux=0
+arg_jsondata="{}"
 while [[ $# -gt 0 ]]; do
   case $1 in
     --tag) # add tags inline
@@ -27,6 +28,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -e|--venv) # start shell in a new virtual environment
       venv=1
+      ;;
+    -j|--json) # provide input JSON data
+      shift
+      arg_jsondata="$1"
       ;;
     -v|--verbose)
       VERBOSE=1
@@ -56,7 +61,7 @@ if [ -z "$title" ]; then
   title="data point created at $(date)"
 fi
 
-echo "{}" > "database/$id/data.json" # initialize json
+echo "$arg_jsondata" > "database/$id/data.json" # initialize json
 
 "$ngram_prog" set-title -t "$title" "$id"
 if [ ! -z "$tagfile" ]; then

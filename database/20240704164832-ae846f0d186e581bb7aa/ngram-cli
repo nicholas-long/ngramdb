@@ -29,6 +29,15 @@ if [[ "$command" =~ -h|--help ]]; then
 elif [ ! -x "$command_prog" ]; then
   if [ "$command" = "ls" ]; then
     command="list"
+  elif [ "$command" = "t" ]; then
+    if [ ! -z "$NGRAM_ID" ]; then
+      echo "tagging $NGRAM_ID as $1" >/dev/stderr
+      "$ngram_prog" tag -t "$1" "$NGRAM_ID"
+      exit 0
+    else
+      echo "this shortcut does not work unless you are in a venv or running as a script" >/dev/stderr
+    fi
+    #command="list"
   else
     echo "error no_subcommand $command" >/dev/stderr
     exit 1
