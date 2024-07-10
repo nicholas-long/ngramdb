@@ -33,7 +33,7 @@ while [[ $# -gt 0 ]]; do
     *)
       id="$1"
       # set tag of id to $tag
-      tagfile="database/$id/tags"
+      tagfile="database/$id/$NGRAM_TAG_FILE"
       if [ ! -z "$settag" ]; then
         if [ "$delete" = "0" ]; then
           if [ -f "$tagfile" ]; then
