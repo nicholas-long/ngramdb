@@ -6,6 +6,7 @@
 # usage as standard input pipe: ... | ngram tsort
 
 inputids=$(mktemp)
+tsortfile=$(mktemp)
 if [ ! -z "$1" ]; then
   while [ ! -z "$1" ]; do
     echo "$1" >> $inputids
@@ -18,15 +19,19 @@ fi
 #echo "Input IDs:" >>/dev/stderr
 #cat $inputids >>/dev/stderr
 export extras=$(mktemp) # temp file to list extra ids
-cat $inputids | awk '
+gawk '
+ARGIND == 1 { necessary[$1] = 1 ; next }
 {
   command = ENVIRON["ngram_prog"] " findrefsto " $1
   printed = 0
   while ((command | getline ref) > 0) {
-    print $1, ref
-    printed = 1
-    printedId[$1] = 1
-    printedId[ref] = 1
+    if (necessary[$1] && necessary[ref]) {
+      print $1, ref
+      #print $1, ref > "diag" # for debugging references
+      printed = 1
+      printedId[$1] = 1
+      printedId[ref] = 1
+    }
   }
   close(command)
   if (!printed) {
@@ -40,13 +45,12 @@ END {
     }
   }
 }
-' | gawk '
-NF == 1 { hasid[$1] = 1 }
-NF > 1 && hasid[$1] && hasid[$2] { print }
-' $inputids /dev/stdin | "$ngram_prog" replace "$inputids"
+' $inputids $inputids > "$tsortfile"
 #cat $inputids >/dev/stderr
+#cat $tsortfile >/dev/stderr
+#cat "$extras" | awk '{print "extra", $1}' >/dev/stderr
 cat "$extras"
-tsort "$inputids"
+tsort "$tsortfile"
 
 rm "$extras"
 rm "$inputids"

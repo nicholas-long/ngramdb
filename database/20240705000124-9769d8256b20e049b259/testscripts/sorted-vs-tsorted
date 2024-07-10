@@ -1,0 +1,8 @@
+#!/bin/bash
+
+len=$(ngram find-executable database -type f -name run | awk -F / 'NF == 3 { print $2 }' | sort -u | wc -l| awk '{print 1}')
+fulllen=$(ngram find-executable database -type f -name run | awk -F / 'NF == 3 { print $2 }' | sort -u | xargs "$ngram_prog" tsort | wc -l| awk '{print 1}')
+if [ "$len" != "$fulllen" ]; then
+  echo "length of dependencies does not match"
+  exit 1
+fi
