@@ -1,14 +1,17 @@
 #!/bin/bash
 
+# get all relevant file paths as JSON for serving within API
+# set locale for sort ordering
+export LC_LOCALE=C
 cd $(dirname $0)
-find .. -type f >allfiles #| ngram replace allfiles
+find .. -type f | sort > allfiles.dat #| ngram replace allfiles
 
 awk '
 /\.js$/ { next }
 /\/run$/ { next }
 /\/node_modules\// { next }
 { print }
-' allfiles.dat
+' allfiles.dat > filtered.dat
 
-cat allfiles | jq -R . | jq -s > filepaths.json
-wc -l allfiles.dat filepaths.json
+cat filtered.dat | jq -R . | jq -s > filepaths.json
+wc -l allfiles.dat filtered.dat filepaths.json
