@@ -1,9 +1,11 @@
 #!/bin/bash
 
-tf=$(mktemp)
-if [ -z "$tf" ]; then exit 1; fi
-
 # clean up empty directories
+# this is primarily for dealing with git leaving empty directories laying around when reverting changes
+
+tf=$(mktemp)
+if [ -z "$tf" ]; then exit 1; fi # failed to allocate temp file
+
 find database -type d -empty | awk -F / 'NF == 2' > $tf
 lines=$(wc -l $tf | awk '{print $1}')
 if [ $lines -gt 0 ]; then

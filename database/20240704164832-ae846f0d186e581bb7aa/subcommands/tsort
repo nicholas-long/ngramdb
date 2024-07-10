@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# internal
 # do a topological sort of the input IDs based on their dependencies between them
-# or do a tsort of input IDs for all dependencies of changed things?!
+# usage: ngram tsort id1 id2 id3 ...
+# usage as standard input pipe: ... | ngram tsort
+
 inputids=$(mktemp)
 if [ ! -z "$1" ]; then
   while [ ! -z "$1" ]; do
