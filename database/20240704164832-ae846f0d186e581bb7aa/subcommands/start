@@ -3,6 +3,11 @@
 # start running the command as a service
 # supports backing off to a maximum refresh interval if there are no changes
 
+for service in $(find $("$ngram_prog" query @service | awk '{ print "database/"$1 }') -type f -name run-service); do
+  echo "starting service $service" >/dev/stderr
+  "$service" &
+done
+
 MAX_LOOP_INTERVAL=10
 MIN_LOOP_INTERVAL=10
 interval=1
