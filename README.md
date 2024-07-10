@@ -80,6 +80,7 @@ start
 tag
 tagfiles
 tsort
+venv
 ```
 
 ## subcommand: checksums
@@ -106,6 +107,7 @@ Usage: ngram create  [ options ] directory
 Options:
     -t|--title) # set title in README of created data point
     -c|--clone) # clone from a template data point ID, bringing over all its files
+    -e|--venv) # start shell in a new virtual environment
     -v|--verbose)
     -h|--help)
 ```
@@ -224,6 +226,11 @@ Options:
 
 - do a topological sort of the input IDs based on their dependencies between them
 - or do a tsort of input IDs for all dependencies of changed things?!
+
+## subcommand: venv
+
+- launch a virtual environment where all shell variables are defined to support the ngram CLI
+- optional ID parameter or --latest to specify an ID for a working directory
 
 
 # Test Run Output
