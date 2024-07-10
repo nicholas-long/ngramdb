@@ -1,0 +1,16 @@
+#!/bin/bash
+
+filename="$1"
+export md5=$(md5sum "$filename" | awk '{print $1}')
+export command="md5sum \"$filename\" | awk '{print \$1}'"
+fswatch "$filename" | awk '
+{
+  system("sleep 1")
+  ENVIRON["command"] | getline
+  close(ENVIRON["command"])
+  if ($1 != ENVIRON["md5"]) {
+    print "File changed. Exiting..."
+    system("kill $(pgrep fswatch)")
+  }
+}
+'
