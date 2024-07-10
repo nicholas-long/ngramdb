@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# check if an Ngram ID has a tag
 tag="$1"
 id="$2"
 showhelp=0

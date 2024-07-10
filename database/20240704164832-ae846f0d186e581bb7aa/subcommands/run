@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# entrypoint to run one single cycle of ngram.
+# one cycle is defined as one pass over all IDs with programs that have dependencies that have changed since the last time the program was run.
+# returns a status code of 1 if nothing was run
 if [ "$1" == "--until-stable" ]; then
   while [ 1 ]; do
     echo Looping $(date)

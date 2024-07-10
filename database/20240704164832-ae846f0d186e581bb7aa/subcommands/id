@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# internal
+# generate a unique ID
+# optionally use a custom timestamp
 while [[ $# -gt 0 ]]; do
   case $1 in
     -d|--date) # provide a custom date to use as a timestamp within the ID
@@ -41,11 +44,10 @@ id=$($datecmd)
 randpart=$(cat /dev/urandom | head -c 10 | xxd -p)
 echo "${id}-${randpart}"
 
-#Some formatting options
-#
-#%b for abbreviated Month name: Jul
-#%B for full Month name: July
-#%a for abbreviated weekday name: Tue
-#%A for full weekday name: Tuesday
-#%d for day of month: 20
-#%Y for 4 character year: 1999
+# Some formatting options:
+# %b for abbreviated Month name: Jul
+# %B for full Month name: July
+# %a for abbreviated weekday name: Tue
+# %A for full weekday name: Tuesday
+# %d for day of month: 20
+# %Y for 4 character year: 1999

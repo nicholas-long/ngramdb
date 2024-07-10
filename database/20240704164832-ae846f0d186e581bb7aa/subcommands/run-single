@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# root run script for an ID
+# run a single ID, process all conditions, set environment, and perform all output logging as necessary.
 
 id="$1"
 # exported values in environment to be used by subcommands

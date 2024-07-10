@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# set the title of an Ngram data point
+# overwrites the first title in the README.md markdown file and the title field in the data.json file.
+
 while [[ $# -gt 0 ]]; do
   case $1 in
     -t|--title) # set or replace title in markdown file

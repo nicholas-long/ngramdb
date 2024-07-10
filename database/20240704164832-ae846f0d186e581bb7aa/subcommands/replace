@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# utility to replace a file
+# utility subcommand to replace a file.
+# use this when possible instead of shell redirection to avoid overwriting files until the program is complete.
+# example: echo ... | ngram replace datafile.dat
+
 if [ -z "$1" ]; then
   echo file argument required
   exit 1
