@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd $(dirname $0)
+find .. -type f >allfiles #| ngram replace allfiles
+
+awk '
+/\.js$/ { next }
+/\/run$/ { next }
+/\/node_modules\// { next }
+{ print }
+' allfiles.dat
+
+cat allfiles | jq -R . | jq -s > filepaths.json
+wc -l allfiles.dat filepaths.json
