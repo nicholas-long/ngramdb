@@ -113,6 +113,7 @@ Options:
     -t|--title) # set title in README of created data point
     -c|--clone) # clone from a template data point ID, bringing over all its files
     -e|--venv) # start shell in a new virtual environment
+    -j|--json) # provide input JSON data
     -v|--verbose)
     -h|--help)
 ```
