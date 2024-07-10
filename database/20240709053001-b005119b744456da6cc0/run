@@ -31,6 +31,8 @@ function generate_readme {
   echo
   echo '# Active Data Pipelines in the System'
   echo
+  echo Updating markdown graph of connections.
+  echo
   cat ../20240710043728-86ad27b18da4fa187615/graph.md
   echo
   echo '# Test Run Output'

@@ -1,5 +1,3 @@
-# automatically generated mermaid graph
-
 ```mermaid
 graph TD;
   test_scripts --> subcommand_implementations;

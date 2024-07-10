@@ -276,7 +276,7 @@ Options:
 
 # Active Data Pipelines in the System
 
-# automatically generated mermaid graph
+Updating markdown graph of connections.
 
 ```mermaid
 graph TD;

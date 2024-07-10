@@ -5,10 +5,6 @@
 cd $(dirname $0) # change to script directory
 
 function genmarkdown {
-  cat << EOF
-# automatically generated mermaid graph
-
-EOF
   echo '```mermaid'
   cat ./graph.mermaid
   echo '```'
