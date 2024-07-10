@@ -92,6 +92,7 @@ venv
 ## subcommand: cleanup
 
 - clean up empty directories
+- this is primarily for dealing with git leaving empty directories laying around when reverting changes
 
 ## subcommand: clear-logs
 
@@ -224,8 +225,10 @@ Options:
 
 ## subcommand: tsort
 
+- internal
 - do a topological sort of the input IDs based on their dependencies between them
-- or do a tsort of input IDs for all dependencies of changed things?!
+- usage: ngram tsort id1 id2 id3 ...
+- usage as standard input pipe: ... | ngram tsort
 
 ## subcommand: venv
 
