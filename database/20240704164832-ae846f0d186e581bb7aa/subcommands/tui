@@ -143,7 +143,7 @@ while [ 1 ]; do # main tui loop
     linkid=$(promptngram)
     if [ ! -z "$linkid" ]; then
       echo "" >> "$DOC"
-      echo "- [Ngram Linked ID $linkid](/database/$linkid/README.md)" >> "$DOC"
+      echo "- [Ngram Linked ID $linkid](/database/$linkid)" >> "$DOC"
     fi
   fi
 done
