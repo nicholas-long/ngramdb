@@ -120,7 +120,11 @@ while [ 1 ]; do # main tui loop
       echo EDITOR environment var is null. defaulting to vin
       export EDITOR=vim
     fi
-    tmux new-window "$EDITOR" "$DOC"
+    if [ ! -z "$selecteddoc" ]; then
+      tmux new-window "$EDITOR" "$selecteddoc"
+    else
+      tmux new-window "$EDITOR" "$DOC"
+    fi
   elif [ "$selectedcmd" = "COPY..." ]; then
     tac "$DOC" | fzf -m '--preview=echo {}' | tmux loadb -
   elif [ "$selectedcmd" = "EDITCLIP" ]; then
