@@ -1,0 +1,102 @@
+#!/bin/bash
+
+export DOC="README.md"
+
+mainlist=$(mktemp)
+ngram query --human > "$mainlist"
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --doc) # add tags inline
+      shift
+      if [ ! -z "$1"]; then
+        export DOC="$1"
+      fi
+      ;;
+    --id) # add tags inline
+      shift
+      if [ ! -z "$1"]; then
+        export DOC="database/$1/README.md"
+      fi
+      ;;
+    -v|--verbose)
+      VERBOSE=1
+      ;;
+    -h|--help)
+      echo "Usage: $(basename $ngram_prog) $(basename $0)  [ options ] directory"
+      echo "Options:"
+      cat "$0" | grep '^\s\+-.|--.*'
+      rm "$mainlist"
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+function menuoptions {
+  echo CREATE
+  echo EDIT "$DOC"
+  echo COPY...
+  echo COPYURL
+  echo TAB "$DOC"
+  if [ "$DOC" != "README.md" ]; then
+    id=$(echo "$DOC" | awk -F / '{print $2}')
+    for attachment in $(find $(dirname "$DOC") -type f); do
+      if ! grep ' ' <( echo "$attachment" ); then
+        echo "EDIT" "$attachment"
+      fi
+    done
+    gawk '
+      ARGIND == 1 { have[$1] = 1; next }
+      ARGIND > 1 && have[$1] { print "GOTO", "database/" $1 "/README.md", $0 }
+      ' <(ngram query id "$id" refs union <(ngram query id "$id" refsto) ) "$mainlist"
+    echo "BACK README.md go back to home"
+  else
+    awk '{ print "GOTO", "database/" $1 "/README.md", $0 }' "$mainlist"
+  fi
+  echo VENV
+  echo TAG
+  echo QUIT
+}
+
+if [ -z "$TMUX" ]; then
+  echo "launching TMUX" > /dev/stderr
+  rm "$mainlist"
+  tmux new -s ngram ngram tui
+  exit 0 # the child process is now the video process
+fi
+
+while [ 1 ]; do # main tui loop
+  currentid=$(echo "$DOC" | awk -F / '{print $2}')
+  selectionline=$(menuoptions | fzf '--preview=ngram tui-video {}')
+  if [ -z "$selectionline" ]; then
+    echo Adios
+    rm "$mainlist"
+    exit 1
+  fi
+  selectedcmd=$(echo "$selectionline" | awk '{ print $1 }')
+  selecteddoc=$(echo "$selectionline" | awk '{ print $2 }')
+  echo "$selectionline" >/dev/stderr # log
+  echo "$selectionline" >> .ngram.tui.rc # save command history
+
+  if [ "$selectedcmd" = "QUIT" ]; then
+    echo cya
+    rm "$mainlist"
+    exit 0
+  elif [ "$selectedcmd" = "GOTO" ]; then
+    export DOC="$selecteddoc"
+  elif [ "$selectedcmd" = "TAB" ]; then
+    tmux new-window ngram tui --doc "$selecteddoc"
+  elif [ "$selectedcmd" = "BACK" ]; then
+    export DOC="README.md"
+    echo "changing DOC back to $selecteddoc" >/dev/stderr
+  elif [ "$selectedcmd" = "VENV" ]; then
+    tmux new-window ngram venv "$currentid" >/dev/stderr
+  elif [ "$selectedcmd" = "EDIT" ]; then
+    if [ -z "$EDITOR" ]; then
+      echo EDITOR environment var is null. defaulting to vin
+      export EDITOR=vim
+    fi
+    tmux new-window "$EDITOR" "$DOC"
+  fi
+done

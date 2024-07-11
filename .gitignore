@@ -3,3 +3,4 @@
 #**/stdout.log
 **/stdout.log.gz
 **/.ngram.dependencies.hashes
+.ngram.tui.rc

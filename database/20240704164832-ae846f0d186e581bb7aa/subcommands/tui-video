@@ -1,0 +1,28 @@
+#!/bin/bash
+
+allarguments="$1" # the whole argument line from FZF comes in as one command
+
+selectedcmd=$(echo "$1" | awk '{ print $1 }')
+selecteddoc=$(echo "$1" | awk '{ print $2 }')
+
+if [ -z "$DOC" ]; then
+  echo "missing DOC environ var" >/dev/stderr
+  exit 1
+fi
+
+# specify if this should show the original document or a different one
+select=0
+
+echo Current Document: "$DOC"
+echo Previewing: "$selecteddoc"
+if [ "$selectedcmd" = "GOTO" ]; then
+  select=1
+elif [ "$selectedcmd" = "EDIT" ]; then
+  select=1
+fi
+
+if [ "$select" = 0 ]; then
+  bat --color=always "$DOC"
+else
+  bat --color=always "$selecteddoc"
+fi
