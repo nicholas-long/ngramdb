@@ -42,11 +42,14 @@ function menuoptions {
   echo EDITCLIP
   echo SAVECLIP
   echo COPY...
-  echo COPYURL
   echo "CHMOD+X"
   echo LINKDOC
   echo TAB "$DOC"
   if [ "$DOC" != "README.md" ]; then
+    echo COPYID
+    echo COPYURL
+    echo TAG
+    echo COPYCWD
     id=$(echo "$DOC" | awk -F / '{print $2}')
     for attachment in $(find $(dirname "$DOC") -type f); do
       if ! grep ' ' <( echo "$attachment" ); then
@@ -62,7 +65,6 @@ function menuoptions {
     awk '{ print "GOTO", "database/" $1 "/README.md", $0 }' <(ngram query --human)
   fi
   echo VENV
-  echo TAG
   echo QUIT
 }
 
@@ -158,5 +160,9 @@ while [ 1 ]; do # main tui loop
       read -p "Enter New Tag: " tag
     fi
     ngram tag -t "$tag" "$currentid"
+  elif [ "$selectedcmd" = "COPYID" ]; then
+    echo -n "$currentid" | tmux loadb -
+  elif [ "$selectedcmd" = "COPYCWD" ]; then
+    realpath $(dirname $DOC) | tmux loadb -
   fi
 done
