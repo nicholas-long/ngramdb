@@ -24,6 +24,8 @@
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/tag
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/tagfiles
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/tsort
+../20240704164832-ae846f0d186e581bb7aa/subcommands/tui
+../20240704164832-ae846f0d186e581bb7aa/subcommands/tui-video
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/venv
 ../20240704164832-ae846f0d186e581bb7aa/tags.ngram
 ../20240704164832-ae846f0d186e581bb7aa/topological-sort-for-run-command.md
@@ -108,3 +110,5 @@
 ../20240710071807-f6dc932b7c6ae12bc96c/stdout.log
 ../20240710071807-f6dc932b7c6ae12bc96c/stdout.log.gz
 ../20240710071807-f6dc932b7c6ae12bc96c/tags.ngram
+../20240711030030-e91e02723fbecc753ad9/README.md
+../20240711030030-e91e02723fbecc753ad9/data.json

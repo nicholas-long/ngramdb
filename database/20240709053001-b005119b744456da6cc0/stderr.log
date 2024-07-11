@@ -23,4 +23,6 @@ processing stubname
 processing tag
 processing tagfiles
 processing tsort
+processing tui
+processing tui-video
 processing venv

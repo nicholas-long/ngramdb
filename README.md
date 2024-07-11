@@ -83,6 +83,8 @@ stubname
 tag
 tagfiles
 tsort
+tui
+tui-video
 venv
 ```
 
@@ -270,6 +272,22 @@ Options:
 - usage: ngram tsort id1 id2 id3 ...
 - usage as standard input pipe: ... | ngram tsort
 
+## subcommand: tui
+
+- Terminal User Interface prompt with workflow shortcuts for working with Ngram
+- uses fzf for graphics
+
+```bash
+ngram tui --help
+Usage: ngram tui  [ options ] directory
+Options:
+    -v|--verbose)
+    -h|--help)
+```
+## subcommand: tui-video
+
+- specify if this should show the original document or a different one
+
 ## subcommand: venv
 
 - launch a virtual environment where all shell variables are defined to support the ngram CLI
@@ -334,4 +352,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
