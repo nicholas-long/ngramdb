@@ -59,7 +59,7 @@ function menuoptions {
       ' <(ngram query id "$id" refs union <(ngram query id "$id" refsto) ) "$mainlist"
     echo "BACK README.md go back to home"
   else
-    awk '{ print "GOTO", "database/" $1 "/README.md", $0 }' "$mainlist"
+    awk '{ print "GOTO", "database/" $1 "/README.md", $0 }' <(ngram query --human)
   fi
   echo VENV
   echo TAG
