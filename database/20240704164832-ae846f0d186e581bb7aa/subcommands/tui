@@ -36,8 +36,11 @@ done
 function menuoptions {
   echo CREATE
   echo EDIT "$DOC"
+  echo EDITCLIP
+  echo SAVECLIP
   echo COPY...
   echo COPYURL
+  echo "CHMOD+X"
   echo TAB "$DOC"
   if [ "$DOC" != "README.md" ]; then
     id=$(echo "$DOC" | awk -F / '{print $2}')
@@ -57,6 +60,11 @@ function menuoptions {
   echo VENV
   echo TAG
   echo QUIT
+}
+
+function promptfile {
+  d=$(dirname "$DOC")
+  find "$d" -type f | fzf
 }
 
 if [ -z "$TMUX" ]; then
@@ -98,5 +106,23 @@ while [ 1 ]; do # main tui loop
       export EDITOR=vim
     fi
     tmux new-window "$EDITOR" "$DOC"
+  elif [ "$selectedcmd" = "COPY..." ]; then
+    tac "$DOC" | fzf -m '--preview=echo {}' | tmux loadb -
+  elif [ "$selectedcmd" = "EDITCLIP" ]; then
+    tf=$(mktemp)
+    tmux saveb $tf
+    "$EDITOR" $tf
+    tmux loadb $tf
+  elif [ "$selectedcmd" = "SAVECLIP" ]; then
+    read -p "Enter filename: " inputfilename
+    curdir=$(dirname "$DOC")
+    tmux saveb "$curdir/${inputfilename}"
+  elif [ "$selectedcmd" = "CHMOD+X" ]; then
+    fn=$(promptfile)
+    echo "executable file prompt $fn" >/dev/stderr
+    if [ ! -z "$fn" ]; then
+      echo "executable file change $fn" >/dev/stderr
+      chmod +x "$fn"
+    fi
   fi
 done

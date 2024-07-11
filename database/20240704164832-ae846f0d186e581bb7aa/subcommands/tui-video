@@ -13,14 +13,20 @@ fi
 # specify if this should show the original document or a different one
 select=0
 
-echo Current Document: "$DOC"
-echo Previewing: "$selecteddoc"
 if [ "$selectedcmd" = "GOTO" ]; then
   select=1
 elif [ "$selectedcmd" = "EDIT" ]; then
   select=1
+elif [ "$selectedcmd" = "EDITCLIP" ]; then
+  tmux saveb - # print tmux clipboard
+  exit 0
+elif [ "$selectedcmd" = "SAVECLIP" ]; then
+  tmux saveb - # print tmux clipboard
+  exit 0
 fi
 
+echo Current Document: "$DOC"
+echo Previewing: "$selecteddoc"
 if [ "$select" = 0 ]; then
   bat --color=always "$DOC"
 else
