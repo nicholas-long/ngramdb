@@ -51,6 +51,7 @@ Queries are possible using a simple query engine that supports traversing graphs
 
 ## CLI help
 
+- [Subcommand Implementations](/database/20240704164832-ae846f0d186e581bb7aa/README.md)
 Automatically generated help documentation:
 
 
@@ -333,3 +334,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
