@@ -145,5 +145,8 @@ while [ 1 ]; do # main tui loop
       echo "" >> "$DOC"
       echo "- [Ngram Linked ID $linkid](/database/$linkid)" >> "$DOC"
     fi
+  elif [ "$selectedcmd" = "CREATE" ]; then
+    read -p "Title: " title
+    tmux new-window ngram create -t "$title" --venv
   fi
 done
