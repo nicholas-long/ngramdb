@@ -51,5 +51,6 @@ Queries are possible using a simple query engine that supports traversing graphs
 
 ## CLI help
 
+- [Subcommand Implementations](/database/20240704164832-ae846f0d186e581bb7aa/README.md)
 Automatically generated help documentation:
 
