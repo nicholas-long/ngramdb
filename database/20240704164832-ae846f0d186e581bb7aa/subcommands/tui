@@ -152,5 +152,11 @@ while [ 1 ]; do # main tui loop
   elif [ "$selectedcmd" = "CREATE" ]; then
     read -p "Title: " title
     tmux new-window ngram create -t "$title" --venv
+  elif [ "$selectedcmd" = "TAG" ]; then
+    tag=$(cat $(ngram tagfiles) | sort -u | fzf)
+    if [ -z "$tag" ]; then
+      read -p "Enter New Tag: " tag
+    fi
+    ngram tag -t "$tag" "$currentid"
   fi
 done
