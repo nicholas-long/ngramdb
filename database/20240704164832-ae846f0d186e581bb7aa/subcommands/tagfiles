@@ -3,4 +3,4 @@
 # internal
 # list all tag files present
 
-find database -name "$NGRAM_TAG_FILE" | awk -F / 'NF == 3' | sort
+cd "$ngram_root_dir" && find database -name "$NGRAM_TAG_FILE" | awk -F / 'NF == 3' | sort
