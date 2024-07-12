@@ -2,7 +2,8 @@
 
 - [x] run
 - [x] fix hastag and tag
-- [ ] git command"?
+- [x] git command"
 - [ ] list of "integrations" - places to bring in files from
+- [ ] simple web server to serve static files instead of watching for filesystem changes?
 
 - there should be a convention like no file paths on stdout

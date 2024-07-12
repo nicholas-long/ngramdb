@@ -1,6 +1,7 @@
 # NgramDB Project
 
 ## what is NgramDB...
+
 This is kind of a graph database.
 This is kind of a framework.
 This is kind of an organizational system.
@@ -17,6 +18,7 @@ Modifications to the data files referenced by executable programs within these d
 ## Programs
 Programs can generate one or more output files, in addition to the default behavior of logging to standard output and stderr log files within their own directory during every run.
 The most recent standard output from a run of a program is stored in a file `stdout.log` which is also data that can be reused within the system.
+- [Interactively generating this readme for the project](/database/20240709053001-b005119b744456da6cc0)
 
 ## Datapoint Program Conventions
 By convention, a datapoint program should produce consistent standard output results. If the standard output changes, it will trigger frequent downstream reruns.
@@ -48,6 +50,8 @@ Queries are possible using a simple query engine that supports traversing graphs
 # run continuously in a loop
 ./ngram start
 ```
+
+- [Improvements on the horizon](/database/20240712005430-5afb3d6fbd05ebc95616)
 
 ## CLI help
 
