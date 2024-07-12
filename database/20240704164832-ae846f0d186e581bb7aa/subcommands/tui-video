@@ -26,6 +26,9 @@ elif [ "$selectedcmd" = "SAVECLIP" ]; then
 elif [ "$selectedcmd" = "RUNBATCH" ]; then
   echo Batch Run
   ngram tsort $(ngram ls)
+  exit 0
+elif [ "$selectedcmd" = "GIT" ]; then
+  git status
 fi
 
 echo Current Document: "$DOC"

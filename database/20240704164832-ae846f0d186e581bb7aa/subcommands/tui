@@ -66,6 +66,7 @@ function menuoptions {
   fi
   echo VENV
   echo RUNBATCH
+  echo GIT
   echo QUIT
 }
 
@@ -167,5 +168,10 @@ while [ 1 ]; do # main tui loop
     realpath $(dirname $DOC) | tmux loadb -
   elif [ "$selectedcmd" = "RUNBATCH" ]; then
     "$ngram_prog" run
+  elif [ "$selectedcmd" = "GIT" ]; then
+    if which lazygit
+    then lazygit
+    else git log
+    fi
   fi
 done
