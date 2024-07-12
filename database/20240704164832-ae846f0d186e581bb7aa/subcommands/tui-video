@@ -3,7 +3,7 @@
 allarguments="$1" # the whole argument line from FZF comes in as one command
 
 selectedcmd=$(echo "$1" | awk '{ print $1 }')
-selecteddoc=$(echo "$1" | awk '{ print $2 }')
+selecteddoc=$(echo "$1" | awk '{ print $NF }')
 
 if [ -z "$DOC" ]; then
   echo "missing DOC environ var" >/dev/stderr
