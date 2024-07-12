@@ -65,6 +65,7 @@ function menuoptions {
     awk '{ print "GOTO", "database/" $1 "/README.md", $0 }' <(ngram query --human)
   fi
   echo VENV
+  echo RUNBATCH
   echo QUIT
 }
 
@@ -164,5 +165,7 @@ while [ 1 ]; do # main tui loop
     echo -n "$currentid" | tmux loadb -
   elif [ "$selectedcmd" = "COPYCWD" ]; then
     realpath $(dirname $DOC) | tmux loadb -
+  elif [ "$selectedcmd" = "RUNBATCH" ]; then
+    "$ngram_prog" run
   fi
 done

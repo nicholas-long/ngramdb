@@ -23,6 +23,9 @@ elif [ "$selectedcmd" = "EDITCLIP" ]; then
 elif [ "$selectedcmd" = "SAVECLIP" ]; then
   tmux saveb - # print tmux clipboard
   exit 0
+elif [ "$selectedcmd" = "RUNBATCH" ]; then
+  echo Batch Run
+  ngram tsort $(ngram ls)
 fi
 
 echo Current Document: "$DOC"
