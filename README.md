@@ -140,7 +140,7 @@ Options:
 
 ```bash
 ngram hastag --help
-usage /Users/coyote/ngramdb/ngram hastag tagquery 20240704164832-ae846f0d186e581bb7aa
+usage ngram hastag tagquery 20240704164832-ae846f0d186e581bb7aa
 ```
 ## subcommand: id
 
@@ -252,7 +252,7 @@ Options:
 
 ```bash
 ngram tag --help
-Usage: /Users/coyote/ngramdb/database/20240704164832-ae846f0d186e581bb7aa/subcommands/tag [ options ] directory
+Usage: ngram tag [ options ] directory
 Options:
     -l|--list) # list tags for ID
     -t|--tag) # add tag

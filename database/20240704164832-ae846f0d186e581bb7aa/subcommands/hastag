@@ -14,7 +14,7 @@ if [ "$tag" == "--help" ]; then
   showhelp=1
 fi
 if [ "$showhelp" = "1" ]; then
-  echo usage $ngram_prog hastag tagquery 20240704164832-ae846f0d186e581bb7aa
+  echo usage $(basename $ngram_prog) hastag tagquery 20240704164832-ae846f0d186e581bb7aa
   exit 1
 fi
 tagfile="database/$id/$NGRAM_TAG_FILE"
