@@ -52,11 +52,11 @@ function menuoptions {
     done
     gawk '
       ARGIND == 1 { have[$1] = 1; next }
-      ARGIND > 1 && have[$1] { print "GOTO", "database/" $1 "/README.md", $0 }
+      ARGIND > 1 && have[$1] { id=$1;$1="";print "GOTO", $0, "database/" id "/README.md" }
       ' <(ngram query id "$id" refs union <(ngram query id "$id" refsto) ) <(ngram query --human)
     echo "BACK README.md go back to home"
   else
-    awk '{ print "GOTO", "database/" $1 "/README.md", $0 }' <(ngram query --human | tac | awk '{NF++;$NF=$1;$1="";print}')
+    awk '{ id=$1;$1="";print "GOTO", $0, "database/" id "/README.md" }' <(ngram query --human | tac)
   fi
   echo LINKDOC
   echo EDITCLIP
