@@ -39,12 +39,6 @@ function menuoptions {
   echo EDIT "$DOC"
   echo CREATE
   echo COPY...
-  echo LINKDOC
-  echo EDITCLIP
-  echo SAVECLIP
-  echo DIAG
-  echo "CHMOD+X"
-  echo TAB "$DOC"
   if [ "$DOC" != "README.md" ]; then
     echo COPYID
     echo COPYURL
@@ -62,8 +56,14 @@ function menuoptions {
       ' <(ngram query id "$id" refs union <(ngram query id "$id" refsto) ) <(ngram query --human)
     echo "BACK README.md go back to home"
   else
-    awk '{ print "GOTO", "database/" $1 "/README.md", $0 }' <(ngram query --human)
+    awk '{ print "GOTO", "database/" $1 "/README.md", $0 }' <(ngram query --human | tac)
   fi
+  echo LINKDOC
+  echo EDITCLIP
+  echo SAVECLIP
+  echo DIAG
+  echo "CHMOD+X"
+  echo TAB "$DOC"
   echo VENV
   echo RUNBATCH
   echo GIT
