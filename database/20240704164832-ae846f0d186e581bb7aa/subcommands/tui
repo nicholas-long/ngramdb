@@ -37,13 +37,13 @@ while [[ $# -gt 0 ]]; do
 done
 
 function menuoptions {
-  echo CREATE
   echo EDIT "$DOC"
+  echo CREATE
+  echo COPY...
+  echo LINKDOC
   echo EDITCLIP
   echo SAVECLIP
-  echo COPY...
   echo "CHMOD+X"
-  echo LINKDOC
   echo TAB "$DOC"
   if [ "$DOC" != "README.md" ]; then
     echo COPYID
