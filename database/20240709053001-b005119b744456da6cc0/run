@@ -47,4 +47,5 @@ function generate_readme {
 
 generate_readme | ngram replace "$READMEFILE"
 
-wc -l "$READMEFILE"
+echo Total Lines
+wc -l "$READMEFILE" | awk '{print $1}'
