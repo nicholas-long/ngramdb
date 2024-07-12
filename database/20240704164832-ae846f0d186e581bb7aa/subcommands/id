@@ -27,16 +27,25 @@ while [[ $# -gt 0 ]]; do
 done
 #date -u -j -f '%Y-%m-%dT%H:%M:%S' '+%Y%m%d%H%M%S' '2020-01-01T10:36:04Z'
 
-if [ ! -z "$customdate" ]; then
-  datecmd="/bin/date -u -j"
-  if [ ! -z "$dateformat" ]; then
-    datecmd="$datecmd -f '$dateformat' '+%Y%m%d%H%M%S'"
-  else
-    datecmd="$datecmd -f '%Y-%m-%dT%H:%M:%S' +%Y%m%d%H%M%S"
+
+if [[ $(uname) =~ Linux ]]; then
+  if [ ! -z "$customdate" ]; then
+    datecmd="/bin/date +%Y%m%d%H%M%S --date $customdate"
+  else # not a custom date
+    datecmd="/bin/date +%Y%m%d%H%M%S"
   fi
-  datecmd="$datecmd '$customdate'"
-else # not a custom date
-  datecmd="/bin/date -u +%Y%m%d%H%M%S"
+else
+  if [ ! -z "$customdate" ]; then
+    datecmd="/bin/date -u -j"
+    if [ ! -z "$dateformat" ]; then
+      datecmd="$datecmd -f '$dateformat' '+%Y%m%d%H%M%S'"
+    else
+      datecmd="$datecmd -f '%Y-%m-%dT%H:%M:%S' +%Y%m%d%H%M%S"
+    fi
+    datecmd="$datecmd '$customdate'"
+  else # not a custom date
+    datecmd="/bin/date -u +%Y%m%d%H%M%S"
+  fi
 fi
 
 [ "$VERBOSE" = "1" ] && echo "$datecmd" >/dev/stderr
