@@ -3,14 +3,18 @@
 # Terminal User Interface prompt with workflow shortcuts for working with Ngram
 # uses fzf for graphics
 
+if [ -z "$DOC" ]; then
+  export DOC="README.md"
+fi
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --doc) # select document to launch - use to pass args to new tmux windows
       shift
-      if [ ! -z "$1"]; then
-        export DOC="$1"
-      fi
+      echo "parsing doc $1" >> diag
+      export DOC="$1"
+      #if [ -e "$1"]; then
+      #fi
       ;;
     --id) # add tags inline
       shift
@@ -38,6 +42,7 @@ function menuoptions {
   echo LINKDOC
   echo EDITCLIP
   echo SAVECLIP
+  echo DIAG
   echo "CHMOD+X"
   echo TAB "$DOC"
   if [ "$DOC" != "README.md" ]; then
@@ -83,13 +88,13 @@ function promptngram {
 
 if [ -z "$TMUX" ]; then
   echo "launching TMUX" > /dev/stderr
-  tmux new -s ngram ngram tui
+  tmux new -s ngram "$ngram_prog" tui
   exit 0 # the child process is now the video process
 fi
 
 while [ 1 ]; do # main tui loop
   currentid=$(echo "$DOC" | awk -F / '{print $2}')
-  selectionline=$(menuoptions | fzf '--preview=ngram tui-video {}')
+  selectionline=$(menuoptions | fzf "--preview=$ngram_prog tui-video {}")
   if [ -z "$selectionline" ]; then
     echo Adios
     exit 1
@@ -105,7 +110,8 @@ while [ 1 ]; do # main tui loop
   elif [ "$selectedcmd" = "GOTO" ]; then
     export DOC="$selecteddoc"
   elif [ "$selectedcmd" = "TAB" ]; then
-    tmux new-window ngram tui --doc "$selecteddoc"
+    echo tmux new-window ngram tui --doc "$selecteddoc" >/dev/stderr
+    tmux new-window "$ngram_prog" tui --doc "$selecteddoc"
   elif [ "$selectedcmd" = "BACK" ]; then
     export DOC="README.md"
     echo "changing DOC back to $DOC" >/dev/stderr
@@ -165,5 +171,8 @@ while [ 1 ]; do # main tui loop
     then lazygit
     else git log
     fi
+  elif [ "$selectedcmd" = "DIAG" ]; then
+    env
+    sleep 10
   fi
 done

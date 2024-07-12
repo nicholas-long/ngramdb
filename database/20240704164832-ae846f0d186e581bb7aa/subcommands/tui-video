@@ -29,6 +29,10 @@ elif [ "$selectedcmd" = "RUNBATCH" ]; then
   exit 0
 elif [ "$selectedcmd" = "GIT" ]; then
   git status
+  exit 0
+elif [ "$selectedcmd" = "DIAG" ]; then
+  env
+  exit 0
 fi
 
 echo Current Document: "$DOC"
