@@ -11,7 +11,6 @@ while [[ $# -gt 0 ]]; do
   case $1 in
     --doc) # select document to launch - use to pass args to new tmux windows
       shift
-      echo "parsing doc $1" >> diag
       export DOC="$1"
       #if [ -e "$1"]; then
       #fi
