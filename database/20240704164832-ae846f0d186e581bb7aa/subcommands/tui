@@ -47,7 +47,7 @@ function menuoptions {
     id=$(echo "$DOC" | awk -F / '{print $2}')
     for attachment in $(find $(dirname "$DOC") -type f); do
       if ! grep ' ' <( echo "$attachment" ); then
-        echo "EDIT" "$attachment"
+        echo "EDIT" $(basename "$attachment") "$attachment"
       fi
     done
     gawk '
