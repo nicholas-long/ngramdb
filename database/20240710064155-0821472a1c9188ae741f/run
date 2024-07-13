@@ -4,7 +4,7 @@
 # set locale for sort ordering
 export LC_LOCALE=C
 cd $(dirname $0)
-find .. -type f | sort > allfiles.dat #| ngram replace allfiles
+find .. -type f | awk -F / 'NF == 3' | sort > allfiles.dat #| ngram replace allfiles.dat
 
 awk '
 /\.js$/ { next }
