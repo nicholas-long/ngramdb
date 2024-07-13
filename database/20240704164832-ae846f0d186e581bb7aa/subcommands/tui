@@ -38,17 +38,19 @@ function menuoptions {
   echo EDIT "$DOC"
   echo CREATE
   echo COPY...
+  echo "EDIT.."
+  echo "EDIT..."
   if [ "$DOC" != "README.md" ]; then
     echo COPYID
     echo COPYURL
     echo TAG
     echo COPYCWD
     id=$(echo "$DOC" | awk -F / '{print $2}')
-    for attachment in $(find $(dirname "$DOC") -type f); do
-      if ! grep ' ' <( echo "$attachment" ); then
-        echo "EDIT" $(basename "$attachment") "$attachment"
-      fi
-    done
+    #for attachment in $(find $(dirname "$DOC") -type f); do
+    #  if ! grep ' ' <( echo "$attachment" ); then
+    #    echo "EDIT" $(basename "$attachment") "$attachment"
+    #  fi
+    #done
     gawk '
       ARGIND == 1 { have[$1] = 1; next }
       ARGIND > 1 && have[$1] { id=$1;$1="";print "GOTO", $0, "database/" id "/README.md" }
@@ -173,5 +175,10 @@ while [ 1 ]; do # main tui loop
   elif [ "$selectedcmd" = "DIAG" ]; then
     env
     sleep 10
+  elif [ "$selectedcmd" = "EDIT.." ]; then
+    export dir=$(dirname "$DOC")
+    ls $(dirname "$DOC") | fzf -m '--preview=bat {}' | awk '{print ENVIRON["dir"] "/" $1}' | xargs -o $EDITOR -p
+  elif [ "$selectedcmd" = "EDIT..." ]; then
+    find $(dirname "$DOC") -type f | fzf -m '--preview=bat {}' | xargs -o $EDITOR -p
   fi
 done

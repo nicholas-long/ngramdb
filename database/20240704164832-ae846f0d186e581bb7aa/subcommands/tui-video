@@ -33,6 +33,12 @@ elif [ "$selectedcmd" = "GIT" ]; then
 elif [ "$selectedcmd" = "DIAG" ]; then
   env
   exit 0
+elif [ "$selectedcmd" = "EDIT.." ]; then
+  ls $(dirname "$DOC")
+  exit 0
+elif [ "$selectedcmd" = "EDIT..." ]; then
+  find $(dirname "$DOC") -type f
+  exit 0
 fi
 
 echo Current Document: "$DOC"
