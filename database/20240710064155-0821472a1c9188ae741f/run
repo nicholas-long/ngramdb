@@ -11,7 +11,6 @@ awk '
 /\/run$/ { next }
 /\/node_modules\// { next }
 { print }
-' allfiles.dat > filtered.dat
+' allfiles.dat | jq -R . | jq -s > filepaths.json
 
-cat filtered.dat | jq -R . | jq -s > filepaths.json
-wc -l allfiles.dat filtered.dat filepaths.json
+wc -l allfiles.dat filepaths.json
