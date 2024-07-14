@@ -1,0 +1,5 @@
+#!/bin/bash
+
+url="$1"
+echo PROCESING WORK ITEM $url
+curl "$1" | exiftool -
