@@ -172,7 +172,7 @@ while [ 1 ]; do # main tui loop
     sleep 10
   elif [ "$selectedcmd" = "EDIT.." ]; then
     export dir=$(dirname "$DOC")
-    ls $(dirname "$DOC") | fzf -m '--preview=bat {}' | awk '{print ENVIRON["dir"] "/" $1}' | xargs -o $EDITOR -p
+    ls $(dirname "$DOC") | fzf -m "--preview=bat --color=always database/$currentid/{}" | awk '{print ENVIRON["dir"] "/" $1}' | xargs -o $EDITOR -p
   elif [ "$selectedcmd" = "EDIT..." ]; then
     find $(dirname "$DOC") -type f | fzf -m '--preview=bat {}' | xargs -o $EDITOR -p
   elif [ "$selectedcmd" = "COPYURL" ]; then
