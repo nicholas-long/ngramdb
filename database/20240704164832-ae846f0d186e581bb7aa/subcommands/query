@@ -83,14 +83,10 @@ while [[ $# -gt 0 ]]; do
       done | sort -u | "$ngram_prog" replace "$workingset"
       ;;
     json) # return all data.json files in the working set appended together as a JSON array
-      optionaljq=""
-      if [ -z "$2" ]; then
-        optionaljq="| jq -c '$2'" # command injection?
-      fi
       for id in $(cat "$workingset"); do
         jsonfile="database/$id/data.json"
         if [ -f "$jsonfile" ]; then
-          cat "$jsonfile"
+          cat "$jsonfile" | jq -c "._ngram_id=\"$id\""
         fi
       done | jq -c -s . | if [ ! -z "$2" ]; then
         jq -c $3 $4 "$2"
