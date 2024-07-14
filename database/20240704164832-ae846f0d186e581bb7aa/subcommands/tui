@@ -82,6 +82,10 @@ function promptngram {
   fi
 }
 
+function prompttemplate {
+  ngram query --human @template | fzf | awk '{print $1}' # list all templates
+}
+
 if [ -z "$TMUX" ]; then
   echo "launching TMUX" > /dev/stderr
   tmux new -s ngram "$ngram_prog" tui
@@ -149,7 +153,12 @@ while [ 1 ]; do # main tui loop
     fi
   elif [ "$selectedcmd" = "CREATE" ]; then
     read -p "Title: " title
-    tmux new-window ngram create -t "$title" --venv
+    templ=$(prompttemplate)
+    if [ ! -z "$templ" ]; then
+      tmux new-window ngram create -t "$title" --venv --clone "$templ"
+    else
+      tmux new-window ngram create -t "$title" --venv
+    fi
   elif [ "$selectedcmd" = "TAG" ]; then
     tag=$(cat $(ngram tagfiles) | sort -u | fzf)
     if [ -z "$tag" ]; then
