@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd $(dirname $0)
+ngram query @template > templates.dat
+
+for id in $(cat templates.dat); do
+  if ! grep $id README.md; then
+    echo "- [template](/database/$id)" >> README.md
+  fi
+done

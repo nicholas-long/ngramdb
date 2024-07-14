@@ -3,38 +3,38 @@ cat: output.gz: No such file or directory
 gzip: stdin: unexpected end of file
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  4955  100  4955    0     0  15812      0 --:--:-- --:--:-- --:--:-- 15881
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   333  100   333    0     0   1216      0 --:--:-- --:--:-- --:--:--  1219
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0 39  117k   39 47809    0     0   140k      0 --:--:-- --:--:-- --:--:--  141k
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  4955  100  4955    0     0   9062      0 --:--:-- --:--:-- --:--:--  9058
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0 41  117k   41 49169    0     0  84464      0  0:00:01 --:--:--  0:00:01 84482
 curl: (23) Failure writing output to destination
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0 35  194k   35 69756    0     0   177k      0  0:00:01 --:--:--  0:00:01  178k
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0 35  194k   35 69756    0     0   108k      0  0:00:01 --:--:--  0:00:01  108k
 curl: (23) Failure writing output to destination
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   333  100   333    0     0    790      0 --:--:-- --:--:-- --:--:--   790
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  9799  100  9799    0     0  18391      0 --:--:-- --:--:-- --:--:-- 18419
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  9799  100  9799    0     0  26659      0 --:--:-- --:--:-- --:--:-- 26700
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  2 2344k    2 56136    0     0   126k      0  0:00:18 --:--:--  0:00:18  126k
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  1 2344k    1 42333    0     0   106k      0  0:00:21 --:--:--  0:00:21  107k
 curl: (23) Failure writing output to destination
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0 12  815k   12  101k    0     0   209k      0  0:00:03 --:--:--  0:00:03  209k
-curl: (23) Failure writing output to destination
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   245  100   245    0     0    635      0 --:--:-- --:--:-- --:--:--   636
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   301  100   301    0     0    805      0 --:--:-- --:--:-- --:--:--   809
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 19557  100 19557    0     0  51873      0 --:--:-- --:--:-- --:--:-- 52013
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  5  815k    5 48692    0     0   108k      0  0:00:07 --:--:--  0:00:07  109k  7  815k    7 59879    0     0   132k      0  0:00:06 --:--:--  0:00:06  132k
+curl: (23) Failure writing output to destination
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   245  100   245    0     0    870      0 --:--:-- --:--:-- --:--:--   875
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   301  100   301    0     0   1194      0 --:--:-- --:--:-- --:--:--  1194
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 19557  100 19557    0     0  45162      0 --:--:-- --:--:-- --:--:-- 45166
