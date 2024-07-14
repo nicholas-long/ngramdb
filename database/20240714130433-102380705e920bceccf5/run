@@ -6,6 +6,7 @@ cd $(dirname $0)
 # remove them from the worklist and start processing each line.
 gawk '
   ARGIND == 1 { done[$1] = 1 ; next }
-  ARGIND > 1 && !done[$1] { print "./process-item", $1 }
+  ARGIND > 1 && !done[$1] { print "./process-item", $1 ; printed++ }
+  printed > 10 { exit 0 } # stop early after a certain number of items
 ' <( cat output.gz | gzip -d - | awk '/^PROCESING WORK ITEM/ {print $NF}' ) worklist |\
 parallel

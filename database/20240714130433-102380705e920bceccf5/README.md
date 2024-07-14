@@ -7,4 +7,7 @@
   - building this list
 ```bash
 grep -R https /usr/share/exploitdb/exploits/ | url-scrape > worklist
+# find all of them that look like file extensions to download
+mv worklist fulllist
+awk '/^http.....*\/.*\.[a-z][a-z]*$/' fulllist > worklist
 ```
