@@ -38,19 +38,14 @@ function menuoptions {
   echo EDIT "$DOC"
   echo CREATE
   echo COPY...
-  echo "EDIT.."
-  echo "EDIT..."
+  echo EDITCLIP
+  echo SAVECLIP
   if [ "$DOC" != "README.md" ]; then
     echo COPYID
     echo COPYURL
     echo TAG
     echo COPYCWD
     id=$(echo "$DOC" | awk -F / '{print $2}')
-    #for attachment in $(find $(dirname "$DOC") -type f); do
-    #  if ! grep ' ' <( echo "$attachment" ); then
-    #    echo "EDIT" $(basename "$attachment") "$attachment"
-    #  fi
-    #done
     gawk '
       ARGIND == 1 { have[$1] = 1; next }
       ARGIND > 1 && have[$1] { id=$1;$1="";print "GOTO", $0, "database/" id "/README.md" }
@@ -59,9 +54,9 @@ function menuoptions {
   else
     awk '{ id=$1;$1="";print "GOTO", $0, "database/" id "/README.md" }' <(ngram query --human | tac)
   fi
+  echo "EDIT.."
+  echo "EDIT..."
   echo LINKDOC
-  echo EDITCLIP
-  echo SAVECLIP
   echo DIAG
   echo "CHMOD+X"
   echo TAB "$DOC"
@@ -180,5 +175,10 @@ while [ 1 ]; do # main tui loop
     ls $(dirname "$DOC") | fzf -m '--preview=bat {}' | awk '{print ENVIRON["dir"] "/" $1}' | xargs -o $EDITOR -p
   elif [ "$selectedcmd" = "EDIT..." ]; then
     find $(dirname "$DOC") -type f | fzf -m '--preview=bat {}' | xargs -o $EDITOR -p
+  elif [ "$selectedcmd" = "COPYURL" ]; then
+    #zet/20231112170729/git-remote-url "$doc" | tmux loadb -
+    export url=$(git remote get-url $(git remote | head -n 1))
+    export branch=$(git branch | awk '/^*/ {print $NF}')
+    echo "$url/blob/$branch/database/$currentid" | tmux loadb -
   fi
 done
