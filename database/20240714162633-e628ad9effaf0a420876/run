@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cd $(dirname $0)
+# produce example json : list of templates
+ngram query @template json | tee templates.json
+
+# TODO: change this line or make it configurable to select columns
+cat templates.json | jq '.[]' | jq -r '._ngram_id,.title' | paste - - > content.tsv
+
+rm database.db
+sqlite3 database.db 'create table nodetitles(id text, title text)'
+cat << EOF | sqlite3 database.db
+.mode tabs
+.import content.tsv nodetitles
+EOF
+echo "testing query:"
+sqlite3 database.db 'select * from nodetitles'
