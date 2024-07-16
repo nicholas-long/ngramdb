@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd $(dirname $0)
 export LC_LOCALE=C # for sort ordering
 grep -R 'ngram.*query.*@' ../20240704164832-ae846f0d186e581bb7aa | sort
 grep -R 'ngram.*hastag' ../20240704164832-ae846f0d186e581bb7aa | sort
