@@ -50,6 +50,7 @@ done
 id=$("$ngram_prog" id)
 dir="$ngram_root_dir/database/$id"
 
+# TODO: if there's a template that's linked to this template ID we're cloning then clone it too?
 if [ ! -z "$cloneid" ]; then # if there's a template ID to clone from
   cp -r "$ngram_root_dir/database/$cloneid" "$dir"
   "$ngram_prog" tag -d template "$id" # remove "template" tag after creation from a template
