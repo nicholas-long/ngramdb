@@ -64,6 +64,7 @@ function menuoptions {
   echo VENV
   echo RUNBATCH
   echo GIT
+  echo CLEANUP
   echo QUIT
 }
 
@@ -194,5 +195,7 @@ while [ 1 ]; do # main tui loop
     read -p "Title: " title
     newid=$("$ngram_prog" create -t "$title" --clone "$currentid" --tag template)
     export DOC="database/$newid/README.md"
+  elif [ "$selectedcmd" = "CLEANUP" ]; then
+    "$ngram_prog" cleanup
   fi
 done

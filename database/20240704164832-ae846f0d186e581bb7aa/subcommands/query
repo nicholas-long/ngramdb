@@ -17,8 +17,8 @@ while [[ $# -gt 0 ]]; do
       shift
       "$ngram_prog" query "$@" | awk '
       { 
-        command = "head -n 1 database/" $1 "/README.md"
-        command | getline title
+        command = "head -n 1 database/" $1 "/README.md 2>/dev/null"
+        if (!(command | getline title)) { title="---" }
         gsub(/^#* /, "", title)
         print $0, title
         close(command)
