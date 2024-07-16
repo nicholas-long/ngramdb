@@ -22,9 +22,11 @@ didntrunanything=1
 
 # run all IDs in topological order
 for id in $( "$ngram_prog" find-executable database -type f -name run | awk -F / 'NF == 3 { print $2 }' | sort -u | xargs "$ngram_prog" tsort); do
-  "$ngram_prog" run-single "$id"
-  if [ "$?" = "0" ]; then
-    didntrunanything=0
+  if ! "$ngram_prog" hastag template "$id"; then
+    "$ngram_prog" run-single "$id"
+    if [ "$?" = "0" ]; then
+      didntrunanything=0
+    fi
   fi
 done
 
