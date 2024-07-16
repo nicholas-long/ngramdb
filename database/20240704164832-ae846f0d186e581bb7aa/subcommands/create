@@ -52,6 +52,7 @@ dir="$ngram_root_dir/database/$id"
 
 if [ ! -z "$cloneid" ]; then # if there's a template ID to clone from
   cp -r "$ngram_root_dir/database/$cloneid" "$dir"
+  "$ngram_prog" tag -d template "$id" # remove "template" tag after creation from a template
   # TODO: check ID
 else
   mkdir -p "$dir"
