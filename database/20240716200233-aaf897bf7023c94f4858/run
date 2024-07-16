@@ -2,6 +2,16 @@
 
 cd $(dirname $0)
 export LC_LOCALE=C # for sort ordering
+
+echo possible query usages:
 grep -R 'ngram.*query.*@' ../20240704164832-ae846f0d186e581bb7aa | sort
+
+echo
+
+echo possible hastag usages:
 grep -R 'ngram.*hastag' ../20240704164832-ae846f0d186e581bb7aa | sort
 
+echo
+
+echo "List of all tags:"
+cd "$ngram_script_dir" && cat $(ngram tagfiles) | sort -u

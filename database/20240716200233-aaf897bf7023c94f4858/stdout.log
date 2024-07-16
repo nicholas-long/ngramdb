@@ -1,8 +1,26 @@
+possible query usages:
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/query:      "$ngram_prog" query "$@" | awk '
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/query:    @*) # search by tag with `ngram query @tag`
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/start:for service in $(find $("$ngram_prog" query @service | awk '{ print "database/"$1 }') -type f -name run-service); do
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/tui:  ngram query --human @template | fzf | awk '{print $1}' # list all templates
+
+possible hastag usages:
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/hastag:  echo usage $(basename $ngram_prog) hastag tagquery 20240704164832-ae846f0d186e581bb7aa
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/run-single:if ! "$ngram_prog" hastag live "$id" ; then # always run program that is tagged live - fast and current data
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/run-single:if "$ngram_prog" hastag live "$id" ; then # always run program that is tagged live - fast and current data
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/run:  if ! "$ngram_prog" hastag template "$id"; then
+
+List of all tags:
+common-algo
+complete
+example
+file
+list
+live
+ngram-internal
+ngram-meta
+project
+service
+subcommand
+template
+test
