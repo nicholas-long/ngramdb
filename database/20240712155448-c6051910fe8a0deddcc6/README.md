@@ -1,5 +1,6 @@
 # list of conventions to power Ngram functionality
 
+- [list of speical tags](/database/20240716200233-aaf897bf7023c94f4858)
 - objects and data structures can be created on the filesystem instead of in memory
 - directory is a data point or object
   - conains data
