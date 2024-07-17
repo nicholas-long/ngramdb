@@ -150,22 +150,23 @@ while [ 1 ]; do # main tui loop
     fi
   elif [ "$selectedcmd" = "LINKDOC" ]; then
     linkid=$(promptngram)
+    read -p "Linktext: " linktext
     if [ ! -z "$linkid" ]; then
-      "$ngram_prog" link "$currentid" "$linkid"
+      "$ngram_prog" link "$currentid" "$linkid" "$linktext"
     fi
   elif [ "$selectedcmd" = "CREATE" ]; then
     read -p "Title: " title
     templ=$(prompttemplate)
     if [ ! -z "$templ" ]; then
       newid=$(ngram create -t "$title" --clone "$templ")
-      "$ngram_prog" link "$newid" "$templ"
+      "$ngram_prog" link "$newid" "$templ" "Created from Template $templ"
       tmux new-window ngram venv "$newid"
     else
       newid=$(ngram create -t "$title")
       tmux new-window ngram venv "$newid"
     fi
     if [ "$DOC" != "README.md" ]; then # link new doc to the current one
-      "$ngram_prog" link "$newid" "$currentid"
+      "$ngram_prog" link "$newid" "$currentid" "Related Ngram ID $currentid"
     fi
   elif [ "$selectedcmd" = "TAG" ]; then
     tag=$(cat $(ngram tagfiles) | sort -u | fzf)

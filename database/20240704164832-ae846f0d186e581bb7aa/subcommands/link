@@ -2,9 +2,12 @@
 
 # create a loose link from one ngram directory to another.
 # do this by adding a valid markdown link to the directory to the README file.
+# usage: ngram link fromid toid [ reason ]
+# provide a reason as an optional third parameter.
 
 from="$1"
 to="$2"
+reason="$3"
 if [ -z "$from" ]; then
   echo missing to argument '#1'
   exit 1
@@ -13,5 +16,8 @@ if [ -z "$to" ]; then
   echo missing to argument '#2'
   exit 1
 fi
+if [ -z "$reason" ]; then
+  reason="Ngram Linked ID $to"
+fi
 linkfile="database/$from/README.md"
-echo "- [Ngram Linked ID $to](/database/$to)" >> "$linkfile"
+echo "- [$reason](/database/$to)" >> "$linkfile"
