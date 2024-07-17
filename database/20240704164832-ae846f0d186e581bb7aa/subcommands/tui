@@ -36,7 +36,6 @@ done
 
 function menuoptions {
   echo EDIT "$DOC"
-  echo CREATE
   echo COPY...
   echo EDITCLIP
   echo SAVECLIP
@@ -45,6 +44,7 @@ function menuoptions {
     echo COPYURL
     echo TAG
     echo COPYCWD
+    echo CREATE # spawn?
     id=$(echo "$DOC" | awk -F / '{print $2}')
     gawk '
       ARGIND == 1 { have[$1] = 1; next }
@@ -54,6 +54,7 @@ function menuoptions {
     echo "BACK README.md go back to home"
   else
     awk '{ id=$1;$1="";print "GOTO", $0, "database/" id "/README.md" }' <(ngram query --human | tac)
+    echo CREATE
   fi
   echo "EDIT.."
   echo "EDIT..."
@@ -150,8 +151,7 @@ while [ 1 ]; do # main tui loop
   elif [ "$selectedcmd" = "LINKDOC" ]; then
     linkid=$(promptngram)
     if [ ! -z "$linkid" ]; then
-      echo "" >> "$DOC"
-      echo "- [Ngram Linked ID $linkid](/database/$linkid)" >> "$DOC"
+      "$ngram_prog" link "$currentid" "$linkid"
     fi
   elif [ "$selectedcmd" = "CREATE" ]; then
     read -p "Title: " title
