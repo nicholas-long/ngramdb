@@ -3,7 +3,7 @@
 # check that there are no refs in the dependency stats for this test ngram which do not actually appear as refs of this
 output=$(mktemp)
 cat database/20240705000124-9769d8256b20e049b259/.ngram.dependencies.hashes | awk '{print $2}' | awk -F / '{print $2}' | sort -u > $output
-wc -l $output <(grep -f <(./ngram refs 20240705000124-9769d8256b20e049b259 union <( echo 20240705000124-9769d8256b20e049b259 ) ) $output) | awk '
+wc -l $output <(grep -f <(./ngram query id 20240705000124-9769d8256b20e049b259 refs union <( echo 20240705000124-9769d8256b20e049b259 ) ) $output) | awk '
 { val[NR] = $1 }
 END {
   if (val[1] != val[2]) {
