@@ -93,6 +93,23 @@ operators
     jsonset - set a json field value, 2 required parameters after
     expand - expand all references into functional group
 ```
+## Queries
+Queries are possible using a simple query engine that supports traversing graphs.
+```bash
+# look for things tagged test
+ngram query @test
+# pretty print output with titles of README.md files as the names of data points
+ngram query --human @test
+# look for things referenced by things tagged logdata and web
+ngram query @logdata @web refs
+# repeat that query but look for only references tagged csvfile
+ngram query @logdata @web refs @csvfile
+# look for pets owned by my family members that are not tagged as cats?
+ngram query @me refs @person @family refs @pet not @cat
+# subqueries are possible using bash redirection - inverse of previous query, but looking for pets not owned by my family members that are not tagged as cats
+ngram query @pet not <( ./ngram query @me refs @person @family refs @pet not @cat )
+```
+
 ## subcommand: tui
 
 - Terminal User Interface prompt with workflow shortcuts for working with Ngram
@@ -273,23 +290,6 @@ Programs can generate one or more output files, in addition to the default behav
 The most recent standard output from a run of a program is stored in a file `stdout.log` which is also data that can be reused within the system.
 - [Interactively generating this readme for the project](/database/20240709053001-b005119b744456da6cc0)
 - [information about batch runner implementation](/database/20240712160752-273f1cf3f63a0b6cb514)
-
-## Queries
-Queries are possible using a simple query engine that supports traversing graphs.
-```bash
-# look for things tagged test
-ngram query @test
-# pretty print output with titles of README.md files as the names of data points
-ngram query --human @test
-# look for things referenced by things tagged logdata and web
-ngram query @logdata @web refs
-# repeat that query but look for only references tagged csvfile
-ngram query @logdata @web refs @csvfile
-# look for pets owned by my family members that are not tagged as cats?
-ngram query @me refs @person @family refs @pet not @cat
-# subqueries are possible using bash redirection - inverse of previous query, but looking for pets not owned by my family members that are not tagged as cats
-ngram query @pet not <( ./ngram query @me refs @person @family refs @pet not @cat )
-```
 
 # Ngram CLI help
 

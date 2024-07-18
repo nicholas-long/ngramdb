@@ -37,6 +37,9 @@ function generate_readme {
       ngram "$subcommand" --help 2>&1
       echo '```'
     fi
+    if [ "$subcommand" = "query" ]; then
+      cat querypromptexamples.md
+    fi
   done
   echo
   cat about.md
