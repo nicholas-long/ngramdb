@@ -193,9 +193,22 @@ Usage: ngram jsonset id field value [-n : numeric]
 
 ```bash
 ngram query --help
+RPN graph query language implementation for Ngram
 Usage: ngram query  [ options ] directory
 Options:
     -h|--help) # print help text
+operators
+    refs - get refs from the current tag set
+    refstype - get refs from the current tag set that match a certain string - used for types of links
+    looserefs - get loose refs (not required to be executable) from the current tag set
+    refsto - get all refs to the current tag set
+    id - use a single ID as the new working set, 1 parameter
+    not - set difference - remove things occuring in the following tag, file, or subcommand argument
+    union - union working set with another
+    filterjson - filter workingset by json parameters using jq select syntax
+    json - return all data.json files in the working set appended together as a JSON array
+    jsonset - set a json field value, 2 required parameters after
+    expand - expand all references into functional group
 ```
 ## subcommand: refdata
 
@@ -205,6 +218,7 @@ Options:
 
 - find refs by ID
 - pass --all as parameter to get table of all refs
+- pass --type "type" parameter to filter only references containing a certain string on the same line - used for types of relationships
 
 ## subcommand: replace
 
