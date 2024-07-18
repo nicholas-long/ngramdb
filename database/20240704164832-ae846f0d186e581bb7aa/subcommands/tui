@@ -97,7 +97,7 @@ fi
 
 while [ 1 ]; do # main tui loop
   currentid=$(echo "$DOC" | awk -F / '{print $2}')
-  selectionline=$(menuoptions | fzf "--preview=$ngram_prog tui-video {}")
+  selectionline=$(menuoptions | fzf "--prompt=$(basename $ngram_root_dir) > " "--preview=$ngram_prog tui-video {}")
   if [ -z "$selectionline" ]; then
     echo Adios
     exit 1
