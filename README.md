@@ -52,22 +52,6 @@ tui-video
 venv
 ```
 
-## subcommand: checksums
-
-- here is the logic to determine what files get scanned for changes
-- gz files cannot be included in checksums because the data does not seem to be deterministic across machines and versions
-- TODO: make sure it's clear that if gzip files are output, you should print stats about them like line counts to stdout so updates get triggered downstream otherwise updates to gz files get ignored
-
-## subcommand: cleanup
-
-- clean up empty directories
-- this is primarily for dealing with git leaving empty directories laying around when reverting changes
-
-## subcommand: clear-logs
-
-- clear the logs for an Ngram data point by ID
-- argument: Ngram ID
-
 ## subcommand: create
 
 - parse args with case statement
@@ -85,74 +69,6 @@ Options:
     -v|--verbose)
     -h|--help)
 ```
-## subcommand: dependstats
-
-- find checksums of all dependencies for an ID
-- used to create .hashes files for comparison
-
-## subcommand: findrefsto
-
-- find things that reference this ID
-
-## subcommand: forcelink
-
-- force a link from ID in arg 1 to arg 2.
-- do this by adding IDs to a data file that is marked executable
-
-## subcommand: hastag
-
-- check if an Ngram ID has a tag
-
-```bash
-ngram hastag --help
-usage ngram hastag tagquery 20240704164832-ae846f0d186e581bb7aa
-```
-## subcommand: id
-
-- internal
-- generate a unique ID
-- optionally use a custom timestamp
-- Some formatting options:
-- %b for abbreviated Month name: Jul
-- %B for full Month name: July
-- %a for abbreviated weekday name: Tue
-- %A for full weekday name: Tuesday
-- %d for day of month: 20
-- %Y for 4 character year: 1999
-
-```bash
-ngram id --help
-Usage: ngram id  [ options ] directory
-Options:
-    -d|--date) # provide a custom date to use as a timestamp within the ID
-    -f|--date-format) # date format if providing a custom date
-    -v|--verbose)
-    -h|--help)
-```
-## subcommand: jsonset
-
-- set json fields
-
-```bash
-ngram jsonset --help
-Usage: ngram jsonset id field value [-n : numeric]
-```
-## subcommand: link
-
-- create a loose link from one ngram directory to another.
-- do this by adding a valid markdown link to the directory to the README file.
-- usage: ngram link fromid toid [ reason ]
-- provide a reason as an optional third parameter.
-
-## subcommand: list
-
-- list Ngram data points in database
-- alias: ngram ls
-
-## subcommand: logs
-
-- retrieve all run logs for an Ngram ID
-
 ## subcommand: query
 
 - perform graph queries with graph links, tags, and JSON data within Ngram.
@@ -177,6 +93,109 @@ operators
     jsonset - set a json field value, 2 required parameters after
     expand - expand all references into functional group
 ```
+## subcommand: tui
+
+- Terminal User Interface prompt with workflow shortcuts for working with Ngram
+- uses fzf for graphics
+
+```bash
+ngram tui --help
+Usage: ngram tui  [ options ] directory
+Options:
+    -v|--verbose)
+    -h|--help)
+```
+## subcommand: run
+
+- entrypoint to run one single cycle of ngram.
+- one cycle is defined as one pass over all IDs with programs that have dependencies that have changed since the last time the program was run.
+- returns a status code of 1 if nothing was run
+- run all IDs in topological order
+
+## subcommand: start
+
+- start running the command as a service
+- supports backing off to a maximum refresh interval if there are no changes
+
+## subcommand: logs
+
+- retrieve all run logs for an Ngram ID
+
+## subcommand: id
+
+- internal
+- generate a unique ID
+- optionally use a custom timestamp
+- Some formatting options:
+- %b for abbreviated Month name: Jul
+- %B for full Month name: July
+- %a for abbreviated weekday name: Tue
+- %A for full weekday name: Tuesday
+- %d for day of month: 20
+- %Y for 4 character year: 1999
+
+```bash
+ngram id --help
+Usage: ngram id  [ options ] directory
+Options:
+    -d|--date) # provide a custom date to use as a timestamp within the ID
+    -f|--date-format) # date format if providing a custom date
+    -v|--verbose)
+    -h|--help)
+```
+## subcommand: list
+
+- list Ngram data points in database
+- alias: ngram ls
+
+## subcommand: jsonset
+
+- set json fields
+
+```bash
+ngram jsonset --help
+Usage: ngram jsonset id field value [-n : numeric]
+```
+## subcommand: cleanup
+
+- clean up empty directories
+- this is primarily for dealing with git leaving empty directories laying around when reverting changes
+
+## subcommand: checksums
+
+- here is the logic to determine what files get scanned for changes
+- gz files cannot be included in checksums because the data does not seem to be deterministic across machines and versions
+- TODO: make sure it's clear that if gzip files are output, you should print stats about them like line counts to stdout so updates get triggered downstream otherwise updates to gz files get ignored
+
+## subcommand: dependstats
+
+- find checksums of all dependencies for an ID
+- used to create .hashes files for comparison
+
+## subcommand: findrefsto
+
+- find things that reference this ID
+
+## subcommand: forcelink
+
+- force a link from ID in arg 1 to arg 2.
+- do this by adding IDs to a data file that is marked executable
+
+## subcommand: hastag
+
+- check if an Ngram ID has a tag
+
+```bash
+ngram hastag --help
+usage ngram hastag tagquery 20240704164832-ae846f0d186e581bb7aa
+```
+## subcommand: link
+
+- create a loose link from one ngram directory to another.
+- do this by adding a valid markdown link to the directory to the README file.
+- usage: ngram link fromid toid [ reason ]
+- provide a reason as an optional third parameter.
+
 ## subcommand: refdata
 
 - print a table of all references
@@ -193,22 +212,6 @@ operators
 - use this when possible instead of shell redirection to avoid overwriting files until the program is complete.
 - example: echo ... | ngram replace datafile.dat
 
-## subcommand: run
-
-- entrypoint to run one single cycle of ngram.
-- one cycle is defined as one pass over all IDs with programs that have dependencies that have changed since the last time the program was run.
-- returns a status code of 1 if nothing was run
-- run all IDs in topological order
-
-## subcommand: run-single
-
-- run a single ID, process all conditions, set environment, and perform all output logging as necessary.
-- exported values in environment to be used by subcommands
-- check dir ID exists
-- TODO: host partitioning
-- TODO: docker containerization of runs for directory data sandboxing
-- execute program and overwrite output files when finished
-
 ## subcommand: set-title
 
 - set the title of an Ngram data point
@@ -223,11 +226,6 @@ Options:
     -v|--verbose)
     -h|--help)
 ```
-## subcommand: start
-
-- start running the command as a service
-- supports backing off to a maximum refresh interval if there are no changes
-
 ## subcommand: stubname
 
 - generate stub names for IDs based on titles
@@ -257,22 +255,6 @@ Options:
 - do a topological sort of the input IDs based on their dependencies between them
 - usage: ngram tsort id1 id2 id3 ...
 - usage as standard input pipe: ... | ngram tsort
-
-## subcommand: tui
-
-- Terminal User Interface prompt with workflow shortcuts for working with Ngram
-- uses fzf for graphics
-
-```bash
-ngram tui --help
-Usage: ngram tui  [ options ] directory
-Options:
-    -v|--verbose)
-    -h|--help)
-```
-## subcommand: tui-video
-
-- specify if this should show the original document or a different one
 
 ## subcommand: venv
 

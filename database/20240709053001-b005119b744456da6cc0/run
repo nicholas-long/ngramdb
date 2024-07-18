@@ -21,7 +21,9 @@ function generate_readme {
   ngram --help 
   echo '```'
   echo
-  for subcommand in $( ls "../20240704164832-ae846f0d186e581bb7aa/subcommands" | grep -v 'find-executable'); do
+  cat subcommands_in_order > subcommands
+  ls "../20240704164832-ae846f0d186e581bb7aa/subcommands" | grep -v 'find-executable' | grep -vf subcommands_in_order >> subcommands
+  for subcommand in $(cat subcommands); do
     echo "processing $subcommand" >/dev/stderr
     # ignore find-executable because it does not work with --help
     echo "## subcommand: $subcommand"

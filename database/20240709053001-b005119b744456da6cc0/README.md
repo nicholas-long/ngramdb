@@ -12,3 +12,6 @@ for subcommand in $(grep -R '.--help' database/20240704164832-ae846f0d186e581bb7
 done
 ```
 
+```bash
+ls "../20240704164832-ae846f0d186e581bb7aa/subcommands" > subcommands_in_order
+```
