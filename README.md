@@ -93,8 +93,10 @@ operators
     jsonset - set a json field value, 2 required parameters after
     expand - expand all references into functional group
 ```
-## Queries
+### Example Queries
+
 Queries are possible using a simple query engine that supports traversing graphs.
+
 ```bash
 # look for things tagged test
 ngram query @test

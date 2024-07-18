@@ -1,5 +1,7 @@
-## Queries
+### Example Queries
+
 Queries are possible using a simple query engine that supports traversing graphs.
+
 ```bash
 # look for things tagged test
 ngram query @test
