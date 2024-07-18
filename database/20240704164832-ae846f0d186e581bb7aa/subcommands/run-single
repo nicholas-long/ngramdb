@@ -38,26 +38,27 @@ if ! "$ngram_prog" hastag live "$id" ; then # always run program that is tagged 
       echo "run skipped by optimization: identical dependency conditions" >/dev/stderr
       exit 2
     fi
-    # at this point, we know there are differences in the file, check if all differences are within the target ngram => not rerun
-    # also check for inbox files - those SHOULD trigger a rerun
-    set -o pipefail # make sure the results of the last program in a chain of pipes is tracked
-    export id
-    diff "$runstats" "$temprunstats" | awk '
-      (/^>/ || /^</) {
-        if ($NF !~ ENVIRON["id"] || $NF ~ /\/inbox\//) {
-          print "i am running", ENVIRON["id"], "because", $0 > "/dev/stderr"
-          exit 0
-        }
-      }
-      END { exit 1 }
-    '
-    result="$?"
-    echo "run stats optimization check result $result" >/dev/stderr
-    rm "$temprunstats"
-    if [ "$result" != "0" ]; then
-      echo "run skipped by optimization: ignoring only self modification" >/dev/stderr
-      exit 2
-    fi
+    # this is not necessary - programs should not be tracking changes to their own output because the hashes are computed after running, and so should only detect actual changes
+    ## at this point, we know there are differences in the file, check if all differences are within the target ngram => not rerun
+    ## also check for inbox files - those SHOULD trigger a rerun
+    #set -o pipefail # make sure the results of the last program in a chain of pipes is tracked
+    #export id
+    #diff "$runstats" "$temprunstats" | awk '
+    #  (/^>/ || /^</) {
+    #    if ($NF !~ ENVIRON["id"] || $NF ~ /\/inbox\//) {
+    #      print "i am running", ENVIRON["id"], "because", $0 > "/dev/stderr"
+    #      exit 0
+    #    }
+    #  }
+    #  END { exit 1 }
+    #'
+    #result="$?"
+    #echo "run stats optimization check result $result" >/dev/stderr
+    #rm "$temprunstats"
+    #if [ "$result" != "0" ]; then
+    #  echo "run skipped by optimization: ignoring only self modification" >/dev/stderr
+    #  exit 2
+    #fi
   fi
 fi
 
