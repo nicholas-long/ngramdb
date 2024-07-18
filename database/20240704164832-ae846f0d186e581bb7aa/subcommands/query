@@ -40,6 +40,10 @@ while [[ $# -gt 0 ]]; do
     refs) # get refs from the current tag set
       cat "$workingset" | xargs -n 1 "$ngram_prog" refs | sort -u | "$ngram_prog" replace "$workingset"
       ;;
+    refstype) # get refs from the current tag set that match a certain string - used for types of links
+      shift
+      cat "$workingset" | xargs -n 1 "$ngram_prog" refs --type "$1" | sort -u | "$ngram_prog" replace "$workingset"
+      ;;
     looserefs) # get loose refs (not required to be executable) from the current tag set
       for id in $(cat $workingset); do
         grep -Rof <($ngram_prog list | grep -v "$id") "database/$id" | awk -F : '{print $NF}'

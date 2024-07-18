@@ -13,11 +13,14 @@ if [ -z "$to" ]; then
   echo missing to argument '#2'
   exit 1
 fi
+linktype="$3"
 linkfile="database/$from/.link"
-if [ -x "$linkfile" ] ; then
+if [ -z "$linktype" ]; then
   echo "$2" >> "$linkfile"
 else
-  echo "$2" >> "$linkfile"
+  echo "$linktype $2" >> "$linkfile"
+fi
+if [ ! -x "$linkfile" ] ; then
   chmod +x "$linkfile" # mark as executable so it gets picked up for references
 fi
 
