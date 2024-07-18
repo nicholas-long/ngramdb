@@ -19,6 +19,7 @@ graph TD;
 ```
 
 ```bash
+$ ngram --help
 Usage: ngram  [subcommand] [--help | options... ]
 Subcommands:
 checksums
