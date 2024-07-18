@@ -9,6 +9,7 @@ processing forcelink
 processing hastag
 processing id
 processing jsonset
+processing link
 processing list
 processing logs
 processing query

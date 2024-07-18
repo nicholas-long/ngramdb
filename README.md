@@ -65,6 +65,7 @@ forcelink
 hastag
 id
 jsonset
+link
 list
 logs
 query
@@ -169,6 +170,13 @@ Options:
 ngram jsonset --help
 Usage: ngram jsonset id field value [-n : numeric]
 ```
+## subcommand: link
+
+- create a loose link from one ngram directory to another.
+- do this by adding a valid markdown link to the directory to the README file.
+- usage: ngram link fromid toid [ reason ]
+- provide a reason as an optional third parameter.
+
 ## subcommand: list
 
 - list Ngram data points in database

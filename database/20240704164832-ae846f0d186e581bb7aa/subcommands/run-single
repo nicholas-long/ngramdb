@@ -39,11 +39,12 @@ if ! "$ngram_prog" hastag live "$id" ; then # always run program that is tagged 
       exit 2
     fi
     # at this point, we know there are differences in the file, check if all differences are within the target ngram => not rerun
+    # also check for inbox files - those SHOULD trigger a rerun
     set -o pipefail # make sure the results of the last program in a chain of pipes is tracked
     export id
     diff "$runstats" "$temprunstats" | awk '
       (/^>/ || /^</) {
-        if ($NF !~ ENVIRON["id"]) {
+        if ($NF !~ ENVIRON["id"] || $NF ~ /\/inbox\//) {
           print "i am running", ENVIRON["id"], "because", $0 > "/dev/stderr"
           exit 0
         }
