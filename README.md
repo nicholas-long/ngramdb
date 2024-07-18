@@ -58,7 +58,7 @@ venv
 - pass in --clone to clone a template
 
 ```bash
-ngram create --help
+$ ngram create --help
 Usage: ngram create  [ options ] directory
 Options:
     -t|--title) # set title in README of created data point
@@ -74,7 +74,7 @@ Options:
 - this is a reverse polish notation machine that performs queries across a graph by using operators from set theory and refrences between IDs.
 
 ```bash
-ngram query --help
+$ ngram query --help
 RPN graph query language implementation for Ngram
 Usage: ngram query  [ options ] directory
 Options:
@@ -98,7 +98,7 @@ operators
 - uses fzf for graphics
 
 ```bash
-ngram tui --help
+$ ngram tui --help
 Usage: ngram tui  [ options ] directory
 Options:
     -v|--verbose)
@@ -134,7 +134,7 @@ Options:
 - %Y for 4 character year: 1999
 
 ```bash
-ngram id --help
+$ ngram id --help
 Usage: ngram id  [ options ] directory
 Options:
     -d|--date) # provide a custom date to use as a timestamp within the ID
@@ -152,7 +152,7 @@ Options:
 - set json fields
 
 ```bash
-ngram jsonset --help
+$ ngram jsonset --help
 Usage: ngram jsonset id field value [-n : numeric]
 ```
 ## subcommand: cleanup
@@ -184,7 +184,7 @@ Usage: ngram jsonset id field value [-n : numeric]
 - check if an Ngram ID has a tag
 
 ```bash
-ngram hastag --help
+$ ngram hastag --help
 usage ngram hastag tagquery 20240704164832-ae846f0d186e581bb7aa
 ```
 ## subcommand: link
@@ -217,7 +217,7 @@ usage ngram hastag tagquery 20240704164832-ae846f0d186e581bb7aa
 - replace title in existing readme file
 
 ```bash
-ngram set-title --help
+$ ngram set-title --help
 Usage: ngram set-title  [ options ] directory
 Options:
     -t|--title) # set or replace title in markdown file
@@ -233,7 +233,7 @@ Options:
 - get or alter the tags of a data set
 
 ```bash
-ngram tag --help
+$ ngram tag --help
 Usage: ngram tag [ options ] directory
 Options:
     -l|--list) # list tags for ID

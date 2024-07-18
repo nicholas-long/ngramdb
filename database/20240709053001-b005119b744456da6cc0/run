@@ -32,7 +32,7 @@ function generate_readme {
     echo ""
     if grep '.--help' "../20240704164832-ae846f0d186e581bb7aa/subcommands/$subcommand" | cut -d : -f 1 | awk -F / '{print $NF}' | sort -u >/dev/null; then
       echo '```bash'
-      echo ngram "$subcommand" --help
+      echo '$' ngram "$subcommand" --help
       ngram "$subcommand" --help 2>&1
       echo '```'
     fi
