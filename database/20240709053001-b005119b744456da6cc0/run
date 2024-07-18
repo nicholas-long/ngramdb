@@ -28,7 +28,7 @@ function generate_readme {
     # ignore find-executable because it does not work with --help
     echo "## subcommand: $subcommand"
     echo ""
-    awk '/^##* / { gsub(/^##* /, ""); print "-", $0 }' "../20240704164832-ae846f0d186e581bb7aa/subcommands/$subcommand"
+    awk '/TODO/ { next } /^##* / { gsub(/^##* /, ""); print "-", $0 }' "../20240704164832-ae846f0d186e581bb7aa/subcommands/$subcommand"
     echo ""
     if grep '.--help' "../20240704164832-ae846f0d186e581bb7aa/subcommands/$subcommand" | cut -d : -f 1 | awk -F / '{print $NF}' | sort -u >/dev/null; then
       echo '```bash'

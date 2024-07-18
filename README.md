@@ -55,8 +55,7 @@ venv
 ## subcommand: create
 
 - parse args with case statement
-- TODO: template argument - pass in id to copy for template
-- TODO: if there's a template that's linked to this template ID we're cloning then clone it too?
+- pass in --clone to clone a template
 
 ```bash
 ngram create --help
@@ -165,7 +164,6 @@ Usage: ngram jsonset id field value [-n : numeric]
 
 - here is the logic to determine what files get scanned for changes
 - gz files cannot be included in checksums because the data does not seem to be deterministic across machines and versions
-- TODO: make sure it's clear that if gzip files are output, you should print stats about them like line counts to stdout so updates get triggered downstream otherwise updates to gz files get ignored
 
 ## subcommand: dependstats
 

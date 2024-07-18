@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # parse args with case statement
+# pass in --clone to clone a template
 VERBOSE=0
 title=""
 runtags=0
@@ -45,7 +46,6 @@ while [[ $# -gt 0 ]]; do
   esac
   shift
 done
-# TODO: template argument - pass in id to copy for template
 
 id=$("$ngram_prog" id)
 dir="$ngram_root_dir/database/$id"
