@@ -32,8 +32,29 @@ runstats="$NGRAM_ID_DIR/.ngram.dependencies.hashes"
 if ! "$ngram_prog" hastag live "$id" ; then # always run program that is tagged live - fast and current data
   # if there's previous run stats then compare against current dependency file contents and skip the run if they are identical
   if [ -f "$runstats" ]; then
-    if diff <("$ngram_prog" dependstats "$id") "$runstats"; then
+    temprunstats=$(mktemp)
+    "$ngram_prog" dependstats "$id" > "$temprunstats"
+    if diff "$temprunstats" "$runstats"; then
       echo "run skipped by optimization: identical dependency conditions" >/dev/stderr
+      exit 2
+    fi
+    # at this point, we know there are differences in the file, check if all differences are within the target ngram => not rerun
+    set -o pipefail # make sure the results of the last program in a chain of pipes is tracked
+    export id
+    diff "$runstats" "$temprunstats" | awk '
+      (/^>/ || /^</) {
+        if ($NF !~ ENVIRON["id"]) {
+          print "i am running", ENVIRON["id"], "because", $0 > "/dev/stderr"
+          exit 0
+        }
+      }
+      END { exit 1 }
+    '
+    result="$?"
+    echo "run stats optimization check result $result" >/dev/stderr
+    rm "$temprunstats"
+    if [ "$result" != "0" ]; then
+      echo "run skipped by optimization: ignoring only self modification" >/dev/stderr
       exit 2
     fi
   fi
