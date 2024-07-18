@@ -2,4 +2,5 @@
 
 echo running tests
 echo running tests stderr >/dev/stderr
+cd "$ngram_root_dir"
 ./run-tests 2>/dev/null| grep 'SUCCESS\|PASSED' | sort -u

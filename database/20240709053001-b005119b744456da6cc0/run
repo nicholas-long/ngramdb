@@ -3,7 +3,7 @@
 # overwrite main readme file
 # for now while this is not running in a container, this will work
 set -o pipefail
-READMEFILE="$(pwd)/README.md"
+READMEFILE="$ngram_root_dir/README.md"
 echo "writing readme file $READMEFILE" >/dev/stderr
 cd $(dirname $0)
 

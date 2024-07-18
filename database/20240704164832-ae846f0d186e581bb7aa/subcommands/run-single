@@ -75,7 +75,7 @@ fi
 
 # execute program and overwrite output files when finished
 export LC_LOCALE=C # for consistent sort ordering across platforms within nested programs
-"$program" 2> "$stderrfile" | "$ngram_prog" replace "$stdoutfile"
+(cd "$NGRAM_ID_DIR" && ./run) 2> "$stderrfile" | "$ngram_prog" replace "$stdoutfile"
 "$ngram_prog" dependstats "$id" > "$runstats"
 
 echo "done running Ngram ID $id" >/dev/stderr
