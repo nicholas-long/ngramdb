@@ -4,3 +4,4 @@
 **/stdout.log.gz
 **/.ngram.dependencies.hashes
 .ngram.tui.rc
+.env
