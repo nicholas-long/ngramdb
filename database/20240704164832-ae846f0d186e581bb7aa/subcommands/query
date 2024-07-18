@@ -2,12 +2,16 @@
 
 # perform graph queries with graph links, tags, and JSON data within Ngram.
 # this is a reverse polish notation machine that performs queries across a graph by using operators from set theory and refrences between IDs.
+# starting with all IDs, apply successive operations until desired nodes are reached or the working set becomes empty.
 
 workingset=$(mktemp)
 if [ -z "$workingset" ]; then exit 1; fi
 ls database > $workingset
 if [ -z "$VERBOSE" ]; then VERBOSE=0; fi
 while [[ $# -gt 0 ]]; do
+  if [ ! -s "$workingset" ]; then # exit early if the working set becomes empty
+    exit 1
+  fi
   case $1 in
     -v) # verbose
       export VERBOSE=1
@@ -37,19 +41,19 @@ while [[ $# -gt 0 ]]; do
         $0 == tag { print FILENAME | "cut -d / -f 2" }
       ' $("$ngram_prog" tagfiles) | grep -f "$workingset" | "$ngram_prog" replace "$workingset"
       ;;
-    refs) # get refs from the current tag set
+    refs) # get refs from the current working set
       cat "$workingset" | xargs -n 1 "$ngram_prog" refs | sort -u | "$ngram_prog" replace "$workingset"
       ;;
-    refstype) # get refs from the current tag set that match a certain string - used for types of links
+    refstype) # get refs from the current working set that match a certain string - used for types of links
       shift
       cat "$workingset" | xargs -n 1 "$ngram_prog" refs --type "$1" | sort -u | "$ngram_prog" replace "$workingset"
       ;;
-    looserefs) # get loose refs (not required to be executable) from the current tag set
+    looserefs) # get loose refs (not required to be executable) from the current working set
       for id in $(cat $workingset); do
         grep -Rof <($ngram_prog list | grep -v "$id") "database/$id" | awk -F : '{print $NF}'
       done | sort -u | $ngram_prog replace $workingset
       ;;
-    refsto) # get all refs to the current tag set
+    refsto) # get all refs to the current working set
       cat "$workingset" | xargs -n 1 "$ngram_prog" findrefsto | sort -u | "$ngram_prog" replace "$workingset"
       ;;
     id) # use a single ID as the new working set, 1 parameter

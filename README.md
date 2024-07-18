@@ -73,6 +73,7 @@ Options:
 
 - perform graph queries with graph links, tags, and JSON data within Ngram.
 - this is a reverse polish notation machine that performs queries across a graph by using operators from set theory and refrences between IDs.
+- starting with all IDs, apply successive operations until desired nodes are reached or the working set becomes empty.
 
 ```bash
 $ ngram query --help
@@ -81,10 +82,10 @@ Usage: ngram query  [ options ] directory
 Options:
     -h|--help) # print help text
 operators
-    refs - get refs from the current tag set
-    refstype - get refs from the current tag set that match a certain string - used for types of links
-    looserefs - get loose refs (not required to be executable) from the current tag set
-    refsto - get all refs to the current tag set
+    refs - get refs from the current working set
+    refstype - get refs from the current working set that match a certain string - used for types of links
+    looserefs - get loose refs (not required to be executable) from the current working set
+    refsto - get all refs to the current working set
     id - use a single ID as the new working set, 1 parameter
     not - set difference - remove things occuring in the following tag, file, or subcommand argument
     union - union working set with another
