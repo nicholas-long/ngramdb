@@ -139,9 +139,15 @@ while [[ $# -gt 0 ]]; do
       mv "$et" "$workingset"
       ;;
     -h|--help) # print help text
+      echo "RPN graph query language implementation for Ngram"
       echo "Usage: $(basename $ngram_prog) $(basename $0)  [ options ] directory"
       echo "Options:"
       cat "$0" | grep '^\s\+-.|--.*'
+      echo "operators"
+      awk '
+        /case/,/esac/ { printing = 1 }
+        printing && / +[a-z]+\) #/ { gsub(/) #/, " -"); print }
+      ' "$0"
       exit 1
       ;;
     *) # filename parameter or subquery implemented with bash filename redirection
