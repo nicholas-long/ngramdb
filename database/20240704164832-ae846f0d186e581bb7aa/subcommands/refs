@@ -25,6 +25,9 @@ while [ ! -z "$1" ]; do
   else
     exelist=$(mktemp)
     "$ngram_prog" find-executable "database/$1" -type f > "$exelist"
+    if [ ! -s "$exelist" ]; then # if list of executables is empty
+      exit 0 # nothing to search
+    fi
     searchfile=$(mktemp)
     ls database | grep -v "$1" > "$searchfile"
     if [ -z "$typeparam" ]; then # no optional type parameter for refs
