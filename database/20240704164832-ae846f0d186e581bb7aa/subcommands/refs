@@ -31,9 +31,9 @@ while [ ! -z "$1" ]; do
     searchfile=$(mktemp)
     ls database | grep -v "$1" > "$searchfile"
     if [ -z "$typeparam" ]; then # no optional type parameter for refs
-      grep -Eof "$searchfile" $(cat "$exelist") | cut -d : -f 2 | sort -u #| awk -F / '{print $2}' | sort -u
+      grep -E '[0-9]{14}-[0-9a-f]{20}' $(cat "$exelist") | cut -d : -f 2 | grep -of "$searchfile" | sort -u
     else
-      grep -f "$searchfile" $(cat "$exelist") | cut -d : -f 2 | grep "$typeparam" | grep -of "$searchfile" | sort -u #| awk -F / '{print $2}' | sort -u
+      grep -f "$searchfile" $(cat "$exelist") | cut -d : -f 2 | grep "$typeparam" | grep -of "$searchfile" | sort -u
     fi
     rm "$searchfile"
     rm "$exelist"
