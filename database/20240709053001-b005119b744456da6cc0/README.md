@@ -1,6 +1,6 @@
-# interactively generated README for this project
+# automatically generated README for this project
 
-- this is an example ngram program to generate a README file for this project by combining together various files.
+- this is an example Ngram program to generate a README file for this project by combining together various files.
 - it happens to copy it back to the README in the root directory.
   - [should ngrams be able to modify each other or modify external files for security](/database/20240712162129-bec61b6ccd3655ec29c4)
 

@@ -17,6 +17,8 @@ function generate_readme {
   echo
   cat ../20240710043728-86ad27b18da4fa187615/graph.md
   echo
+  cat database/20240714155320-1778aa12b5a4c500a58c/templates.md # print list of templates
+  echo
   echo '```bash'
   echo '$' ngram --help
   ngram --help 
