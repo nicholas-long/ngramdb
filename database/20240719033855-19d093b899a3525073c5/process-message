@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo ">>> processing message $1"
+filename=$(cat "$1")
+exiftool "$filename"

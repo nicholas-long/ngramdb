@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for messagefile in $(find inbox -type f); do
+  ./process-message "$messagefile"
+  mv "$messagefile" processed/
+done
