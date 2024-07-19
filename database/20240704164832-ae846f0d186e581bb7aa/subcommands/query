@@ -142,6 +142,10 @@ while [[ $# -gt 0 ]]; do
       done
       mv "$et" "$workingset"
       ;;
+    dirs) # utility operator to return the entire current working set as directory paths
+      awk '{ print "database/" $NF }' "$workingset"
+      exit 0
+      ;;
     -h|--help) # print help text
       echo "RPN graph query language implementation for Ngram"
       echo "Usage: $(basename $ngram_prog) $(basename $0)  [ options ] directory"

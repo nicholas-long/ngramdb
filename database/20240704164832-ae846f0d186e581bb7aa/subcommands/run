@@ -11,8 +11,10 @@ if [ "$1" == "--until-stable" ]; then
       exit 0
     fi
   done
+elif [ "$1" = "--run-all" ]; then
+  find database -name .ngram.dependencies.hashes | xargs rm # clear all hashes of all elements
 elif [ -z "$1" ]; then # base case - no parameter given, run
-  find database -name .ngram.dependencies.hashes | xargs rm # clear all run hashes when starting a new batch run
+  find $("$ngram_prog" query @live dirs) -name .ngram.dependencies.hashes | xargs rm # clear all hashes of live elements
   "$ngram_prog" run --until-stable
 else # run single
   echo "running single stage at $(date)" >/dev/stderr
