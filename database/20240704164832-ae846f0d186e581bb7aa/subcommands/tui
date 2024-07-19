@@ -58,6 +58,7 @@ function menuoptions {
   fi
   echo "EDIT.."
   echo "EDIT..."
+  echo COPYFN
   echo LINKDOC
   echo DIAG
   echo "CHMOD+X"
@@ -204,5 +205,8 @@ while [ 1 ]; do # main tui loop
     export DOC="database/$newid/README.md"
   elif [ "$selectedcmd" = "CLEANUP" ]; then
     "$ngram_prog" cleanup
+  elif [ "$selectedcmd" = "COPYFN" ]; then
+    filename=$(promptfile)
+    echo -n "$filename" | tmux loadb -
   fi
 done
