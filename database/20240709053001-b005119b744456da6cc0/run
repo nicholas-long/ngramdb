@@ -46,6 +46,8 @@ function generate_readme {
   echo
   cat about.md
   echo
+  cat ../20240716200233-aaf897bf7023c94f4858/README.md # include special tags
+  echo
   echo '# Test Run Output'
   echo
   echo '```'
