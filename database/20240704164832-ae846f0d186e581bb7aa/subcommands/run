@@ -13,6 +13,7 @@ if [ "$1" == "--until-stable" ]; then
   done
 elif [ "$1" = "--run-all" ]; then
   find database -name .ngram.dependencies.hashes | xargs rm # clear all hashes of all elements
+  "$ngram_prog" run --until-stable
 elif [ -z "$1" ]; then # base case - no parameter given, run
   find $("$ngram_prog" query @live dirs) -name .ngram.dependencies.hashes | xargs rm # clear all hashes of live elements
   "$ngram_prog" run --until-stable
