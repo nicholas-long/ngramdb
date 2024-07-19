@@ -7,5 +7,5 @@
 - `test` - unit tests
 
 ## tag analysis program output
-- [output](stdout.log)
-- [should be included in readme](/database/20240709053001-b005119b744456da6cc0)
+- [standard output log](/database/20240716200233-aaf897bf7023c94f4858/stdout.log)
+- [this list should be included in readme](/database/20240709053001-b005119b744456da6cc0)
