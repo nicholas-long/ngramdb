@@ -160,14 +160,15 @@ while [ 1 ]; do # main tui loop
     if [ ! -z "$templ" ]; then
       newid=$(ngram create -t "$title" --clone "$templ")
       "$ngram_prog" link "$newid" "$templ" "Created from Template $templ"
-      tmux new-window ngram venv "$newid"
     else
       newid=$(ngram create -t "$title")
-      tmux new-window ngram venv "$newid"
     fi
+    currenttitle=$(head -n 1 "$DOC" | sed 's/^##* *//')
     if [ "$DOC" != "README.md" ]; then # link new doc to the current one
-      "$ngram_prog" link "$newid" "$currentid" "Related Ngram ID $currentid"
+      "$ngram_prog" link "$newid" "$currentid" "Related Ngram: $currenttitle"
+      "$ngram_prog" link "$currentid" "$newid" "Created Related Ngram: $title"
     fi
+    tmux new-window ngram venv "$newid"
   elif [ "$selectedcmd" = "TAG" ]; then
     tag=$(cat $(ngram tagfiles) | sort -u | fzf)
     if [ -z "$tag" ]; then
