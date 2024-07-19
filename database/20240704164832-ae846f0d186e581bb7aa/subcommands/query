@@ -11,7 +11,6 @@ ls database > $workingset
 if [ -z "$VERBOSE" ]; then VERBOSE=0; fi
 while [[ $# -gt 0 ]]; do
   if [ ! -s "$workingset" ]; then # exit early if the working set becomes empty
-    [ -f "$next" ] && rm "$next"
     rm "$workingset"
     exit 1
   fi
@@ -31,7 +30,6 @@ while [[ $# -gt 0 ]]; do
         close(command)
       }
       '
-      [ -f "$next" ] && rm "$next"
       rm "$workingset"
       exit 0
       ;;
@@ -116,7 +114,6 @@ while [[ $# -gt 0 ]]; do
       else
         cat
       fi
-      [ -f "$next" ] && rm "$next"
       rm "$workingset"
       exit 0 # printing JSON breaks the normal flow of printing IDs
       ;;
@@ -127,13 +124,11 @@ while [[ $# -gt 0 ]]; do
       value="$1"
       if [ -z "$field" ]; then
         echo missing field >/dev/stderr
-        [ -f "$next" ] && rm "$next"
         rm "$workingset"
         exit 1
       fi
       if [ -z "$value" ]; then
         echo missing value >/dev/stderr
-        [ -f "$next" ] && rm "$next"
         rm "$workingset"
         exit 1
       fi
@@ -166,7 +161,6 @@ while [[ $# -gt 0 ]]; do
       ;;
     dirs) # utility operator to return the entire current working set as directory paths
       awk '{ print "database/" $NF }' "$workingset"
-      [ -f "$next" ] && rm "$next"
       rm "$workingset"
       exit 0
       ;;
@@ -180,7 +174,6 @@ while [[ $# -gt 0 ]]; do
         /case/,/esac/ { printing = 1 }
         printing && / +[a-z]+\) #/ { gsub(/) #/, " -"); print }
       ' "$0"
-      [ -f "$next" ] && rm "$next"
       rm "$workingset"
       exit 1
       ;;
@@ -193,4 +186,3 @@ while [[ $# -gt 0 ]]; do
 done
 cat "$workingset"
 rm "$workingset"
-[ -f "$next" ] && rm "$next"
