@@ -327,6 +327,7 @@ SUCCESS test graphquery-cats
 SUCCESS test reftest
 SUCCESS test settags
 SUCCESS test sorted-vs-tsorted
+SUCCESS test test-graph-refs
 SUCCESS test testclone
 SUCCESS test testcreate
 SUCCESS test testquery

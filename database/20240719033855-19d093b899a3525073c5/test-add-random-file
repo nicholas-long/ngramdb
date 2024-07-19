@@ -1,0 +1,3 @@
+#!/bin/bash
+
+find $HOME/Documents -type f -name '*.png' | shuf | head -n 1 > "inbox/$(ngram id)"
