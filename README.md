@@ -93,6 +93,7 @@ operators
     json - return all data.json files in the working set appended together as a JSON array
     jsonset - set a json field value, 2 required parameters after
     expand - expand all references into functional group
+    dirs - utility operator to return the entire current working set as directory paths
 ```
 ### Example Queries
 

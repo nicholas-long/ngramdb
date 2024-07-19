@@ -1,6 +1,7 @@
 possible query usages:
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/query:      "$ngram_prog" query "$@" | awk '
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/query:    @*) # search by tag with `ngram query @tag`
+../20240704164832-ae846f0d186e581bb7aa/subcommands/run:  find $("$ngram_prog" query @live dirs) -name .ngram.dependencies.hashes | xargs rm # clear all hashes of live elements
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/start:for service in $(find $("$ngram_prog" query @service | awk '{ print "database/"$1 }') -type f -name run-service); do
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/tui:  ngram query --human @template | fzf | awk '{print $1}' # list all templates
 
@@ -21,6 +22,7 @@ ngram-internal
 ngram-meta
 project
 service
+source
 subcommand
 template
 test
