@@ -3,5 +3,6 @@
 #**/stdout.log
 **/stdout.log.gz
 **/.ngram.dependencies.hashes
+**/.hook-ngram-list
 .ngram.tui.rc
 .env

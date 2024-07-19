@@ -33,4 +33,22 @@ for id in $( "$ngram_prog" find-executable database -type f -name run | awk -F /
   fi
 done
 
+# keep track of lists of Ngram IDs within Ngrams tagged ngram-hook-add
+hooks=$(mktemp)
+temp=$(mktemp)
+"$ngram_prog" ls | sort -u > "$temp"
+"$ngram_prog" query @ngram-hook-add > "$hooks"
+for id in $( cat "$hooks" ); do
+  hookfile="database/$id/.hook-ngram-list"
+  if ! cmp "$temp" "$hookfile"; then
+    cp "$temp" "$hookfile"
+    "$ngram_prog" run-single "$id"
+    if [ "$?" = "0" ]; then
+      didntrunanything=0
+    fi
+  fi
+done
+rm "$hooks"
+if [ -f "$temp" ]; then rm "$temp"; fi # temp file may or may not have been moved
+
 exit $didntrunanything

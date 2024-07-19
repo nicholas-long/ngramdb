@@ -141,6 +141,7 @@ Options:
 - one cycle is defined as one pass over all IDs with programs that have dependencies that have changed since the last time the program was run.
 - returns a status code of 1 if nothing was run
 - run all IDs in topological order
+- keep track of lists of Ngram IDs within Ngrams tagged ngram-hook-add
 
 ## subcommand: start
 
@@ -330,6 +331,8 @@ Automatically generated help documentation:
 - `live` - things tagged live will run at least once every time `ngram run` is called. other things might not be run because no dependency files changes, but these files should be considered like a source in a pipeline.
 - `ngram-internal` - part of the database implementation. the implementations for Ngram subcommands are "contained within the database".
 - `service` - Ngrams with this tag which also have a `run-service` executable will run as a background job when Ngram is running cycles with `ngram start`
+- `ngram-hook-add` - this tag means an Ngram will contain a special file, `.hook-ngram-list`, which lists all Ngrams, having the effect of causing this Ngram to rerun when new ones are added.
+  - this is so Ngrams can detect changes to the entire database as a whole and rerun graph queries as necessary.
 - `test` - unit tests
 
 ## tag analysis program output
