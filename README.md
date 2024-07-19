@@ -14,6 +14,7 @@ graph TD;
   automatically_generated_README_for_this_project --> test_scripts;
   automatically_generated_README_for_this_project --> connections_within_the_system;
   automatically_generated_README_for_this_project --> list_of_templates;
+  automatically_generated_README_for_this_project --> list_of_special_tags;
   subcommand_help_implementation_status --> subcommand_implementations;
   web_server_for_API --> list_of_data_files_for_serving_as_static_content;
   list_of_special_tags --> subcommand_implementations;
@@ -322,6 +323,18 @@ ngram tui
 - [Subcommand Implementations](/database/20240704164832-ae846f0d186e581bb7aa/README.md)
 Automatically generated help documentation:
 
+
+# list of special tags
+
+- `template` - things tagged as template are available in the interface to use to create other Ngrams. they do not get run themselves - things tagged template are skipped from runs.
+- `live` - things tagged live will run at least once every time `ngram run` is called. other things might not be run because no dependency files changes, but these files should be considered like a source in a pipeline.
+- `ngram-internal` - part of the database implementation. the implementations for Ngram subcommands are "contained within the database".
+- `service` - Ngrams with this tag which also have a `run-service` executable will run as a background job when Ngram is running cycles with `ngram start`
+- `test` - unit tests
+
+## tag analysis program output
+- [output](stdout.log)
+- [should be included in readme](/database/20240709053001-b005119b744456da6cc0)
 
 # Test Run Output
 
