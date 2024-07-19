@@ -10,9 +10,11 @@ if [ -z "$workingset" ]; then exit 1; fi # failed to allocate temp file
 ls database > $workingset
 if [ -z "$VERBOSE" ]; then VERBOSE=0; fi
 while [[ $# -gt 0 ]]; do
-  if [ ! -s "$workingset" ]; then # exit early if the working set becomes empty
-    rm "$workingset"
-    exit 1
+  if [ "$1" != "union" ]; then # skip this optimization if the next command is a union
+    if [ ! -s "$workingset" ]; then # exit early if the working set becomes empty
+      rm "$workingset"
+      exit 1
+    fi
   fi
   case $1 in
     -v) # verbose
