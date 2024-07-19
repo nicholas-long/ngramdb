@@ -8,7 +8,9 @@
   - this is the file that 
 - the batch runner reruns the script when any "tracked file"
 - tracked files are every file that is not excessively large, or files that do not have deterministic content, such as gzip streams or videos encoded where metadata might change the resulting file.
-  - [ ] link to code to determine tracked files
+  - code to determine tracked files:
+    - [dependstats subcommand - dependency hashes](/database/20240704164832-ae846f0d186e581bb7aa/subcommands/dependstats)
+    - [checksums command and logic to filter files](/database/20240704164832-ae846f0d186e581bb7aa/subcommands/checksums)
 - a directed dependency to another Ngram is implemented as that Ngram's unique directory IDs occuring within the text of files in the directory.
   - convention: a dependency related to batch running must occur in an _executable_ file.
   - a "loose" reference could be implemented as the ID occuring in any file that is not marked as executable
