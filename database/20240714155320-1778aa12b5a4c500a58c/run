@@ -4,7 +4,25 @@ cd $(dirname $0)
 ngram query @template > templates.dat
 
 for id in $(cat templates.dat); do
-  if ! grep $id README.md; then
+  if ! grep $id README.md >/dev/null; then
     echo "- [template](/database/$id)" >> README.md
   fi
 done
+
+awk '
+BEGIN {
+  print "# List of Templates"
+  print ""
+}
+{
+  id = $1
+  NF++
+  $NF = "](database/" id ")"
+  $1 = "["
+  gsub(/\[ /,"[")
+  gsub(/ *\] */,"]")
+  print "-", $0
+}
+' <(ngram query --human "$(pwd)/templates.dat") > templates.md
+
+wc -l README.md templates.md templates.dat
