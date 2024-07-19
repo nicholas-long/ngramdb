@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -o pipefail
+
+a=$(ngram create -t A)
+b=$(ngram create -t A)
+ngram forcelink $a $b
+ngram query id $a refs | grep $b
+if [ "$?" != "0" ]; then
+  echo failed query
+  exit 1
+fi

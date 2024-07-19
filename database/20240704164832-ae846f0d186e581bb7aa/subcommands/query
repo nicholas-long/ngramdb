@@ -5,11 +5,14 @@
 # starting with all IDs, apply successive operations until desired nodes are reached or the working set becomes empty.
 
 workingset=$(mktemp)
-if [ -z "$workingset" ]; then exit 1; fi
+next=$(mktemp)
+if [ -z "$workingset" ]; then exit 1; fi # failed to allocate temp file
 ls database > $workingset
 if [ -z "$VERBOSE" ]; then VERBOSE=0; fi
 while [[ $# -gt 0 ]]; do
   if [ ! -s "$workingset" ]; then # exit early if the working set becomes empty
+    [ -f "$next" ] && rm "$next"
+    rm "$workingset"
     exit 1
   fi
   case $1 in
@@ -28,6 +31,8 @@ while [[ $# -gt 0 ]]; do
         close(command)
       }
       '
+      [ -f "$next" ] && rm "$next"
+      rm "$workingset"
       exit 0
       ;;
     @*) # search by tag with `ngram query @tag`
@@ -39,22 +44,27 @@ while [[ $# -gt 0 ]]; do
       awk '
         BEGIN { tag = ENVIRON["tag"]; gsub(/@/,"",tag) }
         $0 == tag { print FILENAME | "cut -d / -f 2" }
-      ' $("$ngram_prog" tagfiles) | grep -f "$workingset" | "$ngram_prog" replace "$workingset"
+      ' $("$ngram_prog" tagfiles) | grep -f "$workingset" > "$next"
+      mv "$next" "$workingset"
       ;;
     refs) # get refs from the current working set
-      cat "$workingset" | xargs -n 1 "$ngram_prog" refs | sort -u | "$ngram_prog" replace "$workingset"
+      cat "$workingset" | xargs -n 1 "$ngram_prog" refs | sort -u > "$next"
+      mv "$next" "$workingset"
       ;;
     refstype) # get refs from the current working set that match a certain string - used for types of links
       shift
-      cat "$workingset" | xargs -n 1 "$ngram_prog" refs --type "$1" | sort -u | "$ngram_prog" replace "$workingset"
+      cat "$workingset" | xargs -n 1 "$ngram_prog" refs --type "$1" | sort -u > "$next"
+      mv "$next" "$workingset"
       ;;
     looserefs) # get loose refs (not required to be executable) from the current working set
       for id in $(cat $workingset); do
         grep -Rof <($ngram_prog list | grep -v "$id") "database/$id" | awk -F : '{print $NF}'
-      done | sort -u | $ngram_prog replace $workingset
+      done | sort -u > "$next"
+      mv "$next" "$workingset"
       ;;
     refsto) # get all refs to the current working set
-      cat "$workingset" | xargs -n 1 "$ngram_prog" findrefsto | sort -u | "$ngram_prog" replace "$workingset"
+      cat "$workingset" | xargs -n 1 "$ngram_prog" findrefsto | sort -u > "$next"
+      mv "$next" "$workingset"
       ;;
     id) # use a single ID as the new working set, 1 parameter
       shift
@@ -63,17 +73,21 @@ while [[ $# -gt 0 ]]; do
     not) # set difference - remove things occuring in the following tag, file, or subcommand argument
       shift
       if [[ "$1" =~ @.* ]]; then
-        grep -vf <($ngram_prog query $1) "$workingset" | "$ngram_prog" replace "$workingset"
+        grep -vf <($ngram_prog query $1) "$workingset" > "$next"
+        mv "$next" "$workingset"
       else
-        grep -vf "$1" "$workingset" | "$ngram_prog" replace "$workingset"
+        grep -vf "$1" "$workingset" > "$next"
+        mv "$next" "$workingset"
       fi
       ;;
     union) # union working set with another
       shift
       if [[ "$1" =~ @.* ]]; then
-        cat <($ngram_prog query $1) "$workingset" | sort -u | "$ngram_prog" replace "$workingset"
+        cat <($ngram_prog query $1) "$workingset" | sort -u > "$next"
+        mv "$next" "$workingset"
       else
-        cat "$workingset" "$1" | sort -u | "$ngram_prog" replace "$workingset"
+        cat "$workingset" "$1" | sort -u > "$next"
+        mv "$next" "$workingset"
       fi
       ;;
     filterjson) # filter workingset by json parameters using jq select syntax
@@ -88,7 +102,8 @@ while [[ $# -gt 0 ]]; do
             echo $id
           fi
         fi
-      done | sort -u | "$ngram_prog" replace "$workingset"
+      done | sort -u > "$next"
+      mv "$next" "$workingset"
       ;;
     json) # return all data.json files in the working set appended together as a JSON array
       for id in $(cat "$workingset"); do
@@ -101,6 +116,8 @@ while [[ $# -gt 0 ]]; do
       else
         cat
       fi
+      [ -f "$next" ] && rm "$next"
+      rm "$workingset"
       exit 0 # printing JSON breaks the normal flow of printing IDs
       ;;
     jsonset) # set a json field value, 2 required parameters after
@@ -110,10 +127,14 @@ while [[ $# -gt 0 ]]; do
       value="$1"
       if [ -z "$field" ]; then
         echo missing field >/dev/stderr
+        [ -f "$next" ] && rm "$next"
+        rm "$workingset"
         exit 1
       fi
       if [ -z "$value" ]; then
         echo missing value >/dev/stderr
+        [ -f "$next" ] && rm "$next"
+        rm "$workingset"
         exit 1
       fi
       numeric=""
@@ -136,7 +157,8 @@ while [[ $# -gt 0 ]]; do
         if [ "$count" = "$lastcount" ]; then
           stop=1
         fi
-        "$ngram_prog" query "$et" union <( "$ngram_prog" query "$et" refs ) union <( "$ngram_prog" query "$et" refsto ) | "$ngram_prog" replace "$et"
+        "$ngram_prog" query "$et" union <( "$ngram_prog" query "$et" refs ) union <( "$ngram_prog" query "$et" refsto ) > "$next"
+        mv "$next" "$et"
         lastcount="$count"
         count=$(wc -l $et | awk '{print $1}')
       done
@@ -144,6 +166,8 @@ while [[ $# -gt 0 ]]; do
       ;;
     dirs) # utility operator to return the entire current working set as directory paths
       awk '{ print "database/" $NF }' "$workingset"
+      [ -f "$next" ] && rm "$next"
+      rm "$workingset"
       exit 0
       ;;
     -h|--help) # print help text
@@ -156,13 +180,17 @@ while [[ $# -gt 0 ]]; do
         /case/,/esac/ { printing = 1 }
         printing && / +[a-z]+\) #/ { gsub(/) #/, " -"); print }
       ' "$0"
+      [ -f "$next" ] && rm "$next"
+      rm "$workingset"
       exit 1
       ;;
     *) # filename parameter or subquery implemented with bash filename redirection
-      grep -f "$1" "$workingset" | "$ngram_prog" replace "$workingset"
+      grep -f "$1" "$workingset" > "$next"
+      mv "$next" "$workingset"
       ;;
   esac
   shift
 done
 cat "$workingset"
 rm "$workingset"
+[ -f "$next" ] && rm "$next"
