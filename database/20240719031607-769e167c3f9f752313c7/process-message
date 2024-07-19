@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "processing message $1"
+cat "$1"
