@@ -3,10 +3,15 @@
 set -o pipefail
 
 a=$(ngram create -t A)
-b=$(ngram create -t A)
+b=$(ngram create -t B)
 ngram forcelink $a $b
-ngram query id $a refs | grep $b
+echo "testing references work:"
+grep $b <( ngram query id $a refs )
 if [ "$?" != "0" ]; then
   echo failed query
   exit 1
 fi
+ngram dependstats $a
+
+rm -rf "database/$a"
+rm -rf "database/$b"
