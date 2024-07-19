@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir -p inbox # create inbox if it is not already
+mkdir -p processed
+
 for messagefile in $(find inbox -type f); do
   ./process-message "$messagefile"
   mv "$messagefile" processed/
