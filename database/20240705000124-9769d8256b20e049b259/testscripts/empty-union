@@ -1,0 +1,18 @@
+#!/bin/bash
+
+id=$(ngram create -t test)
+refcount=$(ngram query id "$id" refs | wc -l | awk '{print $1}')
+if [ "$refcount" != "0" ]; then
+  echo "weird refs $refcount for $id"
+  rm -rf "database/$id"
+  exit 1
+fi
+refcount=$(ngram query id $id refs union <( echo $id ) | wc -l | awk '{print $1}')
+if [ "$refcount" != "1" ]; then
+  echo "failed to include self with query ... union ..."
+  rm -rf "database/$id"
+  exit 1
+fi
+
+rm -rf "database/$id"
+exit 0 # test success
