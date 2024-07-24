@@ -3,7 +3,7 @@ possible query usages:
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/query:    @*) # search by tag with `ngram query @tag`
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/run:  find $("$ngram_prog" query @live dirs) -name .ngram.dependencies.hashes | xargs rm # clear all hashes of live elements
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/run:"$ngram_prog" query @cron-daily dirs > $depends
-../20240704164832-ae846f0d186e581bb7aa/subcommands/run:"$ngram_prog" query @cron-five dirs
+../20240704164832-ae846f0d186e581bb7aa/subcommands/run:"$ngram_prog" query @cron-five dirs > $depends
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/run:"$ngram_prog" query @cron-hourly dirs > $depends
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/run:"$ngram_prog" query @ngram-hook-add > "$hooks"
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/start:for service in $(find $("$ngram_prog" query @service | awk '{ print "database/"$1 }') -type f -name run-service); do
