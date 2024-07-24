@@ -34,13 +34,13 @@ if [ -s "$depends" ]; then
 fi
 "$ngram_prog" query @cron-hourly dirs > $depends
 if [ -s "$depends" ]; then
-  for f in $(find $(cat $depends) -name .ngram.dependencies.hashes -mmin +1440); do
+  for f in $(find $(cat $depends) -name .ngram.dependencies.hashes -mmin +60); do
     rm "$f"
   done
 fi
 "$ngram_prog" query @cron-five dirs > $depends
 if [ -s "$depends" ]; then
-  for f in $(find $(cat $depends) -name .ngram.dependencies.hashes -mmin +1440); do
+  for f in $(find $(cat $depends) -name .ngram.dependencies.hashes -mmin +5); do
     rm "$f"
   done
 fi
