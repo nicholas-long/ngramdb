@@ -23,6 +23,17 @@ fi
 
 didntrunanything=1
 
+# clean up all periodic hashes for crons so they run
+for dependencyfile in $(find $("$ngram_prog" query @cron-daily dirs) -name .ngram.dependencies.hashes -mmin +1440); do
+  rm "$dependencyfile"
+done
+for dependencyfile in $(find $("$ngram_prog" query @cron-hourly dirs) -name .ngram.dependencies.hashes -mmin +60); do
+  rm "$dependencyfile"
+done
+for dependencyfile in $(find $("$ngram_prog" query @cron-five dirs) -name .ngram.dependencies.hashes -mmin +5); do
+  rm "$dependencyfile"
+done
+
 # run all IDs in topological order
 for id in $( "$ngram_prog" find-executable database -type f -name run | awk -F / 'NF == 3 { print $2 }' | sort -u | xargs "$ngram_prog" tsort); do
   if ! "$ngram_prog" hastag template "$id"; then
