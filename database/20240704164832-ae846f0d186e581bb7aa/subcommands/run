@@ -38,7 +38,7 @@ if [ -s "$depends" ]; then
     rm "$f"
   done
 fi
-"$ngram_prog" query @cron-five dirs
+"$ngram_prog" query @cron-five dirs > $depends
 if [ -s "$depends" ]; then
   for f in $(find $(cat $depends) -name .ngram.dependencies.hashes -mmin +1440); do
     rm "$f"
