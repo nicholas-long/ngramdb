@@ -67,6 +67,7 @@ function menuoptions {
   echo RUNBATCH
   echo GIT
   echo CLEANUP
+  echo RERUNCRONS
   echo QUIT
 }
 
@@ -208,5 +209,9 @@ while [ 1 ]; do # main tui loop
   elif [ "$selectedcmd" = "COPYFN" ]; then
     filename=$(promptfile)
     echo -n "$filename" | tmux loadb -
+  elif [ "$selectedcmd" = "RERUNCRONS" ]; then
+    find $(ngram query @cron-hourly dirs) -name .ngram.dependencies.hashes | xargs rm
+    find $(ngram query @cron-five dirs) -name .ngram.dependencies.hashes | xargs rm
+    find $(ngram query @cron-daily dirs) -name .ngram.dependencies.hashes | xargs rm
   fi
 done

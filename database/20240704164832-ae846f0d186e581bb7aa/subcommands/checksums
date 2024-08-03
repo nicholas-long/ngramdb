@@ -10,6 +10,8 @@ function checksumsstream {
     /\.webm$/ { next }
     /\.png$/ { next }
     /\.gif$/ { next }
+    /\.bmp$/ { next }
+    /\.mov$/ { next }
     /\.gz$/ { next }
     /\.ngram\.dependencies\.hashes$/ { next }
     { print }

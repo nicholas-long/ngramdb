@@ -8,6 +8,7 @@ export NGRAM_ID="$id"
 export NGRAM_ID_DIR="database/$id"
 
 echo "running Ngram ID $id" >/dev/stderr
+head -n 1 "$NGRAM_ID_DIR/README.md"
 
 # check dir ID exists
 if [ ! -d "$NGRAM_ID_DIR" ]; then

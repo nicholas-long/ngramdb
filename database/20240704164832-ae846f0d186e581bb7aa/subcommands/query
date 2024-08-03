@@ -58,7 +58,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     looserefs) # get loose refs (not required to be executable) from the current working set
       for id in $(cat $workingset); do
-        grep -Rof <($ngram_prog list | grep -v "$id") "database/$id" | awk -F : '{print $NF}'
+        grep -of <($ngram_prog list | grep -v "$id") $(find "database/$id" -type f | awk '!/\.(bmp|mp4|mov|qt|webm|gz)$/') | awk -F : '{print $NF}'
       done | sort -u > "$next"
       mv "$next" "$workingset"
       ;;
