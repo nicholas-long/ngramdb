@@ -7,6 +7,9 @@ possible query usages:
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/run:"$ngram_prog" query @cron-hourly dirs > $depends
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/run:"$ngram_prog" query @ngram-hook-add > "$hooks"
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/start:for service in $(find $("$ngram_prog" query @service | awk '{ print "database/"$1 }') -type f -name run-service); do
+../20240704164832-ae846f0d186e581bb7aa/subcommands/tui:    find $(ngram query @cron-daily dirs) -name .ngram.dependencies.hashes | xargs rm
+../20240704164832-ae846f0d186e581bb7aa/subcommands/tui:    find $(ngram query @cron-five dirs) -name .ngram.dependencies.hashes | xargs rm
+../20240704164832-ae846f0d186e581bb7aa/subcommands/tui:    find $(ngram query @cron-hourly dirs) -name .ngram.dependencies.hashes | xargs rm
 ../20240704164832-ae846f0d186e581bb7aa/subcommands/tui:  ngram query --human @template | fzf | awk '{print $1}' # list all templates
 
 possible hastag usages:
